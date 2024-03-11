@@ -18,11 +18,12 @@ class Queue {
         Front = L.getHead();
         Rear = L.getTail();
     }
-    void dequeue() {
+    T dequeue() {
         if (Front) {
-            L.DeleteBeg();
+            T value = L.DeleteBeg();
             Front = L.getHead();
             Rear = L.getTail();
+            return value;
         }
     }
     T front() {
