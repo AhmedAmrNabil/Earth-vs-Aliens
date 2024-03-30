@@ -17,7 +17,5 @@ public:
 	virtual bool addExisting(UNIT_TYPE type, Unit* unit) = 0;
 	bool getSoldier(Unit*& alienSoldier) {};
 	void addToKilled(Unit* killedUnit) {};
-	void addAttacked(UNIT_TYPE type, Unit* attackedUnit) {};
-
 
 };
