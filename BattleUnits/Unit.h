@@ -1,10 +1,9 @@
 #pragma once
 #include <cmath>
 enum UNIT_TYPE {
-    ES,
+    S,
     ET,
     EG,
-    AS,
     AM,
     AD
 };
@@ -20,13 +19,12 @@ class Unit {
     int attackCapacity;
 
    public:
-    Unit(UNIT_TYPE type, int joinTime, int health, int power, int attackCapacity) : 
-    type(type), joinTime(joinTime), health(health), power(power), attackCapacity(attackCapacity) {
+    Unit(UNIT_TYPE type, int joinTime, int health, int power, int attackCapacity) : type(type), joinTime(joinTime), health(health), power(power), attackCapacity(attackCapacity) {
         this->id = lastId;
         ++lastId;
     }
 
-    virtual bool attack(Army* enemyArmy) = 0;
+    virtual void attack(Army* enemyArmy) = 0;
 
     void getAttacked(Unit* enemyUnit) {
         health -= (enemyUnit->power * enemyUnit->health / 100) / sqrt(this->health);
@@ -35,6 +33,8 @@ class Unit {
 
     bool isDead() { return health == 0; }
 
+    int getAttackCapacity() { return this->attackCapacity; }
+    
 };
 
 int Unit::lastId = 0;
