@@ -47,6 +47,7 @@ public:
 	bool isDead() { return health == 0; };
 
 	int getAttackCapacity() { return this->attackCapacity; };
+	int getPriority() {};
 };
 
 int Unit::lastId = 0;
