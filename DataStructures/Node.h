@@ -1,46 +1,62 @@
+
 #ifndef _NODE
 #define _NODE
-
-//First let's declare a single node in the list
-template<typename T>
+template <typename T>
 class Node
 {
-private :
-	T item;	// A data item (can be any complex structure)
-	Node<T>* next;	// Pointer to next node
+private:
+	T item; // A data item
+	Node<T>* next; // Pointer to next node
 public :
-
-	Node( ) //default constructor
-	{
-		next= nullptr;
-	} 
-
-	Node( T newItem) //non-default constructor
-	{
-		item = newItem;
-		next= nullptr;
-
-	}
-
-	void setItem( T newItem)
-	{
-		item = newItem;
-	} // end setItem
-
-	void setNext(Node<T>* nextNodePtr)
-	{
-	next = nextNodePtr;
-	} // end setNext
-
-	T getItem() const
-	{
-		return item;
-	} // end getItem
-
-	Node<T>* getNext() const
-	{
-		return next;
-	}
+	Node();
+	Node(const T & r_Item);	
+	Node(const T & r_Item, Node<T>* nextNodePtr);
+	void setItem(const T & r_Item);
+	void setNext(Node<T>* nextNodePtr);
+	T getItem() const ;
+	Node<T>* getNext() const ;
 }; // end Node
+#endif
 
-#endif	
+template < typename T>
+Node<T>::Node() 
+{
+	next = nullptr;
+} 
+
+template < typename T>
+Node<T>::Node( const T& r_Item)
+{
+	item = r_Item;
+	next = nullptr;
+} 
+
+template < typename T>
+Node<T>::Node( const T& r_Item, Node<T>* nextNodePtr)
+{
+	item = r_Item;
+	next = nextNodePtr;
+}
+template < typename T>
+void Node<T>::setItem( const T& r_Item)
+{
+	item = r_Item;
+} 
+
+template < typename T>
+void Node<T>::setNext(Node<T>* nextNodePtr)
+{
+	next = nextNodePtr;
+} 
+
+template < typename T>
+T Node<T>::getItem() const
+{
+	return item;
+} 
+
+template < typename T>
+Node<T>* Node<T>::getNext() const
+{
+	return next;
+} 
