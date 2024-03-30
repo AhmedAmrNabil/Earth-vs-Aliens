@@ -14,17 +14,18 @@ public:
 	void attack(Army* enemyArmy, int timestamp) {
 		LinkedQueue <Unit*> tmpList;
 		Unit* enemyUnit;
+		clearAttacked();
 		for (int i = 0; i < this->getAttackCapacity(); ++i) {
 			enemyArmy->getSoldier(enemyUnit);
 			enemyUnit->getAttacked(this, timestamp);
-			enemyArmy->addAttacked(S, enemyUnit);
+			attackedUnits.enqueue(enemyUnit);
 			if (enemyUnit->isDead())
 				enemyArmy->addToKilled(enemyUnit);
 			else
 				tmpList.enqueue(enemyUnit);
 		}
 
-		while (tmpList.isEmpty()) {
+		while (!tmpList.isEmpty()) {
 			tmpList.dequeue(enemyUnit);
 			enemyArmy->addExisting(S, enemyUnit);
 

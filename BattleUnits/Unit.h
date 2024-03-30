@@ -1,5 +1,6 @@
 #pragma once
 #include <cmath>
+#include "../DataStructures/LinkedQueue.h"
 
 enum UNIT_TYPE {
 	S,
@@ -20,6 +21,13 @@ class Unit {
 	int health;
 	int power;
 	int attackCapacity;
+
+protected:
+	LinkedQueue <Unit*>attackedUnits;
+	void clearAttacked(){
+		Unit* tmp;
+		while(attackedUnits.dequeue(tmp));
+	}
 
 public:
 	Unit(UNIT_TYPE type, int joinTime, int health, int power, int attackCapacity) : type(type), joinTime(joinTime), health(health), power(power), attackCapacity(attackCapacity) {
