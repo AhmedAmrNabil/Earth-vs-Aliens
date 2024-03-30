@@ -28,6 +28,8 @@ protected:
 		Unit* tmp;
 		while(attackedUnits.dequeue(tmp));
 	}
+	int getPower(){return power;}
+	int getHealth(){return health;}
 
 public:
 	Unit(UNIT_TYPE type, int joinTime, int health, int power, int attackCapacity) : type(type), joinTime(joinTime), health(health), power(power), attackCapacity(attackCapacity) {
