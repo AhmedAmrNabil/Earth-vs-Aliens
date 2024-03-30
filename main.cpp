@@ -1,6 +1,8 @@
 #include <iostream>
-using std::cout;
-using std::cin;
+#include "BattleUnits/Soldier.h"
+ #include "BattleUnits/EarthGunner.h"
+ #include "Armies/Army.h"
+using namespace std;
 
 int main() {
 
