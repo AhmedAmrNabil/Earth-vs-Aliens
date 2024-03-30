@@ -1,3 +1,5 @@
-class Game {
+#pragma once
+
+class game {
 
 };

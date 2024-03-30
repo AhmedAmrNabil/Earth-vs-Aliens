@@ -12,8 +12,8 @@ public:
 	};
 
 	void attack(Army* enemyArmy, int timestamp) {
-		LinkedQueue <Unit*> tmpList;
-		Unit* enemyUnit;
+		LinkedQueue <Soldier*> tmpList;
+		Soldier* enemyUnit;
 		clearAttacked();
 		for (int i = 0; i < this->getAttackCapacity(); ++i) {
 			enemyArmy->getSoldier(enemyUnit);

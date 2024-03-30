@@ -40,4 +40,9 @@ class EarthGunner : public Unit {
             enemyAlienArmy->addExisting(AD, drone1);
         }
     }
+
+    int getPriority(){
+        return getPower() * sqrt(getHealth());
+    }
+
 };
