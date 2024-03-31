@@ -5,7 +5,8 @@
 #include "../DataStructures/LinkedQueue.h"
 #include "Unit.h"
 
-class EarthGunner : public Unit {
+class EarthGunner : public Unit 
+{
    public:
     EarthGunner(int joinTime, int health, int power, int attackCapacity) : Unit(EG, joinTime, health, power, attackCapacity){};
 
