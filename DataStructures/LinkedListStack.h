@@ -18,7 +18,7 @@ public:
 	}
 	bool push(const T& newEntry)
 	{
-		Node<T>* newNode = new Node(newEntry);
+		Node<T>* newNode = new Node <T> (newEntry);
 		if (!newNode)return false;
 		if (!top) 
 		{

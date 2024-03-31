@@ -29,5 +29,11 @@
     <ClInclude Include="DataStructures\LinkedListStack.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Interface\Game.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RandGen.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

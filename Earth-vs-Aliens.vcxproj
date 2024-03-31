@@ -137,6 +137,8 @@
     <ClInclude Include="Armies\EarthArmy.h" />
     <ClInclude Include="DataStructures\ArrayMonster.h" />
     <ClInclude Include="DataStructures\LinkedListStack.h" />
+    <ClInclude Include="Interface\Game.h" />
+    <ClInclude Include="RandGen.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

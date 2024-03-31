@@ -1,6 +1,6 @@
-
-#ifndef _NODE
-#define _NODE
+#pragma once
+//#ifndef _NODE
+//#define _NODE
 template <typename T>
 class Node
 {
@@ -16,7 +16,7 @@ public :
 	T getItem() const ;
 	Node<T>* getNext() const ;
 }; // end Node
-#endif
+//#endif
 
 template < typename T>
 Node<T>::Node() 
