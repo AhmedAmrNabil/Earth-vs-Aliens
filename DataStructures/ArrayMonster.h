@@ -9,25 +9,17 @@ private:
     AlienMonster* arrayMonster[1000];
     int monsterCount;
 public:
-    ArrayMonster()
+    ArrayMonster():arrayMonster()
     {
-        for (int i = 0; i < 1000; i++)
-        {
-            arrayMonster[i] = nullptr;
-        }
         monsterCount = 0;
     }
     bool isEmpty()
     {
-        if (monsterCount == 0)
-            return true;
-        return false;
+        return (monsterCount == 0);
     }
     bool isFull()
     {
-        if (monsterCount == 1000)
-            return true;
-        return false;
+        return (monsterCount == 1000);
     }
     bool insert(AlienMonster* a1)
     {
