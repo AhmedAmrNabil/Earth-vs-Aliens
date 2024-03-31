@@ -42,7 +42,7 @@ class EarthGunner : public Unit {
     }
 
     int getPriority(){
-        return getPower() * sqrt(getHealth());
+        return power * sqrt(health);
     }
 
 };

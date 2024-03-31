@@ -19,8 +19,6 @@ class Unit {
 	int joinTime;
 	int firstAttackedTime;
 	int destructionTime;
-	int health;
-	int power;
 	int attackCapacity;
 
 protected:
@@ -29,9 +27,8 @@ protected:
 		Unit* tmp;
 		while(attackedUnits.dequeue(tmp));
 	}
-	int getPower(){return power;}
-	int getHealth(){return health;}
-
+	int health;
+	int power;
 public:
 	Unit(UNIT_TYPE type, int joinTime, int health, int power, int attackCapacity) : type(type), joinTime(joinTime), health(health), power(power), attackCapacity(attackCapacity) {
 		this->id = lastId;
@@ -43,7 +40,11 @@ public:
 
 	void getAttacked(Unit* enemyUnit, int timestep) {
 		health -= (enemyUnit->power * enemyUnit->health / 100) / sqrt(this->health);
-		if (health < 0) health = 0;
+		if (health <= 0) 
+		{
+			health = 0; 
+			destructionTime = timestep;
+		}
 		if (firstAttackedTime == -1) firstAttackedTime = timestep;
 	};
 
