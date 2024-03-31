@@ -134,11 +134,30 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Armies\AlienArmy.h" />
+    <ClInclude Include="Armies\Army.h" />
     <ClInclude Include="Armies\EarthArmy.h" />
+    <ClInclude Include="BattleUnits\AlienDrone.h" />
+    <ClInclude Include="BattleUnits\AlienMonster.h" />
+    <ClInclude Include="BattleUnits\EarthGunner.h" />
+    <ClInclude Include="BattleUnits\EarthTank.h" />
+    <ClInclude Include="BattleUnits\Soldier.h" />
+    <ClInclude Include="BattleUnits\Unit.h" />
     <ClInclude Include="DataStructures\ArrayMonster.h" />
+    <ClInclude Include="DataStructures\ArrayStack.h" />
     <ClInclude Include="DataStructures\LinkedListStack.h" />
-    <ClInclude Include="Interface\Game.h" />
-    <ClInclude Include="RandGen.h" />
+    <ClInclude Include="DataStructures\LinkedQueue.h" />
+    <ClInclude Include="DataStructures\Node.h" />
+    <ClInclude Include="DataStructures\priNode.h" />
+    <ClInclude Include="DataStructures\priQueue.h" />
+    <ClInclude Include="DataStructures\QueueADT.h" />
+    <ClInclude Include="DataStructures\StackADT.h" />
+    <ClInclude Include="game.h" />
+    <ClInclude Include="Interface\UI.h" />
+    <ClInclude Include="randGen.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include=".gitignore" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
