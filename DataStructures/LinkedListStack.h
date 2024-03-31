@@ -12,7 +12,7 @@ class LinkedListStack : public StackADT<T>
 private:
 	Node<T>* top;
 public:
-	bool isEmpty() 
+	bool isEmpty() const
 	{
 		return (top == nullptr);
 	}

@@ -1,39 +1,54 @@
 #pragma once
 
 #include "../BattleUnits/Unit.h"
-#include "./Army.h"
+#include "../BattleUnits/AlienDrone.h"
 #include "../BattleUnits/AlienMonster.h"
+#include "../BattleUnits/Soldier.h"
 #include "../DataStructures/ArrayMonster.h"
+#include "./Army.h"
 
-class AlienArmy:public Army 
-{
-	ArrayMonster arrayMonster;
+class AlienArmy : public Army {
+    ArrayMonster arrayMonster;
+
    public:
-	   bool getDronePair(Unit*& drone1, Unit*& drone2) {}
-	   bool addUnit(UNIT_TYPE type, int joinTime, int health, int power, int attackCapacity)
-	   {
-		   switch (type)
-		   {
-		   case S:
-		   {
-			   Soldier* AlienSoldier = new Soldier(joinTime, health, power, attackCapacity);
-			   Soldiers.enqueue(AlienSoldier);
-		   }
-		   break;
+    bool addUnit(UNIT_TYPE type, int joinTime, int health, int power, int attackCapacity) {
+        switch (type) {
+            case S: {
+                Soldier* alienSoldier = new Soldier(joinTime, health, power, attackCapacity);
+                if (alienSoldier == nullptr) return false;
+                soldiers.enqueue(alienSoldier);
+            } break;
 
-		   case AM:
-		   {
-			   AlienMonster* alienMonster = new AlienMonster(joinTime, health, power, attackCapacity);
-			   arrayMonster.insert(alienMonster);
-		   }
-		   break;
+            case AM: {
+                AlienMonster* alienMonster = new AlienMonster(joinTime, health, power, attackCapacity);
+                if (alienMonster == nullptr) return false;
+                arrayMonster.insert(alienMonster);
+            } break;
 
-		   case AD:
-		   {
-			   AlienDrone* alienDrone = new AlienDrone(joinTime, health, power, attackCapacity);
-		   }
-		   break;
-		   }
-	   }
+            case AD: {
+                AlienDrone* alienDrone = new AlienDrone(joinTime, health, power, attackCapacity);
+                if (alienDrone == nullptr) return false;
+            } break;
+        }
+        return true;
+    }
+    bool addExisting(UNIT_TYPE type, Unit* unit) {
+        switch (type) {
+            case S: {
+                Soldier* S1 = dynamic_cast<Soldier*>(unit);
+                if (S1)
+                    soldiers.enqueue(S1);
+            } break;
 
+            case AM: {
+                AlienMonster* A1 = dynamic_cast<AlienMonster*>(unit);
+                if (A1)
+                    arrayMonster.insert(A1);
+            } break;
+
+            case AD: {
+                AlienDrone* alienDrone = dynamic_cast<AlienDrone*>(unit);
+            } break;
+        }
+    }
 };
