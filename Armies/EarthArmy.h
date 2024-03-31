@@ -21,11 +21,11 @@ public:
 				Soldier* EarthSoldier = new Soldier(joinTime,health,power,attackCapacity);
 				Soldiers.enqueue(EarthSoldier);
 				break;
-			case ET:
+			case AM:
 				EarthTank* Tank = new EarthTank(joinTime, health, power, attackCapacity);
 				EarthTanks.push(Tank);
 				break;
-			case EG:
+			case AD:
 				EarthGunner* EarthGunnery1 = new EarthGunner(joinTime, health, power, attackCapacity);
 				EarthGunnery.enqueue(EarthGunnery1, EarthGunnery1->getPriority());
 				break;

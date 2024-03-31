@@ -38,7 +38,8 @@ public:
 
 	virtual void attack(Army* enemyArmy, int timestep) = 0;
 
-	void getAttacked(Unit* enemyUnit, int timestep) {
+	void getAttacked(Unit* enemyUnit, int timestep) 
+	{
 		health -= (enemyUnit->power * enemyUnit->health / 100) / sqrt(this->health);
 		if (health <= 0) 
 		{
