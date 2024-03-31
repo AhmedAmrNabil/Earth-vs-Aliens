@@ -58,4 +58,17 @@ class priQueue {
     bool isEmpty() const {
         return head == nullptr;
     }
+    
+    void print()
+    {
+        int pri;
+        priNode<T>* ptr = head->getNext();
+        cout << "[" << head->getItem(pri);
+        do {
+            cout << ", ";
+            cout << ptr->getItem(pri);
+            ptr = ptr->getNext();
+        } while (ptr);
+        cout << "]";
+    }
 };

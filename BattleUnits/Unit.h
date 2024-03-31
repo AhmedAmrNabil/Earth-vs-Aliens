@@ -18,6 +18,7 @@ class Unit {
 	UNIT_TYPE type;
 	int joinTime;
 	int firstAttackedTime;
+	int destructionTime;
 	int health;
 	int power;
 	int attackCapacity;
@@ -38,18 +39,18 @@ public:
 		firstAttackedTime = -1;
 	};
 
-	virtual void attack(Army* enemyArmy, int timestamp) = 0;
+	virtual void attack(Army* enemyArmy, int timestep) = 0;
 
-	void getAttacked(Unit* enemyUnit, int timestamp) {
+	void getAttacked(Unit* enemyUnit, int timestep) {
 		health -= (enemyUnit->power * enemyUnit->health / 100) / sqrt(this->health);
 		if (health < 0) health = 0;
-		if (firstAttackedTime == -1) firstAttackedTime = timestamp;
+		if (firstAttackedTime == -1) firstAttackedTime = timestep;
 	};
 
 	bool isDead() { return health == 0; };
 
 	int getAttackCapacity() { return this->attackCapacity; };
-	int getPriority() {};
+	void printID() {cout << id;}
 };
 
 int Unit::lastId = 0;
