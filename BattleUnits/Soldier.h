@@ -11,13 +11,13 @@ public:
 
 	};
 
-	void attack(Army* enemyArmy, int timestamp) {
+	void attack(Army* enemyArmy, int timestep) {
 		LinkedQueue <Soldier*> tmpList;
 		Soldier* enemyUnit;
 		clearAttacked();
 		for (int i = 0; i < this->getAttackCapacity(); ++i) {
 			enemyArmy->getSoldier(enemyUnit);
-			enemyUnit->getAttacked(this, timestamp);
+			enemyUnit->getAttacked(this, timestep);
 			attackedUnits.enqueue(enemyUnit);
 			if (enemyUnit->isDead())
 				enemyArmy->addToKilled(enemyUnit);

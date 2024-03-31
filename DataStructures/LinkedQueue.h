@@ -65,6 +65,7 @@ public :
 
 	//copy constructor
 	LinkedQueue(const LinkedQueue<T> & LQ);
+	void print();
 };
 /////////////////////////////////////////////////////////////////////////////////////////
 
@@ -201,4 +202,16 @@ LinkedQueue<T>::LinkedQueue(const LinkedQueue<T> & LQ)
 	}	
 }
 
+template <typename T>
+void LinkedQueue<T>::print()
+{
+	Node<T>* ptr = frontPtr->getNext();
+	cout << "[" << frontPtr->getItem();
+	do {
+		cout << ", ";
+		cout << ptr->getItem();
+		ptr = ptr->getNext();
+	} while (ptr);
+	cout << "]";
+}
 #endif
