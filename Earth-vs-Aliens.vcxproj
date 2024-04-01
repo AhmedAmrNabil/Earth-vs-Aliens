@@ -152,7 +152,7 @@
     <ClInclude Include="DataStructures\priQueue.h" />
     <ClInclude Include="DataStructures\QueueADT.h" />
     <ClInclude Include="DataStructures\StackADT.h" />
-    <ClInclude Include="game.h" />
+    <ClInclude Include="Game.h" />
     <ClInclude Include="Interface\UI.h" />
     <ClInclude Include="randGen.h" />
   </ItemGroup>

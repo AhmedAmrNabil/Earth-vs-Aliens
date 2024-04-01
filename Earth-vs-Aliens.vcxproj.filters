@@ -29,7 +29,7 @@
     <ClInclude Include="DataStructures\LinkedListStack.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="game.h">
+    <ClInclude Include="Game.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="randGen.h">

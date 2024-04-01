@@ -16,7 +16,7 @@ class AlienArmy : public Army {
         {
         case S:
         {
-            Soldier* alienSoldier = new Soldier(joinTime, health, power, attackCapacity);
+            Soldier* alienSoldier = new Soldier(joinTime, health, power, attackCapacity, true);
             if (alienSoldier == nullptr) return false;
             soldiers.enqueue(alienSoldier);
             break;

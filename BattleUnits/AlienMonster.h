@@ -42,4 +42,6 @@ class AlienMonster : public Unit {
             enemyArmy->addExisting(ET, temp);
         }
     }
+
+    bool isAlien() override { return true; };
 };

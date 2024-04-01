@@ -44,4 +44,6 @@ class EarthGunner : public Unit
         return power * sqrt(health);
     }
 
+    bool isAlien() override { return false; };
+
 };
