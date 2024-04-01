@@ -17,12 +17,12 @@ class Game
 
     int power, health, attackcap;
 public:
-    Game()
+    Game():RNG(EA,AA)
     {
         timestep = 0;
-        loadInput();
+        //loadInput();
     }
-    void loadInput()
+    /*void loadInput()
     {
         ifstream input_file;
         input_file.open("input.txt", ios::in);
@@ -46,12 +46,12 @@ public:
         cout << power << "  " << health << "  " << attackcap;
         
         input_file.close();
-    }
-    void loadRange(ifstream &input_file,int& start, int& end)
-    {
-        input_file >> start >> end;
-        end = -1 * end;
-    }
+    }*/
+    //void loadRange(ifstream &input_file,int& start, int& end)
+    //{
+    //    input_file >> start >> end;
+    //    end = -1 * end;
+    //}
     void print()
     {
         EA->print();
