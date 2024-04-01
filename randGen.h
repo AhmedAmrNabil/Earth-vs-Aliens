@@ -7,12 +7,12 @@ class RandGen
 public:
 	RandGen()
 	{
-	
+
 	}
-	int generator(int beg, int end) 
+	int generator(int begin, int end)
 	{
 		srand(time(0));
-		int random = beg + (rand() % (end-beg));
+		int random = begin + (rand() % (end - begin));
 		return random;
 	}
 };
