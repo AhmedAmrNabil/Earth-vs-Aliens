@@ -57,5 +57,18 @@ public:
 			temp = top;
 		}
 	}
+	void print()
+	{
+		Node<T>* ptr = top->getNext();
+		cout << "[" << top->getItem();
+		int c = 1;
+		do {
+			cout << ", ";
+			cout << ptr->getItem();
+			c++;
+			ptr = ptr->getNext();
+		} while (ptr && c != 10);
+		cout << "]";
+	}
 };
 

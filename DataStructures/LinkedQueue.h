@@ -207,11 +207,13 @@ void LinkedQueue<T>::print()
 {
 	Node<T>* ptr = frontPtr->getNext();
 	cout << "[" << frontPtr->getItem();
+	int c = 1;
 	do {
 		cout << ", ";
 		cout << ptr->getItem();
+		c++;
 		ptr = ptr->getNext();
-	} while (ptr);
+	} while (ptr && c!=10);
 	cout << "]";
 }
 #endif

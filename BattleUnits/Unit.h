@@ -54,6 +54,7 @@ public:
 
 	int getAttackCapacity() { return this->attackCapacity; };
 	void printID() { cout << id; }
+
 };
 
 int Unit::lastEarthId = 0;

@@ -6,9 +6,11 @@
 #include "../BattleUnits/Soldier.h"
 #include "../DataStructures/ArrayMonster.h"
 #include "./Army.h"
+#include "../DataStructures/LinkedDeque.h"
 
 class AlienArmy : public Army {
     ArrayMonster arrayMonster;
+    LinkedDeque<AlienDrone*> dequeDrone;
     int amCount;
     int adCount;
    public:
@@ -36,6 +38,7 @@ class AlienArmy : public Army {
             AlienDrone* alienDrone = new AlienDrone(joinTime, health, power, attackCapacity);
             if (alienDrone == nullptr) return false;
             adCount++;
+            dequeDrone.enqueue(alienDrone);
             break;
         }
         }
@@ -47,23 +50,32 @@ class AlienArmy : public Army {
         case S:
         {
             Soldier* S1 = dynamic_cast<Soldier*>(unit);
-            if (S1)
+            if (S1) {
                 soldiers.enqueue(S1);
+                soldierCount++;
+            }
         } break;
 
         case AM:
         {
             AlienMonster* A1 = dynamic_cast<AlienMonster*>(unit);
-            if (A1)
+            if (A1) {
                 arrayMonster.insert(A1);
+                amCount++;
+            }
             break;
         }
         case AD:
         {
-            AlienDrone* alienDrone = dynamic_cast<AlienDrone*>(unit);
+            AlienDrone* A2= dynamic_cast<AlienDrone*>(unit);
+            if (A2) {
+                dequeDrone.enqueue(A2);
+                adCount++;
+            }
             break;
         }
         }
+        return true;
     }
     bool getUnit(UNIT_TYPE type, Unit*& unit, Unit*& unit2) 
     {
@@ -76,6 +88,7 @@ class AlienArmy : public Army {
             soldiers.dequeue(S1);
             unit = dynamic_cast<Unit*>(S1);
             unit2 = nullptr;
+            soldierCount--;
             break;
         } 
         case AM: 
@@ -85,14 +98,22 @@ class AlienArmy : public Army {
             arrayMonster.pick(AM);
             unit = dynamic_cast<Unit*>(AM);
             unit2 = nullptr;
+            amCount--;
             break;
         }
         case AD: 
         {
-            //AlienDrone* alienDrone = new AlienDrone(joinTime, health, power, attackCapacity);
-            //if (alienDrone == nullptr) return false;
+            if (dequeDrone.isEmpty())return false;
+            AlienDrone* AD1 = nullptr;
+            AlienDrone* AD2 = nullptr;
+            dequeDrone.dequeue(AD1);
+            dequeDrone.dequeueRear(AD2);
+            unit = dynamic_cast<Unit*>(AD1);
+            unit2 = dynamic_cast<Unit*>(AD2);
+            adCount--;
             break;
         } 
         }
+        return true;
     }
 };

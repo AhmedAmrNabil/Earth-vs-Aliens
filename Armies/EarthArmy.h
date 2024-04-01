@@ -75,6 +75,7 @@ class EarthArmy : public Army {
                 break;
             }
         }
+        return true;
     }
 
     bool getUnit(UNIT_TYPE type, Unit*& unit,Unit*& unit2) {
@@ -97,6 +98,7 @@ class EarthArmy : public Army {
                 unit = dynamic_cast<Unit*>(Gunner);
                 egCount--;
                 return true;
+                break;
             }
             case (ET):
             {
@@ -110,5 +112,9 @@ class EarthArmy : public Army {
         }
         unit2 = nullptr;
         return true;
+    }
+    void print() {
+        cout << "============== Earth Army Alive Units =============\n";
+        cout << soldierCount << "  ES";
     }
 };

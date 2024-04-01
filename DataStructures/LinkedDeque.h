@@ -1,4 +1,5 @@
 #ifndef LINKED_QUEUE_H_
+#define LINKED_QUEUE_H_
 #include "QueueADT.h" 
 #include "Node.h" 
 
@@ -71,8 +72,7 @@ public:
 		return true;
 	}
 
-	void print()
-	{
+	void print() {
 		Node<T>* ptr = tail->getNext();
 		cout << "[" << ptr->getItem();
 		do {

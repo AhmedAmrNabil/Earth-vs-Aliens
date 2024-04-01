@@ -64,11 +64,13 @@ class priQueue {
         int pri;
         priNode<T>* ptr = head->getNext();
         cout << "[" << head->getItem(pri);
+        int c = 1;
         do {
             cout << ", ";
             cout << ptr->getItem(pri);
+            c++;
             ptr = ptr->getNext();
-        } while (ptr);
+        } while (ptr && c!=10);
         cout << "]";
     }
 };
