@@ -13,4 +13,6 @@ public:
 	void attack(Army* enemyArmy, int timestep) {
 
 	}
+
+	bool isAlien() override { return false; };
 };

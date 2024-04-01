@@ -4,7 +4,7 @@
 #include "Armies/Army.h"
 #include "DataStructures/LinkedQueue.h"
 #include "DataStructures/priQueue.h"
-#include"Interface/Game.h"
+#include "Game.h"
 using namespace std;
 
 int main() {

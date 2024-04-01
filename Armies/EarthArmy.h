@@ -20,7 +20,7 @@ class EarthArmy : public Army {
         switch (type) {
             case S:
             {
-                Soldier* earthSoldier = new Soldier(joinTime, health, power, attackCapacity);
+                Soldier* earthSoldier = new Soldier(joinTime, health, power, attackCapacity,false);
                 soldiers.enqueue(earthSoldier);
                 break;
             }

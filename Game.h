@@ -1,10 +1,10 @@
 #pragma once
 #include <iostream>
 #include <fstream>
-#include "../Armies/Army.h"
-#include "../Armies/EarthArmy.h"
-#include "../Armies/AlienArmy.h"
-#include "../RandGen.h"
+#include "Armies/Army.h"
+#include "Armies/EarthArmy.h"
+#include "Armies/AlienArmy.h"
+#include "RandGen.h"
 class Game
 {
     EarthArmy* EA;
