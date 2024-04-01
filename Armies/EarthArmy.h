@@ -80,7 +80,7 @@ class EarthArmy : public Army {
                 int priority;
                 earthGunnery.dequeue(Gunner, priority);
                 unit = dynamic_cast<Unit*>(Gunner);
-                return true;
+                break;
             }
             case (ET):
             {

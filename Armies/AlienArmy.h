@@ -6,9 +6,11 @@
 #include "../BattleUnits/Soldier.h"
 #include "../DataStructures/ArrayMonster.h"
 #include "./Army.h"
+#include "../DataStructures/LinkedDeque.h"
 
 class AlienArmy : public Army {
     ArrayMonster arrayMonster;
+    LinkedDeque<AlienDrone*> dequeDrone;
 
    public:
     bool addUnit(UNIT_TYPE type, int joinTime, int health, int power, int attackCapacity) {
@@ -32,6 +34,7 @@ class AlienArmy : public Army {
         {
             AlienDrone* alienDrone = new AlienDrone(joinTime, health, power, attackCapacity);
             if (alienDrone == nullptr) return false;
+            dequeDrone.enqueue(alienDrone);
             break;
         }
         }
@@ -56,10 +59,13 @@ class AlienArmy : public Army {
         }
         case AD:
         {
-            AlienDrone* alienDrone = dynamic_cast<AlienDrone*>(unit);
+            AlienDrone* A2= dynamic_cast<AlienDrone*>(unit);
+            if (A2)
+                dequeDrone.enqueue(A2);
             break;
         }
         }
+        return true;
     }
     bool getUnit(UNIT_TYPE type, Unit*& unit, Unit*& unit2) 
     {
@@ -85,10 +91,16 @@ class AlienArmy : public Army {
         }
         case AD: 
         {
-            //AlienDrone* alienDrone = new AlienDrone(joinTime, health, power, attackCapacity);
-            //if (alienDrone == nullptr) return false;
+            if (dequeDrone.isEmpty())return false;
+            AlienDrone* AD1 = nullptr;
+            AlienDrone* AD2 = nullptr;
+            dequeDrone.dequeue(AD1);
+            dequeDrone.dequeueRear(AD2);
+            unit = dynamic_cast<Unit*>(AD1);
+            unit2 = dynamic_cast<Unit*>(AD2);
             break;
         } 
         }
+        return true;
     }
 };
