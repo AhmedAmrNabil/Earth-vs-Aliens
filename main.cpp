@@ -4,13 +4,32 @@
 #include "Armies/Army.h"
 #include "DataStructures/LinkedQueue.h"
 #include "DataStructures/priQueue.h"
+#include "DataStructures/LinkedDeque.h"
 #include "Game.h"
 using namespace std;
 
 int main() {
-	Game G1;
-	//G1.loadInput();
+	//LinkedDeque<int> q1;
 
-	//cout << "Hello World";
-	//return 0;
+	//q1.enqueue(4);
+	//q1.enqueue(3);
+	//q1.enqueue(5);
+	//q1.enqueue(2);
+
+	//q1.print();
+
+	//int x;
+	//q1.dequeue(x);
+	//cout << x << endl;
+	//q1.dequeueRear(x);
+	//cout << x << endl;
+
+	//q1.dequeue(x);
+	//cout << x << endl;
+	//q1.dequeueRear(x);
+	//cout << x << endl;
+
+
+
+	return 0;
 }
