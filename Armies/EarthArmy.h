@@ -14,25 +14,33 @@ class Soldier;
 class EarthArmy : public Army {
     priQueue<EarthGunner*> earthGunnery;
     LinkedListStack<EarthTank*> earthTanks;
-
+    int etCount;
+    int egCount;
    public:
+    EarthArmy() {
+        etCount = 0;
+        egCount = 0;
+    }
     bool addUnit(UNIT_TYPE type, int joinTime, int health, int power, int attackCapacity) {
         switch (type) {
             case S:
             {
                 Soldier* earthSoldier = new Soldier(joinTime, health, power, attackCapacity,false);
                 soldiers.enqueue(earthSoldier);
+                soldierCount++;
                 break;
             }
             case ET:
             {
                 EarthTank* tank = new EarthTank(joinTime, health, power, attackCapacity);
                 earthTanks.push(tank);
+                etCount++;
                 break;
             }
             case EG: {
                 EarthGunner* earthGunner = new EarthGunner(joinTime, health, power, attackCapacity);
                 earthGunnery.enqueue(earthGunner, earthGunner->getPriority());
+                egCount++;
                 break;
             }
         }
@@ -42,22 +50,28 @@ class EarthArmy : public Army {
             case S:
             {
                 Soldier* S1 = dynamic_cast<Soldier*>(unit);
-                if (S1)
+                if (S1) {
                     soldiers.enqueue(S1);
+                    soldierCount++;
+                }
                 break;
             }
             case ET:
             {
                 EarthTank* T1 = dynamic_cast<EarthTank*>(unit);
-                if (T1)
+                if (T1) {
                     earthTanks.push(T1);
+                    etCount++;
+                }
                 break;
             }
             case EG:
             {
                 EarthGunner* G1 = dynamic_cast<EarthGunner*>(unit);
-                if (G1)
+                if (G1) {
                     earthGunnery.enqueue(G1, G1->getPriority());
+                    egCount++;
+                }
                 break;
             }
         }
@@ -71,6 +85,7 @@ class EarthArmy : public Army {
                 Soldier* s1;
                 soldiers.dequeue(s1);
                 unit = dynamic_cast<Unit*>(s1);
+                soldierCount--;
                 break;
             }
             case (EG):
@@ -80,6 +95,7 @@ class EarthArmy : public Army {
                 int priority;
                 earthGunnery.dequeue(Gunner, priority);
                 unit = dynamic_cast<Unit*>(Gunner);
+                egCount--;
                 return true;
             }
             case (ET):
@@ -88,6 +104,7 @@ class EarthArmy : public Army {
                 EarthTank* tank1;
                 earthTanks.pop(tank1);
                 unit = dynamic_cast<Unit*>(tank1);
+                etCount--;
                 break;
             }
         }

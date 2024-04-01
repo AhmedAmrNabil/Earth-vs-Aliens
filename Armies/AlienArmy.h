@@ -9,7 +9,8 @@
 
 class AlienArmy : public Army {
     ArrayMonster arrayMonster;
-
+    int amCount;
+    int adCount;
    public:
     bool addUnit(UNIT_TYPE type, int joinTime, int health, int power, int attackCapacity) {
         switch (type)
@@ -19,6 +20,7 @@ class AlienArmy : public Army {
             Soldier* alienSoldier = new Soldier(joinTime, health, power, attackCapacity, true);
             if (alienSoldier == nullptr) return false;
             soldiers.enqueue(alienSoldier);
+            soldierCount++;
             break;
         }
         case AM:
@@ -26,12 +28,14 @@ class AlienArmy : public Army {
             AlienMonster* alienMonster = new AlienMonster(joinTime, health, power, attackCapacity);
             if (alienMonster == nullptr) return false;
             arrayMonster.insert(alienMonster);
+            amCount++;
             break;
         }
         case AD:
         {
             AlienDrone* alienDrone = new AlienDrone(joinTime, health, power, attackCapacity);
             if (alienDrone == nullptr) return false;
+            adCount++;
             break;
         }
         }
