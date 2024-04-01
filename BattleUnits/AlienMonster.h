@@ -21,14 +21,14 @@ class AlienMonster : public Unit {
            T1->getAttacked(this, timestep);
            enemyArmy->getUnit(S,S1,tmp);
            S1->getAttacked(this, timestep);
-           if (T1->isDead())
-               enemyArmy->addToKilled(T1);
-           else
-               tempSoldiers.enqueue(S1);
            if (S1->isDead())
                enemyArmy->addToKilled(S1);
            else
-               tempEarthTanks.push(S1);
+               tempSoldiers.enqueue(S1);
+           if (T1->isDead())
+               enemyArmy->addToKilled(T1);
+           else
+               tempEarthTanks.push(T1);
         }
         Unit* temp = nullptr;
         while (!tempSoldiers.isEmpty())
