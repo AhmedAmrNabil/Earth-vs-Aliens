@@ -19,13 +19,15 @@ public:
 		Unit* tmp;
 		clearAttacked();
 		for (int i = 0; i < this->getAttackCapacity(); ++i) {
-			enemyArmy->getUnit(S, enemyUnit, tmp);
-			enemyUnit->getAttacked(this, timestep);
-			attackedUnits.enqueue(enemyUnit);
-			if (enemyUnit->isDead())
-				enemyArmy->addToKilled(enemyUnit);
-			else
-				tmpList.enqueue(enemyUnit);
+			if (enemyArmy->getUnit(S, enemyUnit, tmp))
+			{
+				enemyUnit->getAttacked(this, timestep);
+				attackedUnits.enqueue(enemyUnit);
+				if (enemyUnit->isDead())
+					enemyArmy->addToKilled(enemyUnit);
+				else
+					tmpList.enqueue(enemyUnit);
+			}
 		}
 
 		while (!tmpList.isEmpty()) {
