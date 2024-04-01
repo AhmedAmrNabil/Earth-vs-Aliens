@@ -5,7 +5,7 @@
 
 
 template<typename T>
-class LinkedDeque : public QueueADT <T>{
+class LinkedDeque : public QueueADT<T> {
 private:
 	Node<T>* tail;
 
@@ -72,8 +72,7 @@ public:
 		return true;
 	}
 
-	void print()
-	{
+	void print() {
 		Node<T>* ptr = tail->getNext();
 		cout << "[" << ptr->getItem();
 		do {
