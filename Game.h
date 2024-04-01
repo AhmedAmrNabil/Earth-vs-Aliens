@@ -17,10 +17,10 @@ class Game
 
     int power, health, attackcap;
 public:
-    Game()
+    Game():RNG(EA,AA)
     {
         timestep = 0;
-        loadInput();
+        //loadInput();
     }
     void loadInput()
     {
