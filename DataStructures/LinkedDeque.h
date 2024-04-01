@@ -1,10 +1,11 @@
 #ifndef LINKED_QUEUE_H_
+#define LINKED_QUEUE_H_
 #include "QueueADT.h" 
 #include "Node.h" 
 
 
 template<typename T>
-class LinkedDeque : public QueueADT<T> {
+class LinkedDeque : public QueueADT <T>{
 private:
 	Node<T>* tail;
 
