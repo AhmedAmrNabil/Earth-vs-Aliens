@@ -57,4 +57,4 @@ public:
 };
 
 int Unit::lastEarthId = 0;
-int Unit::lastAlienId = 0;
+int Unit::lastAlienId = 2000;
