@@ -20,7 +20,7 @@ class EarthArmy : public Army {
     EarthArmy(LinkedQueue <Unit*>* killed): Army(killed) {
         tankCount = 0;
         gunnerCount = 0;
-        soldierCount;
+        soldierCount = 0;
         lastEarthId = 1;
     }
     bool addUnit(UNIT_TYPE type, int joinTime, int health, int power, int attackCapacity) {
