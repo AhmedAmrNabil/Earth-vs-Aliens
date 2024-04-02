@@ -9,7 +9,8 @@
 #include "BattleUnits/AlienMonster.h"
 #include "BattleUnits/EarthGunner.h"
 #include "BattleUnits/EarthTank.h"
-#include "BattleUnits/Soldier.h"
+#include "BattleUnits/EarthSoldier.h"
+#include "BattleUnits/AlienSoldier.h"
 
 class RandGen {
 	int N;
@@ -64,7 +65,7 @@ public:
 				capacity = earthMinCapacity + rand() % (earthMaxCapacity - earthMinCapacity);
 				int B = (rand() % 100) + 1;
 				if (B <= percentES)
-					type = S;
+					type = ES;
 				else if (B <= percentES + percentET)
 					type = ET;
 				else
@@ -83,7 +84,7 @@ public:
 				capacity = alienMinCapacity + rand() % (alienMaxCapacity - alienMinCapacity);
 				int B = (rand() % 100) + 1;
 				if (B <= percentAS)
-					type = S;
+					type = AS;
 				else if (B <= percentAS + percentAM)
 					type = AM;
 				else

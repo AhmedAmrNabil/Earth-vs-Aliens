@@ -9,16 +9,11 @@ using namespace std;
 class Soldier;
 class Army {
     LinkedQueue<Unit*>* killedUnits;
-
-
    protected:
-    LinkedQueue<Soldier*> soldiers;
-    int soldierCount;
     int lastEarthId;
     int lastAlienId;
    public:
     Army(LinkedQueue <Unit*>* killed) {
-        soldierCount = 0;
         killedUnits = killed;
     }
     virtual bool addUnit(UNIT_TYPE type, int joinTime, int health, int power, int attackCapacity) = 0;

@@ -140,8 +140,9 @@
     <ClInclude Include="BattleUnits\AlienDrone.h" />
     <ClInclude Include="BattleUnits\AlienMonster.h" />
     <ClInclude Include="BattleUnits\EarthGunner.h" />
+    <ClInclude Include="BattleUnits\EarthSoldier.h" />
     <ClInclude Include="BattleUnits\EarthTank.h" />
-    <ClInclude Include="BattleUnits\Soldier.h" />
+    <ClInclude Include="BattleUnits\AlienSoldier.h" />
     <ClInclude Include="BattleUnits\Unit.h" />
     <ClInclude Include="DataStructures\ArrayMonster.h" />
     <ClInclude Include="DataStructures\ArrayStack.h" />

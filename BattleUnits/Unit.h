@@ -3,9 +3,10 @@
 #include "../DataStructures/LinkedQueue.h"
 
 enum UNIT_TYPE {
-	S,
+	ES,
 	ET,
 	EG,
+	AS,
 	AM,
 	AD
 };
@@ -20,8 +21,6 @@ class Unit {
 	int firstAttackedTime;
 	int destructionTime;
 	int attackCapacity;
-	virtual bool isAlien() = 0;
-
 protected:
 	LinkedQueue <Unit*>attackedUnits;
 	void clearAttacked() {

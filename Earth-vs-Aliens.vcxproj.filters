@@ -71,7 +71,7 @@
     <ClInclude Include="BattleUnits\EarthTank.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="BattleUnits\Soldier.h">
+    <ClInclude Include="BattleUnits\AlienSoldier.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="BattleUnits\Unit.h">
@@ -81,6 +81,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Armies\Army.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DataStructures\LinkedDeque.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BattleUnits\EarthSoldier.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

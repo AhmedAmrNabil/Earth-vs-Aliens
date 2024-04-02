@@ -6,7 +6,6 @@
 #include "../DataStructures/LinkedQueue.h";
 
 class AlienMonster : public Unit {
-   bool isAlien() override { return true; };
    public:
     AlienMonster(int id,int joinTime, int health, int power, int attackCapacity) 
         : Unit(AM,id ,joinTime, health, power, attackCapacity) {}
@@ -28,7 +27,7 @@ class AlienMonster : public Unit {
                 else
                     tempEarthTanks.push(T1);
             }
-            if (enemyArmy->getUnit(S, S1, tmp))
+            if (enemyArmy->getUnit(AS, S1, tmp))
             {
                 S1->getAttacked(this, timestep);
                 if (S1->isDead())
@@ -41,7 +40,7 @@ class AlienMonster : public Unit {
         while (!tempSoldiers.isEmpty())
         {
             tempSoldiers.dequeue(temp);
-            enemyArmy->addExisting(S, temp);
+            enemyArmy->addExisting(AS, temp);
         }
         while (!tempEarthTanks.isEmpty()) 
         {

@@ -11,7 +11,7 @@ class Game
     AlienArmy* AA;
     RandGen* RNG;
     int timestep;
-    int N, ES, ETn, EGn, ASn, AMn, ADn, prob;
+    int N, ESn, ETn, EGn, ASn, AMn, ADn, prob;
     int powerEmin,powerEmax, attackEmin, attackEmax, healthEmin, healthEmax;
     int powerAmin, powerAmax, attackAmin, attackAmax, healthAmin, healthAmax;
 
@@ -38,8 +38,8 @@ public:
         if (X > 0 && X < 10) {
             Unit* S1;
             Unit* S2 = nullptr;
-            EA->getUnit(S, S1, S2);
-            EA->addExisting(S, S1);
+            EA->getUnit(ES, S1, S2);
+            EA->addExisting(ES, S1);
         }
         else if (X > 10 && X < 20) {
             Unit* ET1;
@@ -59,9 +59,9 @@ public:
             Unit* AS3;
             Unit* AS4 = nullptr;
 
-            AA->getUnit(S, AS1, AS4);
-            AA->getUnit(S, AS2, AS4);
-            AA->getUnit(S, AS3, AS4);
+            AA->getUnit(AS, AS1, AS4);
+            AA->getUnit(AS, AS2, AS4);
+            AA->getUnit(AS, AS3, AS4);
         }
         else if (X > 40 && X < 50) {
             Unit* AM1;
