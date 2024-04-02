@@ -13,7 +13,12 @@ RandGen::RandGen(Army* earthArmy, Army* alienArmy) {
 	this->earthArmy = earthArmy;
 	this->alienArmy = alienArmy;
 	srand(time(0));
-	loadInput();
+}
+
+int RandGen::generator(int begin, int end)
+{
+	int random = begin + (rand() % (end - begin));
+	return random;
 }
 
 void RandGen::generate(int timestep) {
@@ -71,4 +76,26 @@ void RandGen::generate(int timestep) {
 		}
 	}
 
+}
+
+void RandGen::initParams(int randGenparams[])
+{
+	N = randGenparams[0];
+	percentES = randGenparams[1];
+	percentET =randGenparams[2];
+	percentAS = randGenparams[3];
+	percentAM = randGenparams[4];
+	Thr = randGenparams[5];
+	earthMinPower = randGenparams[6];
+	earthMaxPower = randGenparams[7];
+	earthMinHealth = randGenparams[8];
+	earthMaxHealth = randGenparams[9];
+	earthMinCapacity = randGenparams[10];
+	earthMaxCapacity = randGenparams[11];
+	alienMinPower = randGenparams[12];
+	alienMaxPower = randGenparams[13];
+	alienMinHealth = randGenparams[14];
+	alienMaxHealth = randGenparams[15];
+	alienMinCapacity = randGenparams[16];
+	alienMaxCapacity = randGenparams[17];
 }

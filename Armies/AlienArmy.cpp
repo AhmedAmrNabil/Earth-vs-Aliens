@@ -77,3 +77,17 @@ bool AlienArmy::getUnit(UNIT_TYPE type, Unit*& unit, Unit*& unit2)
     }
     return true;
 }
+
+void AlienArmy::print()
+{
+    cout << "============== Alien Army Alive Units =============\n";
+    cout << soldierCount << "  AS";
+    alienSoldiers.print();
+    cout << endl;
+    cout << monsterCount << "  AM";
+    alienMonsters.print();
+    cout << endl;
+    cout << droneCount << "  AD";
+    alienDrones.print();
+    cout << endl;
+}

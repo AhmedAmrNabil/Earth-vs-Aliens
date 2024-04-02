@@ -12,53 +12,18 @@ class Game
 	AlienArmy* alienArmy;
 	RandGen* RNG;
 	int timestep;
-	int N, ESn, ETn, EGn, ASn, AMn, ADn, prob;
-	int powerEmin, powerEmax, attackEmin, attackEmax, healthEmin, healthEmax;
-	int powerAmin, powerAmax, attackAmin, attackAmax, healthAmin, healthAmax;
-
-	int powerE, healthE, attackcapE;
-	int powerA, healthA, attackcapA;
+	int randGenParams[18];
 	LinkedQueue <Unit*> killedUnits;
 public:
-	Game()
-	{
-		timestep = 0;
-		earthArmy = new EarthArmy();
-		alienArmy = new AlienArmy();
-		RNG = new RandGen(earthArmy, alienArmy);
-		this->earthArmy->setKilledList(&killedUnits);
-		this->alienArmy->setKilledList(&killedUnits);
-
-	}
-
-	void print()
-	{
-		earthArmy->print();
-		//AA->print();
-	}
-
-	bool getEarthUnit(UNIT_TYPE type, Unit*& unit) {
-		Unit* tmp;
-		return earthArmy->getUnit(type, unit, tmp);
-	}
-
-	bool getAlienUnit(UNIT_TYPE type, Unit*& unit1, Unit*& unit2) {
-		return alienArmy->getUnit(type, unit1, unit2);
-	}
-
-
-	bool addExistingEarthUnit(UNIT_TYPE type, Unit*& unit) {
-		return earthArmy->addUnit(type, unit);
-	}
-
-	bool addExistingAlienUnit(UNIT_TYPE type, Unit*& unit) {
-		return alienArmy->addUnit(type, unit);
-	}
-
-	void addToKilled(Unit*& unit) {
-		killedUnits.enqueue(unit);
-	}
-
+	Game();
+	void print();
+	bool getEarthUnit(UNIT_TYPE type, Unit*& unit);
+	bool getAlienUnit(UNIT_TYPE type, Unit*& unit1, Unit*& unit2);
+	bool addExistingEarthUnit(UNIT_TYPE type, Unit*& unit);
+	bool addExistingAlienUnit(UNIT_TYPE type, Unit*& unit);
+	void addToKilled(Unit*& unit);
+	void loadInput();
+	void loadRange(ifstream& input_file, int& start, int& end);
 	/*void testCode() {
 		cout << "\ncurrent timestep: " << timestep;
 		RNG->generate(timestep);

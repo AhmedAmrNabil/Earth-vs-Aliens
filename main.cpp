@@ -6,18 +6,11 @@
 using namespace std;
 
 int main() {
-    Army* earthArmy;
-    Army* alienArmy;
-    earthArmy = new EarthArmy();
-    alienArmy = new AlienArmy();
-    Game G(earthArmy, alienArmy);
+    Game G;
     for (int i = 0; i < 10; i++) {
         G.print();
     }
     G.print();
-
-    delete earthArmy;
-    delete alienArmy;
     return 0;
 }
 

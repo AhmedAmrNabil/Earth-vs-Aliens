@@ -28,30 +28,9 @@ class RandGen {
 
 public:
 	RandGen(Army* earthArmy, Army* alienArmy);
-
-	void loadInput() {
-		ifstream input_file;
-		input_file.open("input.txt", ios::in);
-		input_file >> N >> percentES >> percentET >> percentAS >> percentAM >> Thr;
-		loadRange(input_file, earthMinPower, earthMaxPower);
-		loadRange(input_file, earthMinHealth, earthMaxHealth);
-		loadRange(input_file, earthMinCapacity, earthMaxCapacity);
-		loadRange(input_file, alienMinPower, alienMaxPower);
-		loadRange(input_file, alienMinHealth, alienMaxHealth);
-		loadRange(input_file, alienMinCapacity, alienMaxCapacity);
-		input_file.close();
-	}
-
-	void loadRange(ifstream& input_file, int& start, int& end) {
-		input_file >> start >> end;
-		end = -1 * end;
-	}
-
-	int generator(int begin, int end) {
-		int random = begin + (rand() % (end-begin));
-		return random;
-	}
+	int generator(int begin, int end);
 	void generate(int timestep);
+	void initParams(int randGenparams[]);
 };
 
 #endif

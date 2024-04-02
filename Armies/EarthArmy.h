@@ -26,17 +26,5 @@ class EarthArmy : public Army {
     
     bool addUnit(UNIT_TYPE type, Unit* unit);
     bool getUnit(UNIT_TYPE type, Unit*& unit, Unit*& unit2);
-
-    void print() {
-        cout << "============== Earth Army Alive Units =============\n";
-        cout << soldierCount << "  ES";
-        earthSoldiers.print();
-        cout << endl;
-        cout << tankCount << "  ET";
-        earthTanks.print();
-        cout << endl;
-        cout << gunnerCount << "  EG";
-        earthGunnery.print();
-        cout << endl;
-    }
+    void print();
 };

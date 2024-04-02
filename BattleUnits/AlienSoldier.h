@@ -12,26 +12,7 @@ public:
 		: Unit(AS,id , joinTime, health, power, attackCapacity){
 	};
 
-	void attack(Game* game, int timestep) override {
-		LinkedQueue<Unit*> tmpList;
-		Unit* enemyUnit;
-		clearAttacked();
-		for (int i = 0; i < this->getAttackCapacity(); ++i) {
-			if (game->getEarthUnit(ES, enemyUnit)){
-				enemyUnit->getAttacked(this, timestep);
-				attackedUnits.enqueue(enemyUnit);
-				if (enemyUnit->isDead())
-					game->addToKilled(enemyUnit);
-				else
-					tmpList.enqueue(enemyUnit);
-			}
-		}
-
-		while (!tmpList.isEmpty()) {
-			tmpList.dequeue(enemyUnit);
-			game->addExistingEarthUnit(ES, enemyUnit);
-		}
-	};
+	void attack(Game* game, int timestep) override;
 
 
 };
