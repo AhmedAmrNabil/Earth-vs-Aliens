@@ -6,6 +6,7 @@
 
 class EarthGunner : public Unit 
 {
+   bool isAlien() override { return false; };
    public:
     EarthGunner(int joinTime, int health, int power, int attackCapacity) : Unit(EG, joinTime, health, power, attackCapacity){};
 
@@ -44,6 +45,6 @@ class EarthGunner : public Unit
         return power * sqrt(health);
     }
 
-    bool isAlien() override { return false; };
+    
 
 };

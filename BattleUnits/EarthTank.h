@@ -3,7 +3,7 @@
 
 class EarthTank : public Unit 
 {
-
+	bool isAlien() override { return false; };
 
 public:
 	EarthTank(int joinTime, int health, int power, int attackCapacity) :
@@ -14,5 +14,5 @@ public:
 
 	}
 
-	bool isAlien() override { return false; };
+	
 };

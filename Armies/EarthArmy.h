@@ -17,7 +17,7 @@ class EarthArmy : public Army {
     int etCount;
     int egCount;
    public:
-    EarthArmy() {
+    EarthArmy(LinkedQueue <Unit*>* killed): Army(killed) {
         etCount = 0;
         egCount = 0;
     }
@@ -44,6 +44,7 @@ class EarthArmy : public Army {
                 break;
             }
         }
+        return true;
     }
     bool addExisting(UNIT_TYPE type, Unit* unit) {
         switch (type) {
@@ -116,5 +117,13 @@ class EarthArmy : public Army {
     void print() {
         cout << "============== Earth Army Alive Units =============\n";
         cout << soldierCount << "  ES";
+        soldiers.print();
+        cout << endl;
+        cout << etCount << "  ET";
+        earthTanks.print();
+        cout << endl;
+        cout << egCount << "  EG";
+        earthGunnery.print();
+        cout << endl;
     }
 };

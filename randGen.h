@@ -28,7 +28,11 @@ class RandGen {
 	Army* alienArmy;
 
 public:
-	RandGen(Army* earthArmy, Army* alienArmy) {}
+	RandGen(Army* earthArmy, Army* alienArmy) {
+		this->earthArmy = earthArmy;
+		this->alienArmy = alienArmy;
+		loadInput();
+	}
 
 	void loadInput() {
 		ifstream input_file;
@@ -89,5 +93,10 @@ public:
 			}
 		}
 
+	}
+	int generator(int begin, int end) {
+		srand(time(0));
+		int random = begin + (rand() % (end-begin));
+		return random;
 	}
 };

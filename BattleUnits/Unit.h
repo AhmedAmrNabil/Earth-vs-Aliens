@@ -53,8 +53,12 @@ public:
 	bool isDead() { return health == 0; };
 
 	int getAttackCapacity() { return this->attackCapacity; };
-	void printID() { cout << id; }
-
+	//void printID() { cout << id; }
+	
+	friend ostream& operator << (ostream& out, const Unit& unit) {
+		out << unit.id;
+		return out;
+	}
 };
 
 int Unit::lastEarthId = 0;

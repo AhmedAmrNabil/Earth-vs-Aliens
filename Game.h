@@ -17,59 +17,32 @@ class Game
 
     int powerE, healthE, attackcapE;
     int powerA, healthA, attackcapA;
-
+    LinkedQueue <Unit*> killedUnits;
 public:
     Game():RNG(EA,AA)
     {
         timestep = 0;
-        //loadInput();
+        EA = new EarthArmy(&killedUnits);
+        AA = new AlienArmy(&killedUnits);
     }
-    /*void loadInput()
-    {
-        ifstream input_file;
-        input_file.open("input.txt", ios::in);
-        input_file >> N >> ES >> ETn >> EGn >> ASn >> AMn >> ADn >> prob;
-        loadRange(input_file, powerEmin, powerEmax);
-        loadRange(input_file, healthEmin, healthEmax);
-        loadRange(input_file, attackEmin, attackEmax);
-        loadRange(input_file, powerAmin, powerAmax);
-        loadRange(input_file, healthAmin, healthAmax);
-        loadRange(input_file, attackAmin, attackAmax);
-        powerE = RNG.generator(powerEmin, powerEmax);
-        healthE= RNG.generator(healthEmin, healthEmax);
-        attackcapE = RNG.generator(attackEmin, attackEmax);
-        
-        /*cout <<  powerEmin << "  " <<  powerEmax <<endl;
-        cout << healthEmin << "  " << healthEmax << endl;
-        cout << attackEmin << "  " << attackEmax << endl;
-        cout <<  powerAmin << "  " <<  powerAmax << endl;
-        cout << healthAmin << "  " << healthAmax << endl;
-        cout << attackAmin << "  " << attackAmax << endl;
-        cout << powerE << "  " << healthE << "  " << attackcapE;
-        */
-        input_file.close();
-    }*/
-    //void loadRange(ifstream &input_file,int& start, int& end)
-    //{
-    //    input_file >> start >> end;
-    //    end = -1 * end;
-    //}
+  
     void print()
     {
         EA->print();
-        AA->print();
+        //AA->print();
     }
     void testCode() {
+        RNG.generate(timestep);
         int X = RNG.generator(1, 100);
         if (X > 0 && X < 10) {
             Unit* S1;
-            Unit* S2=nullptr;
+            Unit* S2 = nullptr;
             EA->getUnit(S, S1, S2);
             EA->addExisting(S, S1);
         }
         else if (X > 10 && X < 20) {
             Unit* ET1;
-            Unit* ET2=nullptr;
+            Unit* ET2 = nullptr;
             EA->getUnit(ET, ET1, ET2);
             EA->addToKilled(ET1);
         }

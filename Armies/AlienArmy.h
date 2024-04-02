@@ -14,6 +14,10 @@ class AlienArmy : public Army {
     int amCount;
     int adCount;
    public:
+    AlienArmy(LinkedQueue <Unit*>* killed) : Army(killed) {
+        amCount = 0;
+        adCount = 0;
+    }
     bool addUnit(UNIT_TYPE type, int joinTime, int health, int power, int attackCapacity) {
         switch (type)
         {
@@ -115,5 +119,8 @@ class AlienArmy : public Army {
         } 
         }
         return true;
+    }
+    void print() {
+
     }
 };
