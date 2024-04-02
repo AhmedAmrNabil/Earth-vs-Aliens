@@ -13,8 +13,7 @@ enum UNIT_TYPE {
 
 class Army;
 class Unit {
-	static int lastEarthId;
-	static int lastAlienId;
+
 	int id;
 	UNIT_TYPE type;
 	int joinTime;
@@ -32,9 +31,8 @@ protected:
 	int health;
 	int power;
 public:
-	Unit(UNIT_TYPE type, int joinTime, int health, int power, int attackCapacity) 
-		: type(type), joinTime(joinTime), health(health), power(power), attackCapacity(attackCapacity) {
-		this->id = isAlien() ? lastAlienId++ : lastEarthId++;
+	Unit(UNIT_TYPE type, int id, int joinTime, int health, int power, int attackCapacity) 
+		: type(type), joinTime(joinTime), health(health), power(power), attackCapacity(attackCapacity),id(id) {
 		firstAttackedTime = -1;
 	};
 
@@ -61,5 +59,4 @@ public:
 	}
 };
 
-int Unit::lastEarthId = 0;
-int Unit::lastAlienId = 2000;
+

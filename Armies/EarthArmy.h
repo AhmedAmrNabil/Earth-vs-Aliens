@@ -20,25 +20,26 @@ class EarthArmy : public Army {
     EarthArmy(LinkedQueue <Unit*>* killed): Army(killed) {
         etCount = 0;
         egCount = 0;
+        lastEarthId = 1;
     }
     bool addUnit(UNIT_TYPE type, int joinTime, int health, int power, int attackCapacity) {
         switch (type) {
             case S:
             {
-                Soldier* earthSoldier = new Soldier(joinTime, health, power, attackCapacity,false);
+                Soldier* earthSoldier = new Soldier(lastEarthId++,joinTime, health, power, attackCapacity,false);
                 soldiers.enqueue(earthSoldier);
                 soldierCount++;
                 break;
             }
             case ET:
             {
-                EarthTank* tank = new EarthTank(joinTime, health, power, attackCapacity);
+                EarthTank* tank = new EarthTank(lastEarthId++, joinTime, health, power, attackCapacity);
                 earthTanks.push(tank);
                 etCount++;
                 break;
             }
             case EG: {
-                EarthGunner* earthGunner = new EarthGunner(joinTime, health, power, attackCapacity);
+                EarthGunner* earthGunner = new EarthGunner(lastEarthId++, joinTime, health, power, attackCapacity);
                 earthGunnery.enqueue(earthGunner, earthGunner->getPriority());
                 egCount++;
                 break;

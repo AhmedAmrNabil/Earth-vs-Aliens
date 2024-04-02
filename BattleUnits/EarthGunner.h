@@ -8,7 +8,8 @@ class EarthGunner : public Unit
 {
    bool isAlien() override { return false; };
    public:
-    EarthGunner(int joinTime, int health, int power, int attackCapacity) : Unit(EG, joinTime, health, power, attackCapacity){};
+    EarthGunner(int id, int joinTime, int health, int power, int attackCapacity) 
+        : Unit(EG,id , joinTime, health, power, attackCapacity){};
 
     virtual void attack(Army* enemyArmy, int timestep) {
         LinkedQueue<Unit*> tmpList;

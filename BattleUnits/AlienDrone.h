@@ -4,7 +4,8 @@ class AlienDrone :public Unit
 {
 	bool isAlien() override { return true; };
 public:
-	AlienDrone(int joinTime, int health, int power, int attackCapacity) :Unit(AM, joinTime, health, power, attackCapacity)
+	AlienDrone(int id, int joinTime, int health, int power, int attackCapacity) 
+		:Unit(AM, id,joinTime, health, power, attackCapacity)
 	{}
 	void attack(Army* enemyArmy, int timestep) 
 	{

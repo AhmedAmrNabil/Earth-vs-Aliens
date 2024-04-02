@@ -17,13 +17,14 @@ class AlienArmy : public Army {
     AlienArmy(LinkedQueue <Unit*>* killed) : Army(killed) {
         amCount = 0;
         adCount = 0;
+        lastAlienId = 2000;
     }
     bool addUnit(UNIT_TYPE type, int joinTime, int health, int power, int attackCapacity) {
         switch (type)
         {
         case S:
         {
-            Soldier* alienSoldier = new Soldier(joinTime, health, power, attackCapacity, true);
+            Soldier* alienSoldier = new Soldier(lastAlienId++, joinTime, health, power, attackCapacity, true);
             if (alienSoldier == nullptr) return false;
             soldiers.enqueue(alienSoldier);
             soldierCount++;
@@ -31,7 +32,7 @@ class AlienArmy : public Army {
         }
         case AM:
         {
-            AlienMonster* alienMonster = new AlienMonster(joinTime, health, power, attackCapacity);
+            AlienMonster* alienMonster = new AlienMonster(lastAlienId++, joinTime, health, power, attackCapacity);
             if (alienMonster == nullptr) return false;
             arrayMonster.insert(alienMonster);
             amCount++;
@@ -39,7 +40,7 @@ class AlienArmy : public Army {
         }
         case AD:
         {
-            AlienDrone* alienDrone = new AlienDrone(joinTime, health, power, attackCapacity);
+            AlienDrone* alienDrone = new AlienDrone(lastAlienId++,joinTime, health, power, attackCapacity);
             if (alienDrone == nullptr) return false;
             adCount++;
             dequeDrone.enqueue(alienDrone);
