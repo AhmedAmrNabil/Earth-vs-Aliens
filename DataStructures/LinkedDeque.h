@@ -2,6 +2,8 @@
 #define LINKED_QUEUE_H_
 #include "QueueADT.h" 
 #include "Node.h" 
+#include <iostream>
+using std::cout;
 
 
 template<typename T>
@@ -72,15 +74,18 @@ public:
 		return true;
 	}
 
-	void print() {
+	void print()
+	{
+		if (isEmpty())return;
 		Node<T>* ptr = tail->getNext();
 		cout << "[" << ptr->getItem();
-		do {
+		int c = 1;
+		while (ptr->getNext() != tail && c < 10) {
 			ptr = ptr->getNext();
-			cout << ", ";
-			cout << ptr->getItem();
-		} while (ptr != tail);
-		cout << "]";
+			cout << ", " << ptr->getItem();
+			c++;
+		}
+		cout <<", " << tail->getItem() << "]";
 	}
 
 	~LinkedDeque() {

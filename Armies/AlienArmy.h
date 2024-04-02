@@ -11,29 +11,38 @@
 class AlienArmy : public Army {
     ArrayMonster arrayMonster;
     LinkedDeque<AlienDrone*> dequeDrone;
-
+    int amCount;
+    int adCount;
    public:
+    AlienArmy(LinkedQueue <Unit*>* killed) : Army(killed) {
+        amCount = 0;
+        adCount = 0;
+        lastAlienId = 2000;
+    }
     bool addUnit(UNIT_TYPE type, int joinTime, int health, int power, int attackCapacity) {
         switch (type)
         {
         case S:
         {
-            Soldier* alienSoldier = new Soldier(joinTime, health, power, attackCapacity, true);
+            Soldier* alienSoldier = new Soldier(lastAlienId++, joinTime, health, power, attackCapacity, true);
             if (alienSoldier == nullptr) return false;
             soldiers.enqueue(alienSoldier);
+            soldierCount++;
             break;
         }
         case AM:
         {
-            AlienMonster* alienMonster = new AlienMonster(joinTime, health, power, attackCapacity);
+            AlienMonster* alienMonster = new AlienMonster(lastAlienId++, joinTime, health, power, attackCapacity);
             if (alienMonster == nullptr) return false;
             arrayMonster.insert(alienMonster);
+            amCount++;
             break;
         }
         case AD:
         {
-            AlienDrone* alienDrone = new AlienDrone(joinTime, health, power, attackCapacity);
+            AlienDrone* alienDrone = new AlienDrone(lastAlienId++,joinTime, health, power, attackCapacity);
             if (alienDrone == nullptr) return false;
+            adCount++;
             dequeDrone.enqueue(alienDrone);
             break;
         }
@@ -46,22 +55,28 @@ class AlienArmy : public Army {
         case S:
         {
             Soldier* S1 = dynamic_cast<Soldier*>(unit);
-            if (S1)
+            if (S1) {
                 soldiers.enqueue(S1);
+                soldierCount++;
+            }
         } break;
 
         case AM:
         {
             AlienMonster* A1 = dynamic_cast<AlienMonster*>(unit);
-            if (A1)
+            if (A1) {
                 arrayMonster.insert(A1);
+                amCount++;
+            }
             break;
         }
         case AD:
         {
             AlienDrone* A2= dynamic_cast<AlienDrone*>(unit);
-            if (A2)
+            if (A2) {
                 dequeDrone.enqueue(A2);
+                adCount++;
+            }
             break;
         }
         }
@@ -78,6 +93,7 @@ class AlienArmy : public Army {
             soldiers.dequeue(S1);
             unit = dynamic_cast<Unit*>(S1);
             unit2 = nullptr;
+            soldierCount--;
             break;
         } 
         case AM: 
@@ -87,6 +103,7 @@ class AlienArmy : public Army {
             arrayMonster.pick(AM);
             unit = dynamic_cast<Unit*>(AM);
             unit2 = nullptr;
+            amCount--;
             break;
         }
         case AD: 
@@ -98,9 +115,13 @@ class AlienArmy : public Army {
             dequeDrone.dequeueRear(AD2);
             unit = dynamic_cast<Unit*>(AD1);
             unit2 = dynamic_cast<Unit*>(AD2);
+            adCount--;
             break;
         } 
         }
         return true;
+    }
+    void print() {
+
     }
 };

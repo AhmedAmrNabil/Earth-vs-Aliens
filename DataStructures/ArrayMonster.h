@@ -35,10 +35,19 @@ public:
         if (!isEmpty())
         {
             srand(time(0));
-            int random = 0 + (rand() % monsterCount);
-            AM=arrayMonster[random];
+            int random = rand() % monsterCount;
+            AM = arrayMonster[random];
+            arrayMonster[random] = arrayMonster[--monsterCount];
             return true;
         }
         return false;
+    }
+    void print() {
+        if (isEmpty())return;
+        cout << "["<< arrayMonster[0];
+        for (int i = 1; i < monsterCount && i < 10; i++) {
+            cout << ", " << arrayMonster[i];
+        }
+        cout << "]";
     }
 };

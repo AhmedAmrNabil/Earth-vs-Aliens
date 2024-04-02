@@ -6,8 +6,10 @@
 #include "../DataStructures/LinkedQueue.h";
 
 class AlienMonster : public Unit {
+   bool isAlien() override { return true; };
    public:
-    AlienMonster(int joinTime, int health, int power, int attackCapacity) : Unit(AM, joinTime, health, power, attackCapacity) {}
+    AlienMonster(int id,int joinTime, int health, int power, int attackCapacity) 
+        : Unit(AM,id ,joinTime, health, power, attackCapacity) {}
 
 
     void attack(Army* enemyArmy, int timestep) {
@@ -48,5 +50,5 @@ class AlienMonster : public Unit {
         }
     }
 
-    bool isAlien() override { return true; };
+    
 };

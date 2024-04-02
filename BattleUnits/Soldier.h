@@ -7,9 +7,10 @@
 class Soldier : public Unit {
 private:
 	bool alienSoldier;
+	bool isAlien() override { return alienSoldier; };
 public:
-	Soldier(int joinTime, int health, int power, int attackCapacity,bool alienSoldier) 
-		: Unit(S, joinTime, health, power, attackCapacity){
+	Soldier(int id,int joinTime ,int health, int power, int attackCapacity,bool alienSoldier) 
+		: Unit(S,id , joinTime, health, power, attackCapacity){
 		this->alienSoldier = alienSoldier;
 	};
 
@@ -36,5 +37,5 @@ public:
 		}
 	};
 
-	bool isAlien() override { return alienSoldier; };
+
 };

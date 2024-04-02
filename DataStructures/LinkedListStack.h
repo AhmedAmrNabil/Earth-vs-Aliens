@@ -57,5 +57,18 @@ public:
 			temp = top;
 		}
 	}
+	void print()
+	{
+		if (isEmpty())return;
+		Node<T>* ptr = top;
+		cout << "[" << top->getItem();
+		int c = 1;
+		while (ptr->getNext() && c < 10) {
+			ptr = ptr->getNext();
+			cout << "," << ptr->getItem();
+			c++;
+		}
+		cout << "]";
+	}
 };
 
