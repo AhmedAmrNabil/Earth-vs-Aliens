@@ -4,6 +4,7 @@
 #include "../Armies/Army.h"
 #include "../DataStructures/LinkedQueue.h"
 #include "Unit.h"
+#include "../Game.h"
 
 class EarthSoldier : public Unit {
 public:
@@ -11,18 +12,18 @@ public:
 		: Unit(ES, id, joinTime, health, power, attackCapacity) {
 	};
 
-	void attack(Army* enemyArmy, int timestep) override {
+	void attack(Game* game, int timestep) override {
 		LinkedQueue<Unit*> tmpList;
 		Unit* enemyUnit;
 		Unit* tmp;
 		clearAttacked();
 		for (int i = 0; i < this->getAttackCapacity(); ++i) {
-			if (enemyArmy->getUnit(AS, enemyUnit, tmp))
+			if (game->getAlienUnit(AS, enemyUnit, tmp))
 			{
 				enemyUnit->getAttacked(this, timestep);
 				attackedUnits.enqueue(enemyUnit);
 				if (enemyUnit->isDead())
-					enemyArmy->addToKilled(enemyUnit);
+					game->addToKilled(enemyUnit);
 				else
 					tmpList.enqueue(enemyUnit);
 			}
@@ -30,7 +31,7 @@ public:
 
 		while (!tmpList.isEmpty()) {
 			tmpList.dequeue(enemyUnit);
-			enemyArmy->addExisting(AS, enemyUnit);
+			game->addExistingAlienUnit(AS, enemyUnit);
 		}
 	};
 

@@ -16,7 +16,7 @@ class AlienArmy : public Army {
     int soldierCount;
     int droneCount;
    public:
-    AlienArmy(LinkedQueue <Unit*>* killed) : Army(killed) {
+    AlienArmy() : Army() {
         monsterCount = 0;
         droneCount = 0;
         soldierCount = 0;

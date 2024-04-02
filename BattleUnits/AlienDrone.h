@@ -1,4 +1,6 @@
 #pragma once
+#include "../Game.h"
+#include "../DataStructures/LinkedListStack.h"
 
 class AlienDrone :public Unit
 {
@@ -6,29 +8,28 @@ public:
 	AlienDrone(int id, int joinTime, int health, int power, int attackCapacity) 
 		:Unit(AM, id,joinTime, health, power, attackCapacity)
 	{}
-	void attack(Army* enemyArmy, int timestep) 
+	void attack(Game* game, int timestep) 
 	{
 		LinkedListStack<Unit*> tempEarthTanks;
 		Unit* T1 = nullptr;
 		Unit* G1 = nullptr;
-		Unit* tmp;
 		for (int i = 0; i < this->getAttackCapacity(); ++i) 
 		{
-			if (enemyArmy->getUnit(ET, T1, tmp))
+			if (game->getEarthUnit(ET, T1))
 			{
 				T1->getAttacked(this, timestep);
 				if (T1->isDead())
-					enemyArmy->addToKilled(T1);
+					game->addToKilled(T1);
 				else
 					tempEarthTanks.push(T1);
 			}
-			if (enemyArmy->getUnit(EG, G1, tmp))
+			if (game->getEarthUnit(EG, G1))
 			{
 				G1->getAttacked(this, timestep);
 				if (G1->isDead())
-					enemyArmy->addToKilled(G1);
+					game->addToKilled(G1);
 				else
-					enemyArmy->addExisting(EG, G1);
+					game->addExistingEarthUnit(EG, G1);
 
 			}
 		}
@@ -36,7 +37,7 @@ public:
 		while (!tempEarthTanks.isEmpty())
 		{
 			tempEarthTanks.pop(temp);
-			enemyArmy->addExisting(ET, temp);
+			game->addExistingEarthUnit(ET, temp);
 		}
 	}
 	

@@ -13,6 +13,7 @@ enum UNIT_TYPE {
 
 
 class Army;
+class Game;
 class Unit {
 
 	int id;
@@ -35,7 +36,7 @@ public:
 		firstAttackedTime = -1;
 	};
 
-	virtual void attack(Army* enemyArmy, int timestep) = 0;
+	virtual void attack(Game* game, int timestep) = 0;
 
 	void getAttacked(Unit* enemyUnit, int timestep) {
 		health -= (enemyUnit->power * enemyUnit->health / 100) / sqrt(this->health);
@@ -50,7 +51,6 @@ public:
 	bool isDead() { return health == 0; };
 
 	int getAttackCapacity() { return this->attackCapacity; };
-	//void printID() { cout << id; }
 	
 	friend ostream& operator << (ostream& out, const Unit* unit) {
 		out << unit->id;

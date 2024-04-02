@@ -17,7 +17,7 @@ class EarthArmy : public Army {
     int gunnerCount;
     int soldierCount;
    public:
-    EarthArmy(LinkedQueue <Unit*>* killed): Army(killed) {
+    EarthArmy(): Army() {
         tankCount = 0;
         gunnerCount = 0;
         soldierCount = 0;

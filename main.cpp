@@ -1,36 +1,36 @@
 #include <iostream>
-//#include "BattleUnits/Soldier.h"
-//#include "BattleUnits/EarthGunner.h"
-//#include "Armies/Army.h"
-//#include "DataStructures/LinkedQueue.h"
-//#include "DataStructures/priQueue.h"
-//#include "DataStructures/LinkedDeque.h"
-//#include "DataStructures/ArrayMonster.h"
-//#include "BattleUnits/AlienMonster.h"
-//#include "DataStructures/LinkedListStack.h"
+
+#include "Armies/AlienArmy.h"
+#include "Armies/EarthArmy.h"
 #include "Game.h"
 using namespace std;
 
 int main() {
+    Army* earthArmy;
+    Army* alienArmy;
+    earthArmy = new EarthArmy();
+    alienArmy = new AlienArmy();
+    Game G(earthArmy, alienArmy);
+    for (int i = 0; i < 10; i++) {
+        G.print();
+        G.testCode();
+    }
+    G.print();
 
-
-	Game G;
-	G.testCode();
-	G.print();
-	//q1.print();
-
-	//int x;
-	//q1.dequeue(x);
-	//cout << x << endl;
-	//q1.dequeueRear(x);
-	//cout << x << endl;
-
-	//q1.dequeue(x);
-	//cout << x << endl;
-	//q1.dequeueRear(x);
-	//cout << x << endl;
-
-
-
-	return 0;
+    delete earthArmy;
+    delete alienArmy;
+    return 0;
 }
+
+// int number;
+// char ch;
+
+// bool loop = false;
+// while (loop == false)
+//{
+//	G.testCode();
+//	G.print();
+//	ch = _getch();
+//	if (ch == 27)
+//		loop = true;
+// }
