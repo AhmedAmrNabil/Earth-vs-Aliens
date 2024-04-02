@@ -19,7 +19,7 @@ class AlienArmy : public Army {
     AlienArmy(LinkedQueue <Unit*>* killed) : Army(killed) {
         monsterCount = 0;
         droneCount = 0;
-        monsterCount = 0;
+        soldierCount = 0;
         lastAlienId = 2000;
     }
     bool addUnit(UNIT_TYPE type, int joinTime, int health, int power, int attackCapacity) {
