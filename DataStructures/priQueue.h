@@ -1,5 +1,7 @@
 #pragma once
 #include "priNode.h"
+#include <iostream>
+using std::cout;
 
 // This class impelements the priority queue as a sorted list (Linked List)
 // The item with highest priority is at the front of the queue
@@ -61,16 +63,16 @@ class priQueue {
     
     void print()
     {
-        int pri;
-        priNode<T>* ptr = head->getNext();
-        cout << "[" << head->getItem(pri);
+        int tmp;
+        if (isEmpty())return;
+        priNode<T>* ptr = head;
+        cout << "[" << head->getItem(tmp);
         int c = 1;
-        do {
-            cout << ", ";
-            cout << ptr->getItem(pri);
-            c++;
+        while (ptr->getNext() && c < 10) {
             ptr = ptr->getNext();
-        } while (ptr && c!=10);
+            cout << "," << ptr->getItem(tmp);
+            c++;
+        }
         cout << "]";
     }
 };

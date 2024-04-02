@@ -43,12 +43,11 @@ public:
         return false;
     }
     void print() {
+        if (isEmpty())return;
         cout << "["<< arrayMonster[0];
-        int i = 1;
-        do{
-            cout << ", ";
-            cout << arrayMonster[i];
-            i++;
-        } while (i < monsterCount && i < 10);
+        for (int i = 1; i < monsterCount && i < 10; i++) {
+            cout << ", " << arrayMonster[i];
+        }
+        cout << "]";
     }
 };

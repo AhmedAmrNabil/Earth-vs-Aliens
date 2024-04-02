@@ -205,15 +205,28 @@ LinkedQueue<T>::LinkedQueue(const LinkedQueue<T> & LQ)
 template <typename T>
 void LinkedQueue<T>::print()
 {
-	Node<T>* ptr = frontPtr->getNext();
+	if (isEmpty())return;
+	Node<T>* ptr = frontPtr;
 	cout << "[" << frontPtr->getItem();
 	int c = 1;
-	do {
-		cout << ", ";
-		cout << ptr->getItem();
-		c++;
+	while (ptr->getNext() && c < 10) {
 		ptr = ptr->getNext();
-	} while (ptr && c!=10);
+		cout << "," << ptr->getItem();
+		c++;
+	}
 	cout << "]";
 }
+//void LinkedQueue<Unit*>::print()
+//{
+//	if (isEmpty())return;
+//	Node<Unit*>* ptr = frontPtr;
+//	cout << "[" << *(frontPtr->getItem());
+//	int c = 1;
+//	while (ptr->getNext() && c < 10) {
+//		ptr = ptr->getNext();
+//		cout << "," << ptr->getItem();
+//		c++;
+//	}
+//	cout << "]";
+//}
 #endif

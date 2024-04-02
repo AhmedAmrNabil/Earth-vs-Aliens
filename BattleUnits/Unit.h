@@ -53,8 +53,8 @@ public:
 	int getAttackCapacity() { return this->attackCapacity; };
 	//void printID() { cout << id; }
 	
-	friend ostream& operator << (ostream& out, const Unit& unit) {
-		out << unit.id;
+	friend ostream& operator << (ostream& out, const Unit* unit) {
+		out << unit->id;
 		return out;
 	}
 };

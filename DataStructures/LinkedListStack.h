@@ -59,15 +59,15 @@ public:
 	}
 	void print()
 	{
-		Node<T>* ptr = top->getNext();
+		if (isEmpty())return;
+		Node<T>* ptr = top;
 		cout << "[" << top->getItem();
 		int c = 1;
-		do {
-			cout << ", ";
-			cout << ptr->getItem();
-			c++;
+		while (ptr->getNext() && c < 10) {
 			ptr = ptr->getNext();
-		} while (ptr && c != 10);
+			cout << "," << ptr->getItem();
+			c++;
+		}
 		cout << "]";
 	}
 };

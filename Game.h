@@ -9,7 +9,7 @@ class Game
 {
     EarthArmy* EA;
     AlienArmy* AA;
-    RandGen RNG;
+    RandGen* RNG;
     int timestep;
     int N, ES, ETn, EGn, ASn, AMn, ADn, prob;
     int powerEmin,powerEmax, attackEmin, attackEmax, healthEmin, healthEmax;
@@ -19,11 +19,12 @@ class Game
     int powerA, healthA, attackcapA;
     LinkedQueue <Unit*> killedUnits;
 public:
-    Game():RNG(EA,AA)
+    Game()
     {
         timestep = 0;
         EA = new EarthArmy(&killedUnits);
         AA = new AlienArmy(&killedUnits);
+        RNG = new RandGen(EA, AA);
     }
   
     void print()
@@ -32,8 +33,8 @@ public:
         //AA->print();
     }
     void testCode() {
-        RNG.generate(timestep);
-        int X = RNG.generator(1, 100);
+        RNG->generate(timestep);
+        int X = RNG->generator(1, 100);
         if (X > 0 && X < 10) {
             Unit* S1;
             Unit* S2 = nullptr;
