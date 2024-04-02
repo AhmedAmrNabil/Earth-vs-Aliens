@@ -1,12 +1,15 @@
-#pragma once
+#ifndef GAME_H_
+#define GAME_H_
 #include <iostream>
 #include <fstream>
-#include "Armies/Army.h"
+#include "Armies/EarthArmy.h"
+#include "Armies/AlienArmy.h"
 #include "RandGen.h"
+
 class Game
 {
-	Army* earthArmy;
-	Army* alienArmy;
+	EarthArmy* earthArmy;
+	AlienArmy* alienArmy;
 	RandGen* RNG;
 	int timestep;
 	int N, ESn, ETn, EGn, ASn, AMn, ADn, prob;
@@ -17,11 +20,11 @@ class Game
 	int powerA, healthA, attackcapA;
 	LinkedQueue <Unit*> killedUnits;
 public:
-	Game(Army* earthArmy, Army* alienArmy)
+	Game()
 	{
 		timestep = 0;
-		this->earthArmy = earthArmy;
-		this->alienArmy = alienArmy;
+		earthArmy = new EarthArmy();
+		alienArmy = new AlienArmy();
 		RNG = new RandGen(earthArmy, alienArmy);
 		this->earthArmy->setKilledList(&killedUnits);
 		this->alienArmy->setKilledList(&killedUnits);
@@ -45,18 +48,18 @@ public:
 
 
 	bool addExistingEarthUnit(UNIT_TYPE type, Unit*& unit) {
-		return earthArmy->addExisting(type, unit);
+		return earthArmy->addUnit(type, unit);
 	}
 
 	bool addExistingAlienUnit(UNIT_TYPE type, Unit*& unit) {
-		return alienArmy->addExisting(type, unit);
+		return alienArmy->addUnit(type, unit);
 	}
 
 	void addToKilled(Unit*& unit) {
 		killedUnits.enqueue(unit);
 	}
 
-	void testCode() {
+	/*void testCode() {
 		cout << "\ncurrent timestep: " << timestep;
 		RNG->generate(timestep);
 		int X = RNG->generator(1, 100);
@@ -112,5 +115,7 @@ public:
 			alienArmy->addToKilled(AD2);
 		}
 		++timestep;
-	}
+	}*/
 };
+
+#endif

@@ -1,5 +1,5 @@
-#pragma once
-#pragma once
+#ifndef EARTH_SOLDIER_H_
+#define EARTH_SOLDIER_H_
 
 #include "../Armies/Army.h"
 #include "../DataStructures/LinkedQueue.h"
@@ -37,3 +37,5 @@ public:
 
 
 };
+
+#endif

@@ -13,7 +13,6 @@ int main() {
     Game G(earthArmy, alienArmy);
     for (int i = 0; i < 10; i++) {
         G.print();
-        G.testCode();
     }
     G.print();
 
