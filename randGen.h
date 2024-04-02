@@ -5,11 +5,7 @@
 #include <fstream>
 
 #include "Armies/Army.h"
-#include "BattleUnits/AlienDrone.h"
-#include "BattleUnits/AlienMonster.h"
-#include "BattleUnits/EarthGunner.h"
-#include "BattleUnits/EarthTank.h"
-#include "BattleUnits/Soldier.h"
+
 
 class RandGen {
 	int N;
@@ -31,6 +27,7 @@ public:
 	RandGen(Army* earthArmy, Army* alienArmy) {
 		this->earthArmy = earthArmy;
 		this->alienArmy = alienArmy;
+		srand(time(0));
 		loadInput();
 	}
 
@@ -54,7 +51,6 @@ public:
 
 	void generate(int timestep) {
 		int power, health, capacity;
-		srand(time(0));
 		int A = (rand() % 100) + 1;
 		if (A >= Thr) {
 			UNIT_TYPE type;
@@ -64,7 +60,7 @@ public:
 				capacity = earthMinCapacity + rand() % (earthMaxCapacity - earthMinCapacity);
 				int B = (rand() % 100) + 1;
 				if (B <= percentES)
-					type = S;
+					type = ES;
 				else if (B <= percentES + percentET)
 					type = ET;
 				else
@@ -83,7 +79,7 @@ public:
 				capacity = alienMinCapacity + rand() % (alienMaxCapacity - alienMinCapacity);
 				int B = (rand() % 100) + 1;
 				if (B <= percentAS)
-					type = S;
+					type = AS;
 				else if (B <= percentAS + percentAM)
 					type = AM;
 				else
@@ -95,7 +91,6 @@ public:
 
 	}
 	int generator(int begin, int end) {
-		srand(time(0));
 		int random = begin + (rand() % (end-begin));
 		return random;
 	}
