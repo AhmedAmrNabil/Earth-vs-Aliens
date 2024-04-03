@@ -1,7 +1,7 @@
 #ifndef LINKED_QUEUE_H_
 #define LINKED_QUEUE_H_
 #include "QueueADT.h" 
-#include "Node.h" 
+#include "DNode.h" 
 #include <iostream>
 using std::cout;
 
@@ -9,7 +9,7 @@ using std::cout;
 template<typename T>
 class LinkedDeque : public QueueADT<T> {
 private:
-	Node<T>* tail;
+	DNode<T>* tail;
 
 public:
 	LinkedDeque() {
@@ -22,7 +22,7 @@ public:
 
 
 	bool enqueue(const T& newEntry) override {
-		Node<T>* newItem = new Node<T>(newEntry);
+		DNode<T>* newItem = new DNode<T>(newEntry);
 		if (newItem == nullptr)return false;
 		if (tail == nullptr)
 			tail = newItem;
@@ -36,7 +36,7 @@ public:
 
 	bool dequeue(T& newEntry) override {
 		if (isEmpty())return false;
-		Node<T>* item = tail->getNext();
+		DNode<T>* item = tail->getNext();
 		newEntry = item->getItem();
 
 		if (item == tail)
@@ -57,11 +57,7 @@ public:
 			return true;
 		}
 
-		Node<T>* newTail = tail->getNext();
-
-		while (newTail->getNext() != tail)
-			newTail = newTail->getNext();
-
+		DNode<T>* newTail = tail->getPrev();
 		newTail->setNext(tail->getNext());
 		delete tail;
 		tail = newTail;
@@ -77,15 +73,19 @@ public:
 	void print()
 	{
 		if (isEmpty())return;
-		Node<T>* ptr = tail->getNext();
+		DNode<T>* ptr = tail->getNext();
 		cout << "[" << ptr->getItem();
-		int c = 1;
-		while (ptr->getNext() != tail && c < 10) {
-			ptr = ptr->getNext();
-			cout << ", " << ptr->getItem();
-			c++;
+		if (ptr != tail) {
+
+			int c = 1;
+			while (ptr->getNext() != tail && c < 10) {
+				ptr = ptr->getNext();
+				cout << ", " << ptr->getItem();
+				c++;
+			}
+			cout << ", " << tail->getItem();
 		}
-		cout <<", " << tail->getItem() << "]";
+		cout << "]";
 	}
 
 	~LinkedDeque() {

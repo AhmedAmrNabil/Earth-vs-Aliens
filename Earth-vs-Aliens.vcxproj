@@ -138,6 +138,7 @@
     <ClCompile Include="BattleUnits\AlienSoldier.cpp" />
     <ClCompile Include="BattleUnits\EarthGunner.cpp" />
     <ClCompile Include="BattleUnits\EarthSoldier.cpp" />
+    <ClCompile Include="BattleUnits\Unit.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="randGen.cpp" />
@@ -155,6 +156,7 @@
     <ClInclude Include="BattleUnits\Unit.h" />
     <ClInclude Include="DataStructures\ArrayMonster.h" />
     <ClInclude Include="DataStructures\ArrayStack.h" />
+    <ClInclude Include="DataStructures\DNode.h" />
     <ClInclude Include="DataStructures\LinkedDeque.h" />
     <ClInclude Include="DataStructures\LinkedListStack.h" />
     <ClInclude Include="DataStructures\LinkedQueue.h" />
