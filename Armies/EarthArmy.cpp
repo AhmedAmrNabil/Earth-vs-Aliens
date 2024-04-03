@@ -5,7 +5,8 @@
 #include "../BattleUnits/EarthTank.h"
 
 
-bool EarthArmy::addUnit(UNIT_TYPE type, Unit* unit) {
+bool EarthArmy::addUnit(Unit* unit) {
+    UNIT_TYPE type = unit->getType();
     switch (type) {
     case ES:
     {

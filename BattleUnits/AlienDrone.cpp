@@ -4,33 +4,28 @@
 
 void AlienDrone::attack(Game* game, int timestep)
 {
-	LinkedListStack<Unit*> tempEarthTanks;
-	Unit* T1 = nullptr;
-	Unit* G1 = nullptr;
+	
+	Unit* tank = nullptr;
+	Unit* gunnery = nullptr;
 	for (int i = 0; i < this->getAttackCapacity(); ++i)
 	{
-		if (game->getEarthUnit(ET, T1))
+		if (game->getEarthUnit(ET, tank))
 		{
-			T1->getAttacked(this, timestep);
-			if (T1->isDead())
-				game->addToKilled(T1);
+			tank->getAttacked(this, timestep);
+			if (tank->isDead())
+				game->addToKilled(tank);
 			else
-				tempEarthTanks.push(T1);
+				game->addToTemp(tank);
 		}
-		if (game->getEarthUnit(EG, G1))
+		if (game->getEarthUnit(EG, gunnery))
 		{
-			G1->getAttacked(this, timestep);
-			if (G1->isDead())
-				game->addToKilled(G1);
+			gunnery->getAttacked(this, timestep);
+			if (gunnery->isDead())
+				game->addToKilled(gunnery);
 			else
-				game->addEarthUnit(EG, G1);
+				game->addToTemp(gunnery);
 
 		}
 	}
-	Unit* temp = nullptr;
-	while (!tempEarthTanks.isEmpty())
-	{
-		tempEarthTanks.pop(temp);
-		game->addEarthUnit(ET, temp);
-	}
+	
 }

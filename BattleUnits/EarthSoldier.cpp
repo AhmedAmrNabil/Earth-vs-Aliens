@@ -3,7 +3,7 @@
 
 
 void EarthSoldier::attack(Game* game, int timestep) {
-	LinkedQueue<Unit*> tmpList;
+	
 	Unit* enemyUnit;
 	Unit* tmp;
 	clearAttacked();
@@ -15,12 +15,9 @@ void EarthSoldier::attack(Game* game, int timestep) {
 			if (enemyUnit->isDead())
 				game->addToKilled(enemyUnit);
 			else
-				tmpList.enqueue(enemyUnit);
+				game->addToTemp(enemyUnit);
 		}
 	}
 
-	while (!tmpList.isEmpty()) {
-		tmpList.dequeue(enemyUnit);
-		game->addAlienUnit(AS, enemyUnit);
-	}
+	
 }
