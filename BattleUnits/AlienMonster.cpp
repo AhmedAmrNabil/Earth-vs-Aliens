@@ -4,37 +4,26 @@
 
 void AlienMonster::attack(Game* game, int timestep)
 {
-    LinkedQueue<Unit*> tempSoldiers;
-    LinkedListStack<Unit*> tempEarthTanks;
-    Unit* T1 = nullptr;
-    Unit* S1 = nullptr;
+   
+    Unit* tank = nullptr;
+    Unit* soldier = nullptr;
 
     for (int i = 0; i < this->getAttackCapacity(); ++i)
     {
-        if (game->getEarthUnit(ET, T1)) {
-            T1->getAttacked(this, timestep);
-            if (T1->isDead())
-                game->addToKilled(T1);
+        if (game->getEarthUnit(ET, tank)) {
+            tank->getAttacked(this, timestep);
+            if (tank->isDead())
+                game->addToKilled(tank);
             else
-                tempEarthTanks.push(T1);
+                game->addToTemp(tank);
         }
-        if (game->getEarthUnit(AS, S1)) {
-            S1->getAttacked(this, timestep);
-            if (S1->isDead())
-                game->addToKilled(S1);
+        if (game->getEarthUnit(AS, soldier)) {
+            soldier->getAttacked(this, timestep);
+            if (soldier->isDead())
+                game->addToKilled(soldier);
             else
-                tempSoldiers.enqueue(S1);
+                game->addToTemp(soldier);
         }
     }
-    Unit* temp = nullptr;
-    while (!tempSoldiers.isEmpty())
-    {
-        tempSoldiers.dequeue(temp);
-        game->addEarthUnit(AS, temp);
-    }
-    while (!tempEarthTanks.isEmpty())
-    {
-        tempEarthTanks.pop(temp);
-        game->addEarthUnit(ET, temp);
-    }
+   
 }

@@ -13,11 +13,8 @@ class Army {
    public:
     Army() {
     }
-    virtual bool addUnit(UNIT_TYPE type, Unit* unit) = 0;
+    virtual bool addUnit(Unit* unit) = 0;
     virtual bool getUnit(UNIT_TYPE type, Unit*& unit, Unit*& unit2) = 0;
-    void addToKilled(Unit* killedUnit) {
-        killedUnits->enqueue(killedUnit);
-    }
     virtual void print() = 0;
     void setKilledList(LinkedQueue <Unit*>* killed) {
         killedUnits = killed; 

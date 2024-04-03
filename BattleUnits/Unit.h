@@ -57,11 +57,12 @@ public:
 	}
 
 	int getHealth() { return health; }
-
+	
 	friend ostream& operator << (ostream& out, const Unit* unit) {
 		out << unit->id;
 		return out;
 	}
+	UNIT_TYPE getType() { return type; }
 };
 
 

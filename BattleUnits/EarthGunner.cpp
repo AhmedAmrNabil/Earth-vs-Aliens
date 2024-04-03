@@ -4,7 +4,7 @@
 
 void EarthGunner::attack(Game* game, int timestep)
 {
-	LinkedQueue<Unit*> tmpList;
+
 	Unit* drone1;
 	Unit* drone2 = nullptr;
 	clearAttacked();
@@ -16,7 +16,7 @@ void EarthGunner::attack(Game* game, int timestep)
 			if (drone1->isDead())
 				game->addToKilled(drone1);
 			else
-				tmpList.enqueue(drone1);
+				game->addToTemp(drone1);
 		}
 
 		if (drone2 != nullptr) {
@@ -25,14 +25,10 @@ void EarthGunner::attack(Game* game, int timestep)
 			if (drone2->isDead())
 				game->addToKilled(drone2);
 			else
-				tmpList.enqueue(drone2);
+				game->addToTemp(drone2);
 		}
 	}
-
-	while (!tmpList.isEmpty()) {
-		tmpList.dequeue(drone1);
-		game->addAlienUnit(AD, drone1);
-	}
+	
 }
 int EarthGunner::getPriority() {
 	return power * sqrt(health);

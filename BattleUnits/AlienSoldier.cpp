@@ -4,7 +4,7 @@
 
 void AlienSoldier::attack(Game* game, int timestep)
 {
-	LinkedQueue<Unit*> tmpList;
+	
 	Unit* enemyUnit;
 	clearAttacked();
 	for (int i = 0; i < this->getAttackCapacity(); ++i) {
@@ -14,12 +14,8 @@ void AlienSoldier::attack(Game* game, int timestep)
 			if (enemyUnit->isDead())
 				game->addToKilled(enemyUnit);
 			else
-				tmpList.enqueue(enemyUnit);
+				game->addToTemp(enemyUnit);
 		}
 	}
 
-	while (!tmpList.isEmpty()) {
-		tmpList.dequeue(enemyUnit);
-		game->addEarthUnit(ES, enemyUnit);
-	}
 }

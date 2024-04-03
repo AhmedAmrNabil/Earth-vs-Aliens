@@ -3,7 +3,8 @@
 #include "../BattleUnits/AlienSoldier.h"
 #include "../BattleUnits/AlienMonster.h"
 
-bool AlienArmy::addUnit(UNIT_TYPE type, Unit* unit) {
+bool AlienArmy::addUnit(Unit* unit) {
+    UNIT_TYPE type = unit->getType();
     switch (type)
     {
     case AS:
@@ -50,7 +51,7 @@ bool AlienArmy::getUnit(UNIT_TYPE type, Unit*& unit, Unit*& unit2)
         alienSoldiers.dequeue(S1);
         unit = dynamic_cast<Unit*>(S1);
         unit2 = nullptr;
-        soldierCount--;
+        if(S1) soldierCount--;
         break;
     }
     case AM:
@@ -60,7 +61,7 @@ bool AlienArmy::getUnit(UNIT_TYPE type, Unit*& unit, Unit*& unit2)
         alienMonsters.pick(AM);
         unit = dynamic_cast<Unit*>(AM);
         unit2 = nullptr;
-        monsterCount--;
+        if(AM) monsterCount--;
         break;
     }
     case AD:
@@ -71,8 +72,9 @@ bool AlienArmy::getUnit(UNIT_TYPE type, Unit*& unit, Unit*& unit2)
         alienDrones.dequeue(AD1);
         alienDrones.dequeueRear(AD2);
         unit = dynamic_cast<Unit*>(AD1);
-        unit2 = dynamic_cast<Unit*>(AD2);
-        droneCount--;
+        unit2 = dynamic_cast<Unit*>(AD2); 
+        if(AD1) droneCount--;
+        if(AD2) droneCount--;
         break;
     }
     }
