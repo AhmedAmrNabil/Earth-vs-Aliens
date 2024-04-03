@@ -47,7 +47,6 @@ bool EarthArmy::getUnit(UNIT_TYPE type, Unit*& unit, Unit*& unit2) {
         EarthSoldier* s1;
         earthSoldiers.dequeue(s1);
         unit = dynamic_cast<Unit*>(s1);
-        soldierCount--;
         break;
     }
     case (EG):
@@ -57,8 +56,6 @@ bool EarthArmy::getUnit(UNIT_TYPE type, Unit*& unit, Unit*& unit2) {
         int priority;
         earthGunnery.dequeue(Gunner, priority);
         unit = dynamic_cast<Unit*>(Gunner);
-        gunnerCount--;
-        return true;
         break;
     }
     case (ET):
@@ -67,7 +64,6 @@ bool EarthArmy::getUnit(UNIT_TYPE type, Unit*& unit, Unit*& unit2) {
         EarthTank* tank1;
         earthTanks.pop(tank1);
         unit = dynamic_cast<Unit*>(tank1);
-        tankCount--;
         break;
     }
     }
@@ -92,4 +88,19 @@ void EarthArmy::print()
 int EarthArmy::getSoldierCount()
 {
     return soldierCount;
+}
+
+void EarthArmy::decrementCount(Unit* & unit) {
+    UNIT_TYPE type = unit->getType();
+    switch (type) {
+    case(ES):
+        --soldierCount;
+        break;
+    case(ET):
+        --tankCount;
+        break;
+    case(EG):
+        --gunnerCount;
+        break;
+    }
 }

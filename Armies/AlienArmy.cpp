@@ -51,7 +51,6 @@ bool AlienArmy::getUnit(UNIT_TYPE type, Unit*& unit, Unit*& unit2)
             alienSoldiers.dequeue(S1);
             unit = dynamic_cast<Unit*>(S1);
             unit2 = nullptr;
-            if(S1) soldierCount--;
             break;
         }
         case AM:
@@ -61,7 +60,6 @@ bool AlienArmy::getUnit(UNIT_TYPE type, Unit*& unit, Unit*& unit2)
             alienMonsters.pick(AM);
             unit = dynamic_cast<Unit*>(AM);
             unit2 = nullptr;
-            if(AM) monsterCount--;
             break;
         }
         case AD:
@@ -73,8 +71,6 @@ bool AlienArmy::getUnit(UNIT_TYPE type, Unit*& unit, Unit*& unit2)
             alienDrones.dequeueRear(AD2);
             unit = dynamic_cast<Unit*>(AD1);
             unit2 = dynamic_cast<Unit*>(AD2); 
-            if(AD1) droneCount--;
-            if(AD2) droneCount--;
             break;
         }
     }
@@ -98,4 +94,19 @@ void AlienArmy::print()
 int AlienArmy::getSoldierCount()
 {
     return soldierCount;
+}
+
+void AlienArmy::decrementCount(Unit*& unit) {
+    UNIT_TYPE type = unit->getType();
+    switch (type) {
+    case(AS):
+        --soldierCount;
+        break;
+    case(AM):
+        --monsterCount;
+        break;
+    case(AD):
+        --droneCount;
+        break;
+    }
 }
