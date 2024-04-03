@@ -8,9 +8,7 @@
 #include "BattleUnits/EarthSoldier.h"
 #include "BattleUnits/EarthTank.h"
 
-RandGen::RandGen(Army* earthArmy, Army* alienArmy) {
-    this->earthArmy = earthArmy;
-    this->alienArmy = alienArmy;
+RandGen::RandGen() {
     srand(time(0));
     lastAlienId = 2000;
     lastEarthId = 1;

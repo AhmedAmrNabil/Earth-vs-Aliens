@@ -6,9 +6,7 @@ Game::Game()
 	killedCount = 0;
 	earthArmy = new EarthArmy();
 	alienArmy = new AlienArmy();
-	RNG = new RandGen(earthArmy, alienArmy);
-	this->earthArmy->setKilledList(&killedUnits);
-	this->alienArmy->setKilledList(&killedUnits);
+	RNG = new RandGen();
 	loadInput();
 	RNG->initParams(randGenParams);
 }
