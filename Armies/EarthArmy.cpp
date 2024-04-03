@@ -88,3 +88,8 @@ void EarthArmy::print()
     earthGunnery.print();
     cout << endl;
 }
+
+int EarthArmy::getSoldierCount()
+{
+    return soldierCount;
+}

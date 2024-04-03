@@ -174,4 +174,9 @@ void Game::testCode() {
 	++timestep;
 }
 
+double Game::getSoldierRatio()
+{
+	return ((earthArmy->getSoldierCount()) / (alienArmy->getSoldierCount()))*100;
+}
+
 

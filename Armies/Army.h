@@ -19,4 +19,5 @@ class Army {
     void setKilledList(LinkedQueue <Unit*>* killed) {
         killedUnits = killed; 
     }
+    virtual int getSoldierCount() = 0;
 };

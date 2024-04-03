@@ -138,6 +138,7 @@
     <ClCompile Include="BattleUnits\AlienSoldier.cpp" />
     <ClCompile Include="BattleUnits\EarthGunner.cpp" />
     <ClCompile Include="BattleUnits\EarthSoldier.cpp" />
+    <ClCompile Include="BattleUnits\EarthTank.cpp" />
     <ClCompile Include="BattleUnits\Unit.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="main.cpp" />

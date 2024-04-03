@@ -94,3 +94,8 @@ void AlienArmy::print()
     alienDrones.print();
     cout << endl;
 }
+
+int AlienArmy::getSoldierCount()
+{
+    return soldierCount;
+}
