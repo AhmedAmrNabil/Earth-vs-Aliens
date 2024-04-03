@@ -1,7 +1,8 @@
 #pragma once
-#include "../Game.h"
 #include "../DataStructures/LinkedListStack.h"
+#include "Unit.h"
 
+class Game;
 class AlienDrone :public Unit
 {
 public:

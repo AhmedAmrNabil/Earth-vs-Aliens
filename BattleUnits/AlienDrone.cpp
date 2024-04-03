@@ -1,4 +1,6 @@
 #include "AlienDrone.h"
+#include "../Game.h"
+
 
 void AlienDrone::attack(Game* game, int timestep)
 {
@@ -21,7 +23,7 @@ void AlienDrone::attack(Game* game, int timestep)
 			if (G1->isDead())
 				game->addToKilled(G1);
 			else
-				game->addExistingEarthUnit(EG, G1);
+				game->addEarthUnit(EG, G1);
 
 		}
 	}
@@ -29,6 +31,6 @@ void AlienDrone::attack(Game* game, int timestep)
 	while (!tempEarthTanks.isEmpty())
 	{
 		tempEarthTanks.pop(temp);
-		game->addExistingEarthUnit(ET, temp);
+		game->addEarthUnit(ET, temp);
 	}
 }

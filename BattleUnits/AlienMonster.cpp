@@ -1,4 +1,6 @@
 #include "AlienMonster.h"
+#include "../Game.h"
+
 
 void AlienMonster::attack(Game* game, int timestep)
 {
@@ -28,11 +30,11 @@ void AlienMonster::attack(Game* game, int timestep)
     while (!tempSoldiers.isEmpty())
     {
         tempSoldiers.dequeue(temp);
-        game->addExistingEarthUnit(AS, temp);
+        game->addEarthUnit(AS, temp);
     }
     while (!tempEarthTanks.isEmpty())
     {
         tempEarthTanks.pop(temp);
-        game->addExistingEarthUnit(ET, temp);
+        game->addEarthUnit(ET, temp);
     }
 }

@@ -13,6 +13,8 @@ RandGen::RandGen(Army* earthArmy, Army* alienArmy) {
 	this->earthArmy = earthArmy;
 	this->alienArmy = alienArmy;
 	srand(time(0));
+	lastAlienId = 2000;
+	lastEarthId = 1;
 }
 
 int RandGen::generator(int begin, int end)
@@ -21,71 +23,59 @@ int RandGen::generator(int begin, int end)
 	return random;
 }
 
-void RandGen::generate(int timestep) {
-	int power, health, capacity;
-	int A = (rand() % 100) + 1;
-	if (A >= Thr) {
-		Unit* unit;
-		UNIT_TYPE type;
-
-		for (int i = 0; i < N; ++i) {
-			power = earthMinPower + rand() % (earthMaxPower - earthMinPower);
-			health = earthMinHealth + rand() % (earthMaxHealth - earthMinHealth);
-			capacity = earthMinCapacity + rand() % (earthMaxCapacity - earthMinCapacity);
-			int B = (rand() % 100) + 1;
-			if (B <= percentES) {
-				type = ES;
-				unit = new EarthSoldier(lastEarthId++, timestep, health, power, capacity);
-			}
-			else if (B <= percentES + percentET) {
-				type = ET;
-				unit = new EarthTank(lastEarthId++, timestep, health, power, capacity);
-			}
-			else {
-				type = EG;
-				unit = new EarthGunner(lastEarthId++,timestep, health, power, capacity);
-			}
-
-			earthArmy->addUnit(type,unit);
-		}
+Unit* RandGen::generateEarthUnit(int timestep, UNIT_TYPE& type) {
+	Unit* unit;
+	int	power = earthMinPower + rand() % (earthMaxPower - earthMinPower);
+	int	health = earthMinHealth + rand() % (earthMaxHealth - earthMinHealth);
+	int capacity = earthMinCapacity + rand() % (earthMaxCapacity - earthMinCapacity);
+	int B = (rand() % 100) + 1;
+	if (B <= percentES) {
+		type = ES;
+		unit = new EarthSoldier(lastEarthId++, timestep, health, power, capacity);
+	}
+	else if (B <= percentES + percentET) {
+		type = ET;
+		unit = new EarthTank(lastEarthId++, timestep, health, power, capacity);
+	}
+	else {
+		type = EG;
+		unit = new EarthGunner(lastEarthId++, timestep, health, power, capacity);
 	}
 
-	A = (rand() % 100) + 1;
-	if (A >= Thr) {
-		Unit* unit;
-		UNIT_TYPE type;
-		for (int i = 0; i < N; ++i) {
-			power = alienMinPower + rand() % (alienMaxPower - alienMinPower);
-			health = alienMinHealth + rand() % (alienMaxHealth - alienMinHealth);
-			capacity = alienMinCapacity + rand() % (alienMaxCapacity - alienMinCapacity);
-			int B = (rand() % 100) + 1;
-			if (B <= percentAS) { 
-				type = AS;
-				unit = new AlienSoldier(lastEarthId++, timestep, health, power, capacity);
-			}
-			else if (B <= percentAS + percentAM) {
-				unit = new AlienMonster(lastEarthId++, timestep, health, power, capacity);
-				type = AM;
-			}
-			else {
-				unit = new AlienDrone(lastEarthId++, timestep, health, power, capacity);
-				type = AD;
-			}
+	return unit;
 
-			alienArmy->addUnit(type,unit);
-		}
+}
+
+Unit* RandGen::generateAlienUnit(int timestep, UNIT_TYPE& type) {
+	Unit* unit;
+	int	power = alienMinPower + rand() % (alienMaxPower - alienMinPower);
+	int	health = alienMinHealth + rand() % (alienMaxHealth - alienMinHealth);
+	int capacity = alienMinCapacity + rand() % (alienMaxCapacity - alienMinCapacity);
+	int B = (rand() % 100) + 1;
+	if (B <= percentES) {
+		type = AS;
+		unit = new AlienSoldier(lastAlienId++, timestep, health, power, capacity);
 	}
+	else if (B <= percentES + percentET) {
+		type = AM;
+		unit = new AlienMonster(lastAlienId++, timestep, health, power, capacity);
+	}
+	else {
+		type = AD;
+		unit = new AlienDrone(lastAlienId++, timestep, health, power, capacity);
+	}
+	return unit;
 
 }
 
 void RandGen::initParams(int randGenparams[])
 {
-	N = randGenparams[0];
-	percentES = randGenparams[1];
-	percentET =randGenparams[2];
+	percentES = randGenparams[0];
+	percentET = randGenparams[1];
+
 	percentAS = randGenparams[3];
 	percentAM = randGenparams[4];
-	Thr = randGenparams[5];
+
 	earthMinPower = randGenparams[6];
 	earthMaxPower = randGenparams[7];
 	earthMinHealth = randGenparams[8];

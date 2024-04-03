@@ -29,7 +29,8 @@ class RandGen {
 public:
 	RandGen(Army* earthArmy, Army* alienArmy);
 	int generator(int begin, int end);
-	void generate(int timestep);
+	Unit* generateEarthUnit(int timestep, UNIT_TYPE& type);
+	Unit* generateAlienUnit(int timestep, UNIT_TYPE& type);
 	void initParams(int randGenparams[]);
 };
 

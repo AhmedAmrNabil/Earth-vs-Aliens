@@ -77,13 +77,13 @@ bool EarthArmy::getUnit(UNIT_TYPE type, Unit*& unit, Unit*& unit2) {
 void EarthArmy::print()
 {
     cout << "============== Earth Army Alive Units =============\n";
-    cout << soldierCount << "  ES";
+    cout << soldierCount << "\tES ";
     earthSoldiers.print();
     cout << endl;
-    cout << tankCount << "  ET";
+    cout << tankCount << "\tET ";
     earthTanks.print();
     cout << endl;
-    cout << gunnerCount << "  EG";
+    cout << gunnerCount << "\tEG ";
     earthGunnery.print();
     cout << endl;
 }

@@ -1,8 +1,8 @@
 #pragma once
 
 #include "../DataStructures/ArrayMonster.h"
-#include "./Army.h"
 #include "../DataStructures/LinkedDeque.h"
+#include "./Army.h"
 
 
 class Unit;

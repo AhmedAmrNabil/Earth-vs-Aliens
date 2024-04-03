@@ -4,8 +4,8 @@
 #include "../Armies/Army.h"
 #include "../DataStructures/LinkedQueue.h"
 #include "Unit.h"
-#include "../Game.h"
 
+class Game;
 class EarthSoldier : public Unit {
 public:
 	EarthSoldier(int id, int joinTime, int health, int power, int attackCapacity)

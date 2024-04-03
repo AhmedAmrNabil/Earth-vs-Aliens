@@ -3,7 +3,7 @@
 #include "../Armies/Army.h"
 #include "../DataStructures/LinkedQueue.h"
 #include "Unit.h"
-#include "../Game.h"
+class Game;
 
 class AlienSoldier : public Unit {
 

@@ -1,4 +1,6 @@
 #include "AlienSoldier.h"
+#include "../Game.h"
+
 
 void AlienSoldier::attack(Game* game, int timestep)
 {
@@ -18,6 +20,6 @@ void AlienSoldier::attack(Game* game, int timestep)
 
 	while (!tmpList.isEmpty()) {
 		tmpList.dequeue(enemyUnit);
-		game->addExistingEarthUnit(ES, enemyUnit);
+		game->addEarthUnit(ES, enemyUnit);
 	}
 }

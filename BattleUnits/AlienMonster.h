@@ -4,7 +4,7 @@
 #include "Unit.h"
 #include "../DataStructures/LinkedListStack.h"
 #include "../DataStructures/LinkedQueue.h"
-#include "../Game.h"
+class Game;
 
 class AlienMonster : public Unit {
    public:

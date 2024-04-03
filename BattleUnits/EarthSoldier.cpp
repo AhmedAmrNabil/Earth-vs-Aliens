@@ -1,4 +1,6 @@
 #include "EarthSoldier.h"
+#include "../Game.h"
+
 
 void EarthSoldier::attack(Game* game, int timestep) {
 	LinkedQueue<Unit*> tmpList;
@@ -19,6 +21,6 @@ void EarthSoldier::attack(Game* game, int timestep) {
 
 	while (!tmpList.isEmpty()) {
 		tmpList.dequeue(enemyUnit);
-		game->addExistingAlienUnit(AS, enemyUnit);
+		game->addAlienUnit(AS, enemyUnit);
 	}
 }

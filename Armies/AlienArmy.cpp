@@ -17,6 +17,7 @@ bool AlienArmy::addUnit(UNIT_TYPE type, Unit* unit) {
 
     case AM:
     {
+
         AlienMonster* A1 = dynamic_cast<AlienMonster*>(unit);
         if (A1) {
             alienMonsters.insert(A1);
@@ -81,13 +82,13 @@ bool AlienArmy::getUnit(UNIT_TYPE type, Unit*& unit, Unit*& unit2)
 void AlienArmy::print()
 {
     cout << "============== Alien Army Alive Units =============\n";
-    cout << soldierCount << "  AS";
+    cout << soldierCount << "\tAS ";
     alienSoldiers.print();
     cout << endl;
-    cout << monsterCount << "  AM";
+    cout << monsterCount << "\tAM ";
     alienMonsters.print();
     cout << endl;
-    cout << droneCount << "  AD";
+    cout << droneCount << "\tAD ";
     alienDrones.print();
     cout << endl;
 }

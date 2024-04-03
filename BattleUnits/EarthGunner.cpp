@@ -1,4 +1,6 @@
 #include "EarthGunner.h"
+#include "../Game.h"
+
 
 void EarthGunner::attack(Game* game, int timestep)
 {
@@ -29,7 +31,7 @@ void EarthGunner::attack(Game* game, int timestep)
 
 	while (!tmpList.isEmpty()) {
 		tmpList.dequeue(drone1);
-		game->addExistingAlienUnit(AD, drone1);
+		game->addAlienUnit(AD, drone1);
 	}
 }
 int EarthGunner::getPriority() {
