@@ -41,7 +41,7 @@ bool Game::addAlienUnit(UNIT_TYPE type, Unit*& unit)
 
 
 void Game::generateUnits() {
-	int A = RNG->generator(1, 101);
+	int A = RNG->generator(1, 100);
 	if (A >= Prob) {
 		UNIT_TYPE type;
 		Unit* unit;
@@ -52,7 +52,7 @@ void Game::generateUnits() {
 
 	}
 
-	A = RNG->generator(1, 101);
+	A = RNG->generator(1, 100);
 	if (A >= Prob) {
 		UNIT_TYPE type;
 		Unit* unit;

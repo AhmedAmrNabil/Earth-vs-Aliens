@@ -56,6 +56,8 @@ public:
 		if (firstAttackedTime == -1) firstAttackedTime = timestep;
 	}
 
+	int getHealth() { return health; }
+
 	friend ostream& operator << (ostream& out, const Unit* unit) {
 		out << unit->id;
 		return out;
