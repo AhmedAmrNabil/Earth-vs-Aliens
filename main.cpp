@@ -3,34 +3,23 @@
 #include "Armies/AlienArmy.h"
 #include "Armies/EarthArmy.h"
 #include "Game.h"
+#include <conio.h>
 using namespace std;
 
 int main() {
-    Army* earthArmy;
-    Army* alienArmy;
-    earthArmy = new EarthArmy();
-    alienArmy = new AlienArmy();
-    Game G(earthArmy, alienArmy);
-    for (int i = 0; i < 10; i++) {
-        G.print();
-        G.testCode();
-    }
-    G.print();
+    Game G;
 
-    delete earthArmy;
-    delete alienArmy;
+    int number;
+    char ch;
+    bool loop = true;
+    while (loop)
+    {
+        G.gameTick();
+    	ch = _getch();
+    	if (ch == 27)
+    		loop = false;
+    }
     return 0;
 }
 
-// int number;
-// char ch;
 
-// bool loop = false;
-// while (loop == false)
-//{
-//	G.testCode();
-//	G.print();
-//	ch = _getch();
-//	if (ch == 27)
-//		loop = true;
-// }
