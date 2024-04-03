@@ -155,6 +155,7 @@
     <ClInclude Include="BattleUnits\Unit.h" />
     <ClInclude Include="DataStructures\ArrayMonster.h" />
     <ClInclude Include="DataStructures\ArrayStack.h" />
+    <ClInclude Include="DataStructures\DNode.h" />
     <ClInclude Include="DataStructures\LinkedDeque.h" />
     <ClInclude Include="DataStructures\LinkedListStack.h" />
     <ClInclude Include="DataStructures\LinkedQueue.h" />
