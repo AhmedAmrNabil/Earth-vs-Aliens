@@ -78,7 +78,7 @@ public:
 		if (ptr != tail) {
 
 			int c = 1;
-			while (ptr->getNext() != tail && c < 10) {
+			while (ptr->getNext() != tail && c < 9) {
 				ptr = ptr->getNext();
 				cout << ", " << ptr->getItem();
 				c++;

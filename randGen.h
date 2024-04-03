@@ -27,7 +27,7 @@ class RandGen {
 	int lastAlienId;
 
 public:
-	RandGen(Army* earthArmy, Army* alienArmy);
+	RandGen();
 	int generator(int begin, int end);
 	Unit* generateEarthUnit(int timestep, UNIT_TYPE& type);
 	Unit* generateAlienUnit(int timestep, UNIT_TYPE& type);

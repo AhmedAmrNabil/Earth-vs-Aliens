@@ -32,6 +32,7 @@ public:
 	void generateUnits();
 	void gameTick();
 	void testCode();
+	double getSoldierRatio();
 	
 };
 
