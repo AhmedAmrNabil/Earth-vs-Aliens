@@ -216,17 +216,4 @@ void LinkedQueue<T>::print()
 	}
 	cout << "]";
 }
-//void LinkedQueue<Unit*>::print()
-//{
-//	if (isEmpty())return;
-//	Node<Unit*>* ptr = frontPtr;
-//	cout << "[" << *(frontPtr->getItem());
-//	int c = 1;
-//	while (ptr->getNext() && c < 10) {
-//		ptr = ptr->getNext();
-//		cout << "," << ptr->getItem();
-//		c++;
-//	}
-//	cout << "]";
-//}
 #endif

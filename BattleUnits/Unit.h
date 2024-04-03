@@ -1,4 +1,5 @@
-#pragma once
+#ifndef UNIT_H_
+#define UNIT_H_
 #include <cmath>
 #include "../DataStructures/LinkedQueue.h"
 
@@ -34,18 +35,20 @@ public:
 	Unit(UNIT_TYPE type, int id, int joinTime, int health, int power, int attackCapacity)
 		: type(type), joinTime(joinTime), health(health), power(power), attackCapacity(attackCapacity), id(id) {
 		firstAttackedTime = -1;
+		destructionTime = -1;
 	};
 
 	virtual void attack(Game* game, int timestep) = 0;
+	bool isDead() { return health == 0; };
+	int getAttackCapacity() { return attackCapacity; };
+	int getHealth() { return health; }
+	int getId() const { return id; }
+	UNIT_TYPE getType() { return type; }
 
 	void getAttacked(Unit* enemyUnit, int timestep) {
 		int damage = (enemyUnit->power * enemyUnit->health / 100) / sqrt(this->health);
 		decrementHealth(damage, timestep);
 	};
-
-	bool isDead() { return health == 0; };
-
-	int getAttackCapacity() { return this->attackCapacity; };
 
 	void decrementHealth(int damage, int timestep) {
 		health -= damage;
@@ -56,13 +59,10 @@ public:
 		if (firstAttackedTime == -1) firstAttackedTime = timestep;
 	}
 
-	int getHealth() { return health; }
-	
-	friend ostream& operator << (ostream& out, const Unit* unit) {
-		out << unit->id;
-		return out;
-	}
-	UNIT_TYPE getType() { return type; }
+
 };
 
+ostream& operator << (ostream& out, const Unit* unit);
+
+#endif
 
