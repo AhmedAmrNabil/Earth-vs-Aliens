@@ -97,16 +97,15 @@ int AlienArmy::getSoldierCount()
 }
 
 void AlienArmy::decrementCount(Unit*& unit) {
-    UNIT_TYPE type = unit->getType();
-    switch (type) {
+    switch (unit->getType()) {
     case(AS):
-        --soldierCount;
+        if(soldierCount > 0)--soldierCount;
         break;
     case(AM):
-        --monsterCount;
+        if (monsterCount > 0)--monsterCount;
         break;
     case(AD):
-        --droneCount;
+        if (droneCount > 0)--droneCount;
         break;
     }
 }
