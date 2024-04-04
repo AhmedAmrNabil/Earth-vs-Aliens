@@ -35,10 +35,9 @@ bool Game::getAlienUnit(UNIT_TYPE type, Unit*& unit1, Unit*& unit2)
 void Game::generateUnits() {
 	int A = RNG->generator(1, 100);
 	if (A >= Prob) {
-		UNIT_TYPE type;
 		Unit* unit;
 		for (int i = 0; i < N; ++i) {
-			unit = RNG->generateEarthUnit(timestep, type);
+			unit = RNG->generateEarthUnit(timestep);
 			earthArmy->addUnit(unit);
 		}
 
@@ -46,10 +45,9 @@ void Game::generateUnits() {
 
 	A = RNG->generator(1, 100);
 	if (A >= Prob) {
-		UNIT_TYPE type;
 		Unit* unit;
 		for (int i = 0; i < N; ++i) {
-			unit = RNG->generateAlienUnit(timestep, type);
+			unit = RNG->generateAlienUnit(timestep);
 			alienArmy->addUnit(unit);
 		}
 

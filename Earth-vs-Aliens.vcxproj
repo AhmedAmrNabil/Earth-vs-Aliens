@@ -142,7 +142,7 @@
     <ClCompile Include="BattleUnits\Unit.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="randGen.cpp" />
+    <ClCompile Include="RandGen.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Armies\AlienArmy.h" />
@@ -168,7 +168,7 @@
     <ClInclude Include="DataStructures\StackADT.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Interface\UI.h" />
-    <ClInclude Include="randGen.h" />
+    <ClInclude Include="RandGen.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".gitignore" />

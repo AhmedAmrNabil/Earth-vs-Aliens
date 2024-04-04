@@ -18,7 +18,7 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="randGen.cpp">
+    <ClCompile Include="RandGen.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Armies\EarthArmy.cpp">
@@ -48,6 +48,9 @@
     <ClCompile Include="BattleUnits\Unit.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="BattleUnits\EarthTank.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Armies\EarthArmy.h">
@@ -62,7 +65,7 @@
     <ClInclude Include="Game.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="randGen.h">
+    <ClInclude Include="RandGen.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Interface\UI.h">
@@ -125,5 +128,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include=".gitignore" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="input.txt" />
   </ItemGroup>
 </Project>
