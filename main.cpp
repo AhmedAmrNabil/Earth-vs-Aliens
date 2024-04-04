@@ -15,7 +15,7 @@ char getChar() {
 #ifdef _WIN32
     buf = _getch();
 #elif __linux__
-    struct termios old = { 0 };
+    struct termios old = {0};
     fflush(stdout);
     if (tcgetattr(0, &old) < 0)
         perror("tcsetattr()");
@@ -34,22 +34,17 @@ char getChar() {
 #endif
     return buf;
 }
+
 using namespace std;
 
 int main() {
     Game G;
 
-     int number;
-     char ch;
-     bool loop = true;
-     while (loop)
-     {
-         G.gameTick();
-     	ch = getChar();
-     	if (ch == 27)
-     		loop = false;
-     }
+    int number;
+    char ch = 0;
+    while (ch != 27) {
+        G.gameTick();
+        ch = getChar();
+    }
     return 0;
 }
-
-
