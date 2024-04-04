@@ -1,18 +1,15 @@
 #ifndef EARTH_SOLDIER_H_
 #define EARTH_SOLDIER_H_
 
-#include "../Armies/Army.h"
-#include "../DataStructures/LinkedQueue.h"
 #include "Unit.h"
 
 class Game;
 class EarthSoldier : public Unit {
-public:
-	EarthSoldier(int id, int joinTime, int health, int power, int attackCapacity)
-		: Unit(ES, id, joinTime, health, power, attackCapacity) {
-	};
+   public:
+    EarthSoldier(int id, int joinTime, int health, int power, int attackCapacity)
+        : Unit(ES, id, joinTime, health, power, attackCapacity){};
 
-	void attack(Game* game, int timestep) override;
+    void attack(Game* game, int timestep) override;
 };
 
 #endif
