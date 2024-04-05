@@ -7,11 +7,8 @@ using namespace std;
 
 
 class Unit;
-class EarthGunner;
-class EarthTank;
-class EarthSoldier;
 class EarthArmy : public Army {
-    priQueue<EarthGunner*> earthGunnery;
+    priQueue<Unit*> earthGunnery;
     LinkedListStack<Unit*> earthTanks;
     LinkedQueue<Unit*> earthSoldiers;
     int tankCount;
