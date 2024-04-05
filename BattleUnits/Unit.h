@@ -24,42 +24,23 @@ class Unit {
     int attackCapacity;
 
    protected:
-    LinkedQueue<Unit*> attackedUnits;
-    void clearAttacked() {
-        Unit* tmp;
-        while (attackedUnits.dequeue(tmp))
-            ;
-    };
+    LinkedQueue<int> attackedIDs;
+    void clearAttacked();
+    int priority;
     int health;
     int power;
 
    public:
-    Unit(UNIT_TYPE type, int id, int joinTime, int health, int power, int attackCapacity)
-        : type(type), joinTime(joinTime), health(health), power(power), attackCapacity(attackCapacity), id(id) {
-        firstAttackedTime = -1;
-        destructionTime = -1;
-    };
-
+    Unit(UNIT_TYPE type, int id, int joinTime, int health, int power, int attackCapacity);
     virtual void attack(Game* game, int timestep) = 0;
-    bool isDead() { return health == 0; };
-    int getAttackCapacity() { return attackCapacity; };
-    int getHealth() { return health; };
-    int getId() const { return id; };
-    UNIT_TYPE getType() { return type; };
-
-    void getAttacked(Unit* enemyUnit, int timestep) {
-        int damage = (enemyUnit->power * enemyUnit->health / 100) / sqrt(this->health);
-        decrementHealth(damage, timestep);
-    };
-
-    void decrementHealth(int damage, int timestep) {
-        health -= damage;
-        if (health <= 0) {
-            health = 0;
-            destructionTime = timestep;
-        }
-        if (firstAttackedTime == -1) firstAttackedTime = timestep;
-    };
+    bool isDead();
+    int getAttackCapacity();
+    int getHealth();
+    int getId() const;
+    UNIT_TYPE getType();
+    void getAttacked(Unit* enemyUnit, int timestep);
+    void decrementHealth(int damage, int timestep);
+    int getPriority() const;
 };
 
 ostream& operator<<(ostream& out, const Unit* unit);

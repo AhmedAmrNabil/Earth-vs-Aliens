@@ -10,7 +10,7 @@ EXECUTABLE=./bin/main
 all: $(SOURCES) $(EXECUTABLE)
 
 $(EXECUTABLE): $(OBJECTS)
-	@mkdir ./bin
+	@mkdir -p ./bin
 	$(CC) $(LDFLAGS) $(OBJECTS) -o $@
 
 $(BINDIR)/%.o: $(SRCDIR)/%.cpp

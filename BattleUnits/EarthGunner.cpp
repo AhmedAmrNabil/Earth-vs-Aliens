@@ -2,37 +2,70 @@
 
 #include "../Game.h"
 
+EarthGunner::EarthGunner(int id, int joinTime, int health, int power, int attackCapacity)
+    : Unit(EG, id, joinTime, health, power, attackCapacity) {
+    priority = power * sqrt(health);
+};
+
 void EarthGunner::attack(Game* game, int timestep) {
-    Unit* drone1;
-    Unit* drone2 = nullptr;
     clearAttacked();
-    LinkedQueue<Unit*> temp;
-    for (int i = 0; i < this->getAttackCapacity(); ++i) {
+    Unit* drone1 = nullptr;
+    Unit* drone2 = nullptr;
+    Unit* monster = nullptr;
+    Unit* tmp;
+    LinkedQueue<Unit*> tempDrone;
+    LinkedQueue<Unit*> tempMonster;
+
+    int monsterCount = this->getAttackCapacity() / 2;
+    int droneCount = this->getAttackCapacity() - monsterCount;
+    while (monsterCount > 0) {
+        if (game->getAlienUnit(AM, monster, tmp)) {
+            monster->getAttacked(this, timestep);
+            attackedIDs.enqueue(monster->getId());
+            if (monster->isDead())
+                game->addToKilled(monster);
+            else
+                tempMonster.enqueue(monster);
+        }
+        --monsterCount;
+    }
+
+    while (droneCount / 2 > 0) {
         if (game->getAlienUnit(AD, drone1, drone2)) {
             drone1->getAttacked(this, timestep);
-            attackedUnits.enqueue(drone1);
+            attackedIDs.enqueue(drone1->getId());
             if (drone1->isDead())
                 game->addToKilled(drone1);
             else
-                temp.enqueue(drone1);
+                tempDrone.enqueue(drone1);
         }
-
         if (drone2 != nullptr) {
             drone2->getAttacked(this, timestep);
-            attackedUnits.enqueue(drone2);
+            attackedIDs.enqueue(drone2->getId());
             if (drone2->isDead())
                 game->addToKilled(drone2);
             else
-                temp.enqueue(drone2);
+                tempDrone.enqueue(drone2);
+        }
+        --droneCount;
+    }
+
+    if (droneCount) {
+        if (game->getAlienUnit(AD, drone1, drone2)) {
+            drone1->getAttacked(this, timestep);
+            if (drone1->isDead())
+                game->addToKilled(drone1);
+            else
+                tempDrone.enqueue(drone1);
         }
     }
-    while (!temp.isEmpty()) 
-    {
-        temp.dequeue(drone2);
-        game->addAlienUnit(drone2);
-    }
-}
 
-int EarthGunner::getPriority() {
-    return power * sqrt(health);
+    while (!tempDrone.isEmpty()) {
+        tempDrone.dequeue(drone1);
+        game->addAlienUnit(drone1);
+    }
+    while (!tempMonster.isEmpty()) {
+        tempMonster.dequeue(monster);
+        game->addAlienUnit(monster);
+    }
 }

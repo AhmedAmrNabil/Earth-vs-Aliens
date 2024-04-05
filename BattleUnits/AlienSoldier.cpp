@@ -2,22 +2,29 @@
 
 #include "../Game.h"
 
+AlienSoldier::AlienSoldier(int id, int joinTime, int health, int power, int attackCapacity)
+    : Unit(AS, id, joinTime, health, power, attackCapacity) {
+    priority = 1;
+}
+
 void AlienSoldier::attack(Game* game, int timestep) {
-    Unit* enemyUnit;
     clearAttacked();
+    Unit* enemyUnit;
     LinkedQueue<Unit*> temp;
-    for (int i = 0; i < this->getAttackCapacity(); ++i) {
+    int soldierCount = this->getAttackCapacity();
+    while (soldierCount) {
         if (game->getEarthUnit(ES, enemyUnit)) {
             enemyUnit->getAttacked(this, timestep);
-            attackedUnits.enqueue(enemyUnit);
+            attackedIDs.enqueue(enemyUnit->getId());
             if (enemyUnit->isDead())
                 game->addToKilled(enemyUnit);
             else
                 temp.enqueue(enemyUnit);
         }
+        --soldierCount;
     }
-    while (!temp.isEmpty())
-    {
+
+    while (!temp.isEmpty()) {
         temp.dequeue(enemyUnit);
         game->addEarthUnit(enemyUnit);
     }
