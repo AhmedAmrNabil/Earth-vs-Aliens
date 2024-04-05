@@ -1,5 +1,7 @@
 #ifndef UNIT_H_
 #define UNIT_H_
+#include <cmath>
+
 #include "../DataStructures/LinkedQueue.h"
 
 enum UNIT_TYPE {
