@@ -39,8 +39,6 @@ using namespace std;
 
 int main() {
     Game G;
-
-    int number;
     char ch = 0;
     while (ch != 27) {
         G.gameTick();
