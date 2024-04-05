@@ -16,18 +16,18 @@ class Game
 	int N;
 	int Prob;
 	LinkedQueue <Unit*> killedUnits;
-	LinkedQueue <Unit*> tempUnits;
+	//LinkedQueue <Unit*> tempUnits;
 	int killedCount;
 public:
 	Game();
 	void print();
 	bool getEarthUnit(UNIT_TYPE type, Unit*& unit);
 	bool getAlienUnit(UNIT_TYPE type, Unit*& unit1, Unit*& unit2);
-	//bool addEarthUnit(Unit*& unit);
-	//bool addAlienUnit(Unit*& unit);
+	bool addEarthUnit(Unit*& unit);
+	bool addAlienUnit(Unit*& unit);
 	void addToKilled(Unit*& unit);
-	void addToTemp(Unit*& unit);
-	void clearTemp();
+	/*void addToTemp(Unit*& unit);
+	void clearTemp();*/
 	void loadInput();
 	void generateUnits();
 	void gameTick();

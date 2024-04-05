@@ -10,8 +10,8 @@ class AlienDrone;
 class AlienSoldier;
 class AlienArmy : public Army {
     ArrayMonster alienMonsters;
-    LinkedDeque<AlienDrone*> alienDrones;
-    LinkedQueue<AlienSoldier*> alienSoldiers;
+    LinkedDeque<Unit*> alienDrones;
+    LinkedQueue<Unit*> alienSoldiers;
     int monsterCount;
     int soldierCount;
     int droneCount;

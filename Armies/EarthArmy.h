@@ -12,8 +12,8 @@ class EarthTank;
 class EarthSoldier;
 class EarthArmy : public Army {
     priQueue<EarthGunner*> earthGunnery;
-    LinkedListStack<EarthTank*> earthTanks;
-    LinkedQueue<EarthSoldier*> earthSoldiers;
+    LinkedListStack<Unit*> earthTanks;
+    LinkedQueue<Unit*> earthSoldiers;
     int tankCount;
     int gunnerCount;
     int soldierCount;

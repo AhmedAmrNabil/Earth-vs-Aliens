@@ -5,7 +5,9 @@ void EarthTank::attack(Game* game, int timestep)
 	Unit* monster;
 	Unit* soldier;
 	Unit* tmp;
-	bool monstersOnly = true;
+	bool monstersOnly = true;  
+	LinkedQueue<Unit*> temp;
+	ArrayMonster tmpMonsters;
 	if (game->getSoldierRatio() < 30) monstersOnly = false;
 	clearAttacked();
 	for (int i = 0; i < this->getAttackCapacity(); ++i) {
@@ -16,7 +18,7 @@ void EarthTank::attack(Game* game, int timestep)
 			if (monster->isDead())
 				game->addToKilled(monster);
 			else
-				game->addToTemp(monster);
+				tmpMonsters.insert(monster);
 		}
 		if (game->getSoldierRatio() > 80) monstersOnly = true;
 		if (!monstersOnly) {
@@ -27,8 +29,18 @@ void EarthTank::attack(Game* game, int timestep)
 				if (soldier->isDead())
 					game->addToKilled(soldier);
 				else
-					game->addToTemp(monster);
+					temp.enqueue(soldier);
 			}
 		}
+	}
+	while (!temp.isEmpty())
+	{
+		temp.dequeue(soldier);
+		game->addAlienUnit(soldier);
+	}
+	while (!tmpMonsters.isEmpty())
+	{
+		tmpMonsters.pick(monster);
+		game->addAlienUnit(monster);
 	}
 }

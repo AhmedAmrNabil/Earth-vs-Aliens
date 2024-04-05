@@ -32,6 +32,16 @@ bool Game::getAlienUnit(UNIT_TYPE type, Unit*& unit1, Unit*& unit2)
 	return alienArmy->getUnit(type, unit1, unit2);
 }
 
+bool Game::addEarthUnit(Unit*& unit)
+{
+	return (earthArmy->addUnit(unit));
+}
+
+bool Game::addAlienUnit(Unit*& unit)
+{
+	return (alienArmy->addUnit(unit));
+}
+
 void Game::generateUnits() {
 	int A = RNG->generator(1, 100);
 	if (A >= Prob) {
@@ -72,20 +82,20 @@ void Game::addToKilled(Unit*& unit)
 	killedCount++;
 }
 
-void Game::addToTemp(Unit*& unit)
-{
-	tempUnits.enqueue(unit);
-}
-
-void Game::clearTemp() {
-	Unit* tmp;
-	while (tempUnits.dequeue(tmp)) {
-		if (tmp->getType() > 2)
-			alienArmy->addUnit(tmp);
-		else
-			earthArmy->addUnit(tmp);
-	}
-}
+//void Game::addToTemp(Unit*& unit)
+//{
+//	tempUnits.enqueue(unit);
+//}
+//
+//void Game::clearTemp() {
+//	Unit* tmp;
+//	while (tempUnits.dequeue(tmp)) {
+//		if (tmp->getType() > 2)
+//			alienArmy->addUnit(tmp);
+//		else
+//			earthArmy->addUnit(tmp);
+//	}
+//}
 
 void Game::loadInput()
 {
@@ -132,13 +142,13 @@ void Game::testCode() {
 		}
 	}
 	else if (X < 40) {
-		Unit* AS1[6];
+		/*Unit* AS1[6];
 		AS1[5] = 0;
 		for (int i = 0; i < 4; i++) {
-			if (alienArmy->getUnit(AS, AS1[i], AS1[5]))
+			if (alienArmy->getUnit(AS, AS1[i], AS1[5]));
 				addToTemp(AS1[i]);
 		}
-		clearTemp();
+		clearTemp();*/
 	}
 	else if (X < 50) {
 		Unit* AM1;
