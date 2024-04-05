@@ -8,7 +8,7 @@
 class ArrayMonster
 {
 private:
-	AlienMonster* arrayMonster[1000];
+	Unit* arrayMonster[1000];
 	int monsterCount;
 public:
 	ArrayMonster() :arrayMonster() {
@@ -24,7 +24,7 @@ public:
 		return (monsterCount == 1000);
 	}
 
-	bool insert(AlienMonster* a1) {
+	bool insert(Unit* a1) {
 		if (!isFull()) {
 			arrayMonster[monsterCount++] = a1;
 			return true;
@@ -32,7 +32,7 @@ public:
 		return false;
 	}
 
-	bool pick(AlienMonster*& AM) {
+	bool pick(Unit*& AM) {
 		if (!isEmpty()) {
 			int random = rand() % monsterCount;
 			AM = arrayMonster[random];

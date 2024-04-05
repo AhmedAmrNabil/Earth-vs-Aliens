@@ -10,18 +10,18 @@ bool EarthArmy::addUnit(Unit* unit) {
 	switch (type) {
 	case ES:
 	{
-		EarthSoldier* S1 = dynamic_cast<EarthSoldier*>(unit);
-		if (S1) {
-			earthSoldiers.enqueue(S1);
+		//EarthSoldier* S1 = dynamic_cast<EarthSoldier*>(unit);
+		if (unit) {
+			earthSoldiers.enqueue(unit);
 			soldierCount++;
 		}
 		break;
 	}
 	case ET:
 	{
-		EarthTank* T1 = dynamic_cast<EarthTank*>(unit);
-		if (T1) {
-			earthTanks.push(T1);
+		//EarthTank* T1 = dynamic_cast<EarthTank*>(unit);
+		if (unit) {
+			earthTanks.push(unit);
 			tankCount++;
 		}
 		break;
@@ -44,9 +44,10 @@ bool EarthArmy::getUnit(UNIT_TYPE type, Unit*& unit, Unit*& unit2) {
 	case (ES):
 	{
 		if (earthSoldiers.isEmpty()) return false;
-		EarthSoldier* s1;
+		Unit* s1;
 		earthSoldiers.dequeue(s1);
-		unit = dynamic_cast<Unit*>(s1);
+		//unit = dynamic_cast<Unit*>(s1);
+		unit = s1;
 		break;
 	}
 	case (EG):
@@ -61,9 +62,10 @@ bool EarthArmy::getUnit(UNIT_TYPE type, Unit*& unit, Unit*& unit2) {
 	case (ET):
 	{
 		if (earthTanks.isEmpty()) return false;
-		EarthTank* tank1;
+		Unit* tank1;
 		earthTanks.pop(tank1);
-		unit = dynamic_cast<Unit*>(tank1);
+		//unit = dynamic_cast<Unit*>(tank1);
+		unit = tank1;
 		break;
 	}
 	}

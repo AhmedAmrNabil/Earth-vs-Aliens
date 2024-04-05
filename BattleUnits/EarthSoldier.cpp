@@ -4,16 +4,21 @@
 
 void EarthSoldier::attack(Game* game, int timestep) {
     Unit* enemyUnit;
-    Unit* tmp;
     clearAttacked();
+    LinkedQueue<Unit*> temp;
     for (int i = 0; i < this->getAttackCapacity(); ++i) {
-        if (game->getAlienUnit(AS, enemyUnit, tmp)) {
+        if (game->getEarthUnit(AS, enemyUnit)) {
             enemyUnit->getAttacked(this, timestep);
             attackedUnits.enqueue(enemyUnit);
             if (enemyUnit->isDead())
                 game->addToKilled(enemyUnit);
             else
-                game->addToTemp(enemyUnit);
+                temp.enqueue(enemyUnit);
         }
+    }
+    while (!temp.isEmpty())
+    {
+        temp.dequeue(enemyUnit);
+        game->addAlienUnit(enemyUnit);
     }
 }

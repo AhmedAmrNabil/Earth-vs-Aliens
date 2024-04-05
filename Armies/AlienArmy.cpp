@@ -9,9 +9,9 @@ bool AlienArmy::addUnit(Unit* unit) {
     {
         case AS:
         {
-            AlienSoldier* S1 = dynamic_cast<AlienSoldier*>(unit);
-            if (S1) {
-                alienSoldiers.enqueue(S1);
+            //AlienSoldier* S1 = dynamic_cast<AlienSoldier*>(unit);
+            if (unit) {
+                alienSoldiers.enqueue(unit);
                 soldierCount++;
             }
         } break;
@@ -19,18 +19,18 @@ bool AlienArmy::addUnit(Unit* unit) {
         case AM:
         {
 
-            AlienMonster* A1 = dynamic_cast<AlienMonster*>(unit);
-            if (A1) {
-                alienMonsters.insert(A1);
+            //AlienMonster* A1 = dynamic_cast<AlienMonster*>(unit);
+            if (unit) {
+                alienMonsters.insert(unit);
                 monsterCount++;
             }
             break;
         }
         case AD:
         {
-            AlienDrone* A2 = dynamic_cast<AlienDrone*>(unit);
-            if (A2) {
-                alienDrones.enqueue(A2);
+            //AlienDrone* A2 = dynamic_cast<AlienDrone*>(unit);
+            if (unit) {
+                alienDrones.enqueue(unit);
                 droneCount++;
             }
             break;
@@ -47,30 +47,34 @@ bool AlienArmy::getUnit(UNIT_TYPE type, Unit*& unit, Unit*& unit2)
         case AS:
         {
             if (alienSoldiers.isEmpty())return false;
-            AlienSoldier* S1 = nullptr;
+            Unit* S1 = nullptr;
             alienSoldiers.dequeue(S1);
-            unit = dynamic_cast<Unit*>(S1);
+            //unit = dynamic_cast<Unit*>(S1);
+            unit = S1;
             unit2 = nullptr;
             break;
         }
         case AM:
         {
             if (alienMonsters.isEmpty())return false;
-            AlienMonster* AM = nullptr;
+            Unit* AM = nullptr;
             alienMonsters.pick(AM);
-            unit = dynamic_cast<Unit*>(AM);
+            //unit = dynamic_cast<Unit*>(AM);
+            unit = AM;
             unit2 = nullptr;
             break;
         }
         case AD:
         {
             if (alienDrones.isEmpty())return false;
-            AlienDrone* AD1 = nullptr;
-            AlienDrone* AD2 = nullptr;
+            Unit* AD1 = nullptr;
+            Unit* AD2 = nullptr;
             alienDrones.dequeue(AD1);
             alienDrones.dequeueRear(AD2);
-            unit = dynamic_cast<Unit*>(AD1);
-            unit2 = dynamic_cast<Unit*>(AD2); 
+            /*unit = dynamic_cast<Unit*>(AD1);
+            unit2 = dynamic_cast<Unit*>(AD2); */
+            unit = AD1;
+            unit2 = AD2;
             break;
         }
     }
