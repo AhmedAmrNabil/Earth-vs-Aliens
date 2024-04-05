@@ -11,7 +11,8 @@ bool AlienArmy::addUnit(Unit* unit) {
                 inserted = alienSoldiers.enqueue(unit);
                 ++soldierCount;
             }
-        } break;
+            break;
+        }
 
         case AM: {
             if (unit) {
