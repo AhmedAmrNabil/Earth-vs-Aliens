@@ -7,10 +7,13 @@ SOURCES=$(shell find $(SRCDIR) -name '*.cpp')
 OBJECTS=$(SOURCES:$(SRCDIR)/%.cpp=$(BINDIR)/%.o)
 EXECUTABLE=./bin/main
 
+run: clean all
+	$(EXECUTABLE)
+
 all: $(SOURCES) $(EXECUTABLE)
 
 $(EXECUTABLE): $(OBJECTS)
-	@mkdir ./bin
+	@mkdir -p ./bin
 	$(CC) $(LDFLAGS) $(OBJECTS) -o $@
 
 $(BINDIR)/%.o: $(SRCDIR)/%.cpp

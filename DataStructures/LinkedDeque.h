@@ -27,16 +27,26 @@ class LinkedDeque : public QueueADT<T> {
             tail = newItem;
         else
             newItem->setNext(tail->getNext());
-
         tail->setNext(newItem);
         tail = newItem;
         return true;
     }
 
-    bool dequeue(T& newEntry) override {
+    bool enqeueFront(const T& newEntry) {
+        DNode<T>* newItem = new DNode<T>(newEntry);
+        if (newItem == nullptr) return false;
+        if (tail == nullptr)
+            tail = newItem;
+        else
+            newItem->setNext(tail->getNext());
+        tail->setNext(newItem);
+        return true;
+    }
+
+    bool dequeue(T& backEntry) override {
         if (isEmpty()) return false;
         DNode<T>* item = tail->getNext();
-        newEntry = item->getItem();
+        backEntry = item->getItem();
 
         if (item == tail)
             tail = nullptr;
@@ -74,11 +84,9 @@ class LinkedDeque : public QueueADT<T> {
         DNode<T>* ptr = tail->getNext();
         cout << "[" << ptr->getItem();
         if (ptr != tail) {
-            int c = 0;
-            while (ptr->getNext() != tail && c < 8) {
+            while (ptr->getNext() != tail) {
                 ptr = ptr->getNext();
                 cout << ", " << ptr->getItem();
-                ++c;
             }
             cout << ", " << tail->getItem();
         }
