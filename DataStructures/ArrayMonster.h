@@ -45,7 +45,7 @@ public:
 	void print() {
 		if (isEmpty()) return;
 		cout << "[" << arrayMonster[0];
-		for (int i = 1; i < monsterCount && i < 10; i++) {
+		for (int i = 1; i < monsterCount; i++) {
 			cout << ", " << arrayMonster[i];
 		}
 		cout << "]";

@@ -84,11 +84,9 @@ class LinkedDeque : public QueueADT<T> {
         DNode<T>* ptr = tail->getNext();
         cout << "[" << ptr->getItem();
         if (ptr != tail) {
-            int c = 0;
-            while (ptr->getNext() != tail && c < 8) {
+            while (ptr->getNext() != tail) {
                 ptr = ptr->getNext();
                 cout << ", " << ptr->getItem();
-                ++c;
             }
             cout << ", " << tail->getItem();
         }

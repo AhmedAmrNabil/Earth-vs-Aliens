@@ -62,11 +62,9 @@ public:
 		if (isEmpty())return;
 		Node<T>* ptr = top;
 		cout << "[" << top->getItem();
-		int c = 1;
-		while (ptr->getNext() && c < 10) {
+		while (ptr->getNext()) {
 			ptr = ptr->getNext();
 			cout << "," << ptr->getItem();
-			c++;
 		}
 		cout << "]";
 	}

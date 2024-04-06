@@ -16,7 +16,6 @@ class Game
 	int N;
 	int Prob;
 	LinkedQueue <Unit*> killedUnits;
-	//LinkedQueue <Unit*> tempUnits;
 	int killedCount;
 public:
 	Game();
