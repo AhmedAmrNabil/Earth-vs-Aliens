@@ -7,6 +7,9 @@ SOURCES=$(shell find $(SRCDIR) -name '*.cpp')
 OBJECTS=$(SOURCES:$(SRCDIR)/%.cpp=$(BINDIR)/%.o)
 EXECUTABLE=./bin/main
 
+run: all
+	$(EXECUTABLE)
+
 all: $(SOURCES) $(EXECUTABLE)
 
 $(EXECUTABLE): $(OBJECTS)

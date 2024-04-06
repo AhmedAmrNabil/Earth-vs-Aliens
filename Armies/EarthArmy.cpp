@@ -3,28 +3,26 @@
 #include "../BattleUnits/Unit.h"
 
 bool EarthArmy::addUnit(Unit* unit) {
+    if(unit == nullptr)return false;
     UNIT_TYPE type = unit->getType();
 	bool inserted = false;
     switch (type) {
         case ES: {
-            if (unit) {
                 inserted = earthSoldiers.enqueue(unit);
-                ++soldierCount;
-            }
+                if(inserted)
+                    ++soldierCount;
             break;
         }
         case ET: {
-            if (unit) {
                 inserted = earthTanks.push(unit);
-                ++tankCount;
-            }
+                if(inserted)
+                    ++tankCount;
             break;
         }
         case EG: {
-            if (unit) {
                 inserted = earthGunnery.enqueue(unit, unit->getPriority());
-                ++gunnerCount;
-            }
+                if(inserted)
+                    ++gunnerCount;
             break;
         }
     }
@@ -32,27 +30,26 @@ bool EarthArmy::addUnit(Unit* unit) {
 }
 
 bool EarthArmy::getUnit(UNIT_TYPE type, Unit*& unit, Unit*& unit2) {
-	bool extracted = false;
     switch (type) {
         case (ES): {
             if (earthSoldiers.isEmpty()) return false;
-            extracted = earthSoldiers.dequeue(unit);
+            earthSoldiers.dequeue(unit);
             break;
         }
         case (EG): {
 			int priority;
             if (earthGunnery.isEmpty()) return false;
-			extracted = earthGunnery.dequeue(unit,priority);
+			earthGunnery.dequeue(unit,priority);
             break;
         }
         case (ET): {
             if (earthTanks.isEmpty()) return false;
-            extracted = earthTanks.pop(unit);
+            earthTanks.pop(unit);
             break;
         }
     }
     unit2 = nullptr;
-    return extracted;
+    return true;
 }
 
 void EarthArmy::print() {

@@ -3,29 +3,27 @@
 #include "../BattleUnits/Unit.h"
 
 bool AlienArmy::addUnit(Unit* unit) {
-    bool inserted = false;
+    if (unit == nullptr) return false;
     UNIT_TYPE type = unit->getType();
+    bool inserted = false;
     switch (type) {
         case AS: {
-            if (unit) {
-                inserted = alienSoldiers.enqueue(unit);
+            inserted = alienSoldiers.enqueue(unit);
+            if (inserted)
                 ++soldierCount;
-            }
             break;
         }
 
         case AM: {
-            if (unit) {
-                inserted = alienMonsters.insert(unit);
+            inserted = alienMonsters.insert(unit);
+            if (inserted)
                 ++monsterCount;
-            }
             break;
         }
         case AD: {
-            if (unit) {
-                inserted = alienDrones.enqueue(unit);
+            inserted = alienDrones.enqueue(unit);
+            if (inserted)
                 ++droneCount;
-            }
             break;
         }
     }
@@ -33,27 +31,26 @@ bool AlienArmy::addUnit(Unit* unit) {
 }
 
 bool AlienArmy::getUnit(UNIT_TYPE type, Unit*& unit, Unit*& unit2) {
-    bool extracted = false;
     unit2 = nullptr;
     switch (type) {
         case AS: {
             if (alienSoldiers.isEmpty()) return false;
-            extracted = alienSoldiers.dequeue(unit);
+            alienSoldiers.dequeue(unit);
             break;
         }
         case AM: {
             if (alienMonsters.isEmpty()) return false;
-            extracted = alienMonsters.pick(unit);
+            alienMonsters.pick(unit);
             break;
         }
         case AD: {
             if (alienDrones.isEmpty()) return false;
-            extracted = alienDrones.dequeue(unit);
+            alienDrones.dequeue(unit);
             alienDrones.dequeueRear(unit2);
             break;
         }
     }
-    return extracted;
+    return true;
 }
 
 void AlienArmy::print() {
