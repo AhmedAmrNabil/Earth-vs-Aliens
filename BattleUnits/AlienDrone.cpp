@@ -16,6 +16,7 @@ void AlienDrone::attack(Game* game, int timestep) {
     for (int i = 0; i < this->getAttackCapacity() / 2; ++i) {
         if (game->getEarthUnit(ET, tank)) {
             tank->getAttacked(this, timestep);
+            attackedIDs.enqueue(tank->getId());
             if (tank->isDead())
                 game->addToKilled(tank);
             else
@@ -23,6 +24,7 @@ void AlienDrone::attack(Game* game, int timestep) {
         }
         if (game->getEarthUnit(EG, gunnery)) {
             gunnery->getAttacked(this, timestep);
+            attackedIDs.enqueue(gunnery->getId());
             if (gunnery->isDead())
                 game->addToKilled(gunnery);
             else
@@ -32,6 +34,7 @@ void AlienDrone::attack(Game* game, int timestep) {
     if (this->getAttackCapacity() % 2 == 1) {
         if (game->getEarthUnit(ET, tank)) {
             tank->getAttacked(this, timestep);
+            attackedIDs.enqueue(tank->getId());
             if (tank->isDead())
                 game->addToKilled(tank);
             else
