@@ -23,11 +23,10 @@ void Game::print()
 
 bool Game::getEarthUnit(UNIT_TYPE type, Unit*& unit)
 {
-	Unit* tmp;
-	return earthArmy->getUnit(type, unit, tmp);
+	return earthArmy->getUnit(type, unit);
 }
 
-bool Game::getAlienUnit(UNIT_TYPE type, Unit*& unit1, bool rear = false)
+bool Game::getAlienUnit(UNIT_TYPE type, Unit*& unit1, bool rear)
 {
 	return alienArmy->getUnit(type, unit1,rear);
 }

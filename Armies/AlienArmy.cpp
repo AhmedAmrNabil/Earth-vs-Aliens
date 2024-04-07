@@ -30,7 +30,7 @@ bool AlienArmy::addUnit(Unit* unit) {
     return inserted;
 }
 
-bool AlienArmy::getUnit(UNIT_TYPE type, Unit*& unit,bool rear = false) {
+bool AlienArmy::getUnit(UNIT_TYPE type, Unit*& unit,bool rear) {
     switch (type) {
         case AS: {
             if (alienSoldiers.isEmpty()) return false;
