@@ -9,10 +9,8 @@ EarthGunner::EarthGunner(int id, int joinTime, int health, int power, int attack
 
 void EarthGunner::attack(Game* game, int timestep) {
     clearAttacked();
-    Unit* drone1 = nullptr;
-    Unit* drone2 = nullptr;
+    Unit* drone = nullptr;
     Unit* monster = nullptr;
-    Unit* tmp;
     LinkedQueue<Unit*> tempDrone;
     LinkedQueue<Unit*> tempMonster;
 
@@ -20,7 +18,7 @@ void EarthGunner::attack(Game* game, int timestep) {
     int dronesCount = this->getAttackCapacity() - monsterCount;
     int dronesAttacked = 0;
     while (monsterCount > 0) {
-        if (game->getAlienUnit(AM, monster, tmp)) {
+        if (game->getAlienUnit(AM, monster)) {
             monster->getAttacked(this, timestep);
             attackedIDs.enqueue(monster->getId());
             if (monster->isDead())
@@ -32,20 +30,20 @@ void EarthGunner::attack(Game* game, int timestep) {
     }
 
     while (dronesAttacked > dronesCount) {
-        if (game->getAlienUnit(AD, drone1, dronesAttacked % 2)) {
-            drone1->getAttacked(this, timestep);
-            attackedIDs.enqueue(drone1->getId());
-            if (drone1->isDead())
-                game->addToKilled(drone1);
+        if (game->getAlienUnit(AD, drone, dronesAttacked % 2)) {
+            drone->getAttacked(this, timestep);
+            attackedIDs.enqueue(drone->getId());
+            if (drone->isDead())
+                game->addToKilled(drone);
             else
-                tempDrone.enqueue(drone1);
+                tempDrone.enqueue(drone);
         }
         ++dronesAttacked;
     }
 
     while (!tempDrone.isEmpty()) {
-        tempDrone.dequeue(drone1);
-        game->addAlienUnit(drone1);
+        tempDrone.dequeue(drone);
+        game->addAlienUnit(drone);
     }
     while (!tempMonster.isEmpty()) {
         tempMonster.dequeue(monster);
