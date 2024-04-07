@@ -29,7 +29,7 @@ void EarthGunner::attack(Game* game, int timestep) {
         --monsterCount;
     }
 
-    while (dronesAttacked > dronesCount) {
+    while (dronesAttacked < dronesCount) {
         if (game->getAlienUnit(AD, drone, dronesAttacked % 2)) {
             drone->getAttacked(this, timestep);
             attackedIDs.enqueue(drone->getId());
