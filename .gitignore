@@ -4,3 +4,4 @@ bin/
 x64/
 Earth-vs-Aliens/
 build/
+.vscode/
