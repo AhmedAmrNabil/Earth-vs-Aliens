@@ -27,9 +27,9 @@ bool Game::getEarthUnit(UNIT_TYPE type, Unit*& unit)
 	return earthArmy->getUnit(type, unit, tmp);
 }
 
-bool Game::getAlienUnit(UNIT_TYPE type, Unit*& unit1, Unit*& unit2)
+bool Game::getAlienUnit(UNIT_TYPE type, Unit*& unit1, bool rear = false)
 {
-	return alienArmy->getUnit(type, unit1, unit2);
+	return alienArmy->getUnit(type, unit1,rear);
 }
 
 bool Game::addEarthUnit(Unit*& unit)

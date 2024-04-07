@@ -10,11 +10,10 @@ EarthSoldier::EarthSoldier(int id, int joinTime, int health, int power, int atta
 void EarthSoldier::attack(Game* game, int timestep) {
     clearAttacked();
     Unit* enemyUnit;
-    Unit* tmpUnit;
     LinkedQueue<Unit*> temp;
     int soldierCount = this->getAttackCapacity();
     while (soldierCount) {
-        if (game->getAlienUnit(AS, enemyUnit, tmpUnit)) {
+        if (game->getAlienUnit(AS, enemyUnit)) {
             enemyUnit->getAttacked(this, timestep);
             attackedIDs.enqueue(enemyUnit->getId());
             if (enemyUnit->isDead())

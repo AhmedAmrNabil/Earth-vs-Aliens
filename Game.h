@@ -21,7 +21,7 @@ public:
 	Game();
 	void print();
 	bool getEarthUnit(UNIT_TYPE type, Unit*& unit);
-	bool getAlienUnit(UNIT_TYPE type, Unit*& unit1, Unit*& unit2);
+	bool getAlienUnit(UNIT_TYPE type, Unit*& unit1, bool rear = false);
 	bool addEarthUnit(Unit*& unit);
 	bool addAlienUnit(Unit*& unit);
 	void addToKilled(Unit*& unit);
