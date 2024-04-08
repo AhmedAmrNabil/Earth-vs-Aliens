@@ -29,7 +29,7 @@ bool EarthArmy::addUnit(Unit* unit) {
     return inserted;
 }
 
-bool EarthArmy::getUnit(UNIT_TYPE type, Unit*& unit, Unit*& unit2) {
+bool EarthArmy::getUnit(UNIT_TYPE type, Unit*& unit,bool rear) {
     switch (type) {
         case (ES): {
             if (earthSoldiers.isEmpty()) return false;
@@ -48,7 +48,6 @@ bool EarthArmy::getUnit(UNIT_TYPE type, Unit*& unit, Unit*& unit2) {
             break;
         }
     }
-    unit2 = nullptr;
     return true;
 }
 

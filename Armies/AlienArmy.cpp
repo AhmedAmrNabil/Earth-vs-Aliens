@@ -30,8 +30,7 @@ bool AlienArmy::addUnit(Unit* unit) {
     return inserted;
 }
 
-bool AlienArmy::getUnit(UNIT_TYPE type, Unit*& unit, Unit*& unit2) {
-    unit2 = nullptr;
+bool AlienArmy::getUnit(UNIT_TYPE type, Unit*& unit,bool rear) {
     switch (type) {
         case AS: {
             if (alienSoldiers.isEmpty()) return false;
@@ -45,8 +44,10 @@ bool AlienArmy::getUnit(UNIT_TYPE type, Unit*& unit, Unit*& unit2) {
         }
         case AD: {
             if (alienDrones.isEmpty()) return false;
-            alienDrones.dequeue(unit);
-            alienDrones.dequeueRear(unit2);
+            if (rear)
+                alienDrones.dequeueRear(unit);
+            else
+                alienDrones.dequeue(unit);
             break;
         }
     }
