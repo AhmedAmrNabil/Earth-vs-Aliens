@@ -2,8 +2,8 @@
 
 #include "../Game.h"
 
-EarthSoldier::EarthSoldier(int id, int joinTime, int health, int power, int attackCapacity)
-    : Unit(ES, id, joinTime, health, power, attackCapacity) {
+EarthSoldier::EarthSoldier(int joinTime, int health, int power, int attackCapacity)
+    : Unit(ES, joinTime, health, power, attackCapacity) {
     priority = 1;
 }
 
