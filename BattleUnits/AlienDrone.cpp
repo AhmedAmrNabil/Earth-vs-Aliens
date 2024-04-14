@@ -2,8 +2,8 @@
 
 #include "../Game.h"
 
-AlienDrone::AlienDrone(int id, int joinTime, int health, int power, int attackCapacity)
-    : Unit(AD, id, joinTime, health, power, attackCapacity) {
+AlienDrone::AlienDrone(int joinTime, int health, int power, int attackCapacity)
+    : Unit(AD,joinTime, health, power, attackCapacity) {
     priority = 1;
 }
 

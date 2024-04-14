@@ -6,7 +6,7 @@
 class Game;
 class AlienSoldier : public Unit {
    public:
-    AlienSoldier(int id, int joinTime, int health, int power, int attackCapacity);
+    AlienSoldier(int joinTime, int health, int power, int attackCapacity);
     void attack(Game* game, int timestep) override;
 };
 

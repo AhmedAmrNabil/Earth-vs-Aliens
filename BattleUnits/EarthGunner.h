@@ -6,7 +6,7 @@
 class Game;
 class EarthGunner : public Unit {
    public:
-    EarthGunner(int id, int joinTime, int health, int power, int attackCapacity);
+    EarthGunner(int joinTime, int health, int power, int attackCapacity);
     void attack(Game* game, int timestep) override;
 };
 

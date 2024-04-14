@@ -73,7 +73,7 @@ void Game::gameTick() {
 
 void Game::addToKilled(Unit*& unit)
 {
-	if (unit->getType() > 2)
+	if (unit->isAlien())
 		alienArmy->decrementCount(unit);
 	else
 		earthArmy->decrementCount(unit);

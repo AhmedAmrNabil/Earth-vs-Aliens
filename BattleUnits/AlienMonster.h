@@ -8,6 +8,6 @@ class Game;
 
 class AlienMonster : public Unit {
    public:
-    AlienMonster(int id, int joinTime, int health, int power, int attackCapacity);
+    AlienMonster(int joinTime, int health, int power, int attackCapacity);
     void attack(Game* game, int timestep)override;
 };

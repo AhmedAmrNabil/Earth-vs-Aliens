@@ -14,8 +14,7 @@ class RandGen {
     int alienMinPower, alienMaxPower;
     int alienMinHealth, alienMaxHealth;
     int alienMinCapacity, alienMaxCapacity;
-    int lastEarthId;
-    int lastAlienId;
+
 
    public:
     RandGen();

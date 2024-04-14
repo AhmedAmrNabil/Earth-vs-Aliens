@@ -1,7 +1,7 @@
 #include "EarthTank.h"
 
-EarthTank::EarthTank(int id, int joinTime, int health, int power, int attackCapacity)
-    : Unit(ET, id, joinTime, health, power, attackCapacity) {
+EarthTank::EarthTank(int joinTime, int health, int power, int attackCapacity)
+    : Unit(ET, joinTime, health, power, attackCapacity) {
     priority = 1;
 }
 void EarthTank::attack(Game* game, int timestep) {

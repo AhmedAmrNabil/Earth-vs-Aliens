@@ -9,8 +9,7 @@
 
 RandGen::RandGen() {
     srand(time(0));
-    lastAlienId = 2000;
-    lastEarthId = 1;
+
 }
 
 int RandGen::generator(int begin, int end) {
@@ -25,11 +24,11 @@ Unit* RandGen::generateEarthUnit(int timestep) {
     int capacity = generator(earthMinCapacity, earthMaxCapacity);
     int B = generator(1, 100);
     if (B <= percentES)
-        unit = new EarthSoldier(lastEarthId++, timestep, health, power, capacity);
+        unit = new EarthSoldier(timestep, health, power, capacity);
     else if (B <= percentES + percentET)
-        unit = new EarthTank(lastEarthId++, timestep, health, power, capacity);
+        unit = new EarthTank(timestep, health, power, capacity);
     else
-        unit = new EarthGunner(lastEarthId++, timestep, health, power, capacity);
+        unit = new EarthGunner(timestep, health, power, capacity);
 
     return unit;
 }
@@ -41,11 +40,11 @@ Unit* RandGen::generateAlienUnit(int timestep) {
     int capacity = generator(alienMinCapacity, alienMaxCapacity);
     int B = generator(1, 100);
     if (B <= percentAS)
-        unit = new AlienSoldier(lastAlienId++, timestep, health, power, capacity);
+        unit = new AlienSoldier(timestep, health, power, capacity);
     else if (B <= percentAS + percentAM)
-        unit = new AlienMonster(lastAlienId++, timestep, health, power, capacity);
+        unit = new AlienMonster(timestep, health, power, capacity);
     else
-        unit = new AlienDrone(lastAlienId++, timestep, health, power, capacity);
+        unit = new AlienDrone(timestep, health, power, capacity);
 
     return unit;
 }

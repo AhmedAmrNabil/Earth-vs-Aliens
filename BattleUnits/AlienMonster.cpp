@@ -2,8 +2,8 @@
 
 #include "../Game.h"
 
-AlienMonster::AlienMonster(int id, int joinTime, int health, int power, int attackCapacity)
-    : Unit(AM, id, joinTime, health, power, attackCapacity) {
+AlienMonster::AlienMonster(int joinTime, int health, int power, int attackCapacity)
+    : Unit(AM, joinTime, health, power, attackCapacity) {
     priority = 1;
 }
 

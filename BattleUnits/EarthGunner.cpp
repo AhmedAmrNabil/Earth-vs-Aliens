@@ -2,8 +2,8 @@
 
 #include "../Game.h"
 
-EarthGunner::EarthGunner(int id, int joinTime, int health, int power, int attackCapacity)
-    : Unit(EG, id, joinTime, health, power, attackCapacity) {
+EarthGunner::EarthGunner(int joinTime, int health, int power, int attackCapacity)
+    : Unit(EG, joinTime, health, power, attackCapacity) {
     priority = power * sqrt(health);
 };
 
