@@ -123,14 +123,18 @@ void Game::testCode() {
 	if (X > 0 && X < 10) {
 		Unit* S1;
 		Unit* S2 = nullptr;
-		if (earthArmy->getUnit(ES, S1, S2))
+		if (earthArmy->getUnit(ES, S1, S2)) {
 			earthArmy->addUnit(S1);
+			cout << "An Earth Soldier was Picked and inserted back to the original list\n";
+		}
 	}
 	else if (X < 20) {
 		Unit* ET1;
 		Unit* ET2 = nullptr;
-		if (earthArmy->getUnit(ET, ET1, ET2))
+		if (earthArmy->getUnit(ET, ET1, ET2)) {
 			addToKilled(ET1);
+			cout << "An Earth Soldier was Picked and added to the killed list\n";
+		}
 	}
 	else if (X < 30) {
 		Unit* EG1;
@@ -138,35 +142,55 @@ void Game::testCode() {
 		if (earthArmy->getUnit(EG, EG1, EG2)) {
 			EG1->decrementHealth(EG1->getHealth() / 2, timestep);
 			earthArmy->addUnit(EG1);
+			cout << "An Earth Gunnery was Picked, decremented half its health and inserted back to the original list\n";
 		}
 	}
 	else if (X < 40) {
-		/*Unit* AS1[6];
+		Unit* AS1[6];
 		AS1[5] = 0;
+		int count = 0;
+		LinkedQueue<Unit*> temp;
 		for (int i = 0; i < 4; i++) {
-			if (alienArmy->getUnit(AS, AS1[i], AS1[5]));
-				addToTemp(AS1[i]);
+			if (alienArmy->getUnit(AS, AS1[i], AS1[5])) {
+				count++;
+				AS1[i]->decrementHealth(AS1[i]->getHealth() / 2, timestep); //assuming it's decremented by half as well
+				temp.enqueue(AS1[i]);
+			}
 		}
-		clearTemp();*/
+		cout << count <<" Alien Soldiers were Picked, decremented half their health, added to a temp list then inserted back to the original list\n";
+		while (!temp.isEmpty()) {
+			Unit* value;
+			temp.dequeue(value);
+			addAlienUnit(value);
+		}
 	}
 	else if (X < 50) {
 		Unit* AM1;
 		Unit* AM2 = nullptr;
+		int count = 0;
 		for (int i = 0; i < 5; i++) {
-			if (alienArmy->getUnit(AM, AM1, AM2))
+			if (alienArmy->getUnit(AM, AM1, AM2)) {
+				count++;
 				alienArmy->addUnit(AM1);
+			}
 		}
+		cout << count <<" Alien Monsters were Picked and inserted back to the original list\n";
 	}
 	else if (X < 60) {
 		Unit* AD1;
 		Unit* AD2 = nullptr;
+		int count = 0;
 		for (int i = 0; i < 3; i++) {
 			if (alienArmy->getUnit(AD, AD1, AD2)) {
 				addToKilled(AD1);
-				if (AD2)
+				count++;
+				if (AD2) {
 					addToKilled(AD2);
+					count++;
+				}
 			}
 		}
+		cout << count <<" Alien Drones were Picked from front and rear of their list and added to the Killed list\n";
 	}
 	++timestep;
 }
@@ -174,6 +198,11 @@ void Game::testCode() {
 double Game::getSoldierRatio()
 {
 	return (double(earthArmy->getSoldierCount()) / (alienArmy->getSoldierCount())) * 100;
+}
+
+int Game::getTimestep()
+{
+	return timestep;
 }
 
 

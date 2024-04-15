@@ -32,7 +32,7 @@ public:
 	void gameTick();
 	void testCode();
 	double getSoldierRatio();
-	
+	int getTimestep();
 };
 
 #endif
