@@ -47,6 +47,18 @@ class LinkedDeque : public QueueADT<T> {
         return true;
     }
 
+    bool peekFront(T& frontEntry) {
+        if (isEmpty())return false;
+        frontEntry = tail->getNext();
+        return true;
+    }
+
+    bool peekBack(T& backEntry) {
+        if (isEmpty())return false;
+        frontEntry = tail;
+        return true;
+    }
+
     bool dequeue(T& backEntry) override {
         if (isEmpty()) return false;
         DNode<T>* item = tail->getNext();
