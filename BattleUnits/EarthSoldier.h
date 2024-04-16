@@ -3,11 +3,10 @@
 
 #include "Unit.h"
 
-class Game;
 class EarthSoldier : public Unit {
    public:
-    EarthSoldier(int joinTime, int health, int power, int attackCapacity);
-    void attack(Game* game, int timestep) override;
+    EarthSoldier(Game* game,int joinTime, int health, int power, int attackCapacity);
+    void attack() override;
 };
 
 #endif

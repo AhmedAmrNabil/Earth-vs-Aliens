@@ -22,9 +22,9 @@ bool Game::getEarthUnit(UNIT_TYPE type, Unit*& unit)
 	return earthArmy.getUnit(type, unit);
 }
 
-bool Game::getAlienUnit(UNIT_TYPE type, Unit*& unit1, bool rear)
+bool Game::getAlienUnit(UNIT_TYPE type, Unit*& unit)
 {
-	return alienArmy.getUnit(type, unit1, rear);
+	return alienArmy.getUnit(type, unit);
 }
 
 bool Game::addEarthUnit(Unit*& unit)
@@ -38,7 +38,7 @@ bool Game::addAlienUnit(Unit*& unit)
 }
 
 void Game::gameTick() {
-	RNG.generateUnits(timestep);
+	RNG.generateUnits();
 	testCode();
 	print();
 	//earthArmy->fight(game);
@@ -54,6 +54,7 @@ void Game::addToKilled(Unit*& unit)
 
 void Game::loadInput()
 {
+	int N, Prob;
 	Percentages percentages;
 	ArmyData earthData;
 	ArmyData alienData;
@@ -99,19 +100,19 @@ void Game::testCode() {
 	if (X > 0 && X < 10) {
 		Unit* S1;
 		Unit* S2 = nullptr;
-		if (earthArmy.getUnit(ES, S1, S2))
+		if (earthArmy.getUnit(ES, S1))
 			earthArmy.addUnit(S1);
 	}
 	else if (X < 20) {
 		Unit* ET1;
 		Unit* ET2 = nullptr;
-		if (earthArmy.getUnit(ET, ET1, ET2))
+		if (earthArmy.getUnit(ET, ET1))
 			addToKilled(ET1);
 	}
 	else if (X < 30) {
 		Unit* EG1;
 		Unit* EG2 = nullptr;
-		if (earthArmy.getUnit(EG, EG1, EG2)) {
+		if (earthArmy.getUnit(EG, EG1)) {
 			EG1->decrementHealth(EG1->getHealth() / 2, timestep);
 			earthArmy.addUnit(EG1);
 		}
@@ -129,7 +130,7 @@ void Game::testCode() {
 		Unit* AM1;
 		Unit* AM2 = nullptr;
 		for (int i = 0; i < 5; i++) {
-			if (alienArmy.getUnit(AM, AM1, AM2))
+			if (alienArmy.getUnit(AM, AM1))
 				alienArmy.addUnit(AM1);
 		}
 	}
@@ -137,7 +138,7 @@ void Game::testCode() {
 		Unit* AD1;
 		Unit* AD2 = nullptr;
 		for (int i = 0; i < 3; i++) {
-			if (alienArmy.getUnit(AD, AD1, AD2)) {
+			if (alienArmy.getUnit(AD, AD1)) {
 				addToKilled(AD1);
 				if (AD2)
 					addToKilled(AD2);
@@ -152,6 +153,9 @@ double Game::getSoldierRatio()
 	return (double(earthArmy.getSoldierCount()) / (alienArmy.getSoldierCount())) * 100;
 }
 
+int Game::getTimestep() {
+	return timestep;
+}
 
 Game::~Game() {
 	Unit* unit;

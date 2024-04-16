@@ -30,9 +30,9 @@ class RandGen {
 public:
 	RandGen(Game* game);
 	int generator(int begin, int end);
-	Unit* generateEarthUnit(int timestep);
-	Unit* generateAlienUnit(int timestep);
-	void generateUnits(int timestep);
+	Unit* generateEarthUnit();
+	Unit* generateAlienUnit();
+	void generateUnits();
 	void setData(ArmyData earthData, ArmyData alienData,Percentages percentages, int N, int Prob);
 };
 

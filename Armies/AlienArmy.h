@@ -15,12 +15,14 @@ class AlienArmy : public Army {
 	int monsterCount;
 	int soldierCount;
 	int droneCount;
+	bool insertRear;
 public:
 	AlienArmy();
 
 	bool addUnit(Unit* unit, bool isNew = false);
-	bool getUnit(UNIT_TYPE type, Unit*& unit, bool rear = false);
+	bool getUnit(UNIT_TYPE type, Unit*& unit);
 	void print();
 	int getSoldierCount();
+	~AlienArmy();
 	//void decrementCount(Unit*& unit);
 };

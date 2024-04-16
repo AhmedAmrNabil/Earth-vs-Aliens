@@ -26,16 +26,16 @@ class Unit {
 	static int lastAlienId;
 
    protected:
+	Game* game;
 	LinkedQueue<int> attackedIDs;
 	void clearAttacked();
-	int priority;
 	int health;
 	int power;
 
 
    public:
-	Unit(UNIT_TYPE type, int joinTime, int health, int power, int attackCapacity);
-	virtual void attack(Game* game, int timestep) = 0;
+	Unit(Game* game,UNIT_TYPE type, int joinTime, int health, int power, int attackCapacity);
+	virtual void attack() = 0;
 	bool isDead();
 	int getAttackCapacity();
 	int getHealth();
@@ -43,8 +43,8 @@ class Unit {
 	UNIT_TYPE getType();
 	void getAttacked(Unit* enemyUnit, int timestep);
 	void decrementHealth(int damage, int timestep);
-	int getPriority() const;
 	bool isAlien();
+	int getDamage();
 };
 
 ostream& operator<<(ostream& out, const Unit* unit);

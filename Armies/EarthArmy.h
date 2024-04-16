@@ -17,8 +17,9 @@ class EarthArmy : public Army {
 public:
 	EarthArmy();
 	bool addUnit(Unit* unit, bool isNew = false);
-	bool getUnit(UNIT_TYPE type, Unit*& unit, bool rear = false);
+	bool getUnit(UNIT_TYPE type, Unit*& unit);
 	void print();
 	int getSoldierCount();
+	~EarthArmy();
 	//void decrementCount(Unit*& unit);
 };

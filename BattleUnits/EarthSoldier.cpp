@@ -2,12 +2,12 @@
 
 #include "../Game.h"
 
-EarthSoldier::EarthSoldier(int joinTime, int health, int power, int attackCapacity)
-    : Unit(ES, joinTime, health, power, attackCapacity) {
-    priority = 1;
+EarthSoldier::EarthSoldier(Game* game,int joinTime, int health, int power, int attackCapacity)
+    : Unit(game,ES, joinTime, health, power, attackCapacity) {
 }
 
-void EarthSoldier::attack(Game* game, int timestep) {
+void EarthSoldier::attack() {
+    int timestep = game->getTimestep();
     clearAttacked();
     Unit* enemyUnit;
     LinkedQueue<Unit*> temp;

@@ -1,13 +1,13 @@
 #include "EarthArmy.h"
-
 #include "../BattleUnits/Unit.h"
+#include <cmath>
 EarthArmy::EarthArmy() : Army() {
 	tankCount = 0;
 	gunnerCount = 0;
 	soldierCount = 0;
 }
 
-bool EarthArmy::addUnit(Unit* unit,bool isNew) {
+bool EarthArmy::addUnit(Unit* unit, bool isNew) {
 	if (unit == nullptr)return false;
 	UNIT_TYPE type = unit->getType();
 	bool inserted = false;
@@ -25,7 +25,8 @@ bool EarthArmy::addUnit(Unit* unit,bool isNew) {
 		break;
 	}
 	case EG: {
-		inserted = earthGunnery.enqueue(unit, unit->getPriority());
+		int priority = unit->getDamage() * sqrt(unit->getHealth());
+		inserted = earthGunnery.enqueue(unit, priority);
 		if (inserted && isNew)
 			++gunnerCount;
 		break;
@@ -34,7 +35,7 @@ bool EarthArmy::addUnit(Unit* unit,bool isNew) {
 	return inserted;
 }
 
-bool EarthArmy::getUnit(UNIT_TYPE type, Unit*& unit, bool rear) {
+bool EarthArmy::getUnit(UNIT_TYPE type, Unit*& unit) {
 	switch (type) {
 	case (ES): {
 		if (earthSoldiers.isEmpty()) return false;
@@ -73,6 +74,13 @@ int EarthArmy::getSoldierCount() {
 	return soldierCount;
 }
 
+EarthArmy::~EarthArmy() {
+	Unit* unit;
+	int pri;
+	while (earthSoldiers.dequeue(unit))delete unit;
+	while (earthTanks.pop(unit))delete unit;
+	while (earthGunnery.dequeue(unit, pri))delete unit;
+}
 //void EarthArmy::decrementCount(Unit*& unit) {
 //	if (unit == nullptr)return;
 //	switch (unit->getType()) {

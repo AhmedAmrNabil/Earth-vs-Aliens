@@ -6,6 +6,7 @@ AlienArmy::AlienArmy() {
 	monsterCount = 0;
 	droneCount = 0;
 	soldierCount = 0;
+	insertRear = false;
 }
 
 
@@ -28,16 +29,21 @@ bool AlienArmy::addUnit(Unit* unit, bool isNew) {
 		break;
 	}
 	case AD: {
-		inserted = alienDrones.enqueue(unit);
-		if (inserted && isNew)
+		if (insertRear)
+			inserted = alienDrones.enqueue(unit);
+		else
+			inserted = alienDrones.enqeueFront(unit);
+		if (inserted && isNew) {
+			insertRear = !insertRear;
 			++droneCount;
+		}
 		break;
 	}
 	}
 	return inserted;
 }
 
-bool AlienArmy::getUnit(UNIT_TYPE type, Unit*& unit, bool rear) {
+bool AlienArmy::getUnit(UNIT_TYPE type, Unit*& unit) {
 	switch (type) {
 	case AS: {
 		if (alienSoldiers.isEmpty()) return false;
@@ -51,10 +57,9 @@ bool AlienArmy::getUnit(UNIT_TYPE type, Unit*& unit, bool rear) {
 	}
 	case AD: {
 		if (alienDrones.isEmpty()) return false;
-		if (rear)
-			alienDrones.dequeueRear(unit);
-		else
-			alienDrones.dequeue(unit);
+		if (!insertRear) alienDrones.dequeueRear(unit);
+		else alienDrones.dequeue(unit);
+		insertRear = !insertRear;
 		break;
 	}
 	}
@@ -76,6 +81,14 @@ void AlienArmy::print() {
 
 int AlienArmy::getSoldierCount() {
 	return soldierCount;
+}
+
+AlienArmy::~AlienArmy() {
+	Unit* unit;
+	while (alienSoldiers.dequeue(unit))delete unit;
+	while (alienDrones.dequeue(unit))delete unit;
+	while (alienMonsters.pick(unit))delete unit;
+
 }
 
 //void AlienArmy::decrementCount(Unit*& unit) {

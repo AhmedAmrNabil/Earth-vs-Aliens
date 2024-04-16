@@ -20,39 +20,39 @@ int RandGen::generator(int begin, int end) {
 	return random;
 }
 
-Unit* RandGen::generateEarthUnit(int timestep) {
+Unit* RandGen::generateEarthUnit() {
 	Unit* unit;
 	int power = generator(earthData.minPower, earthData.maxPower);
 	int health = generator(earthData.minHealth, earthData.maxHealth);
 	int capacity = generator(earthData.minCapacity, earthData.maxCapacity);
 	int B = generator(1, 100);
 	if (B <= percentages.percentES)
-		unit = new EarthSoldier(timestep, health, power, capacity);
+		unit = new EarthSoldier(game, game->getTimestep(), health, power, capacity);
 	else if (B <= percentages.percentES + percentages.percentET)
-		unit = new EarthTank(timestep, health, power, capacity);
+		unit = new EarthTank(game, game->getTimestep(), health, power, capacity);
 	else
-		unit = new EarthGunner(timestep, health, power, capacity);
+		unit = new EarthGunner(game, game->getTimestep(), health, power, capacity);
 
 	return unit;
 }
 
-Unit* RandGen::generateAlienUnit(int timestep) {
+Unit* RandGen::generateAlienUnit() {
 	Unit* unit;
 	int power = generator(alienData.minPower, alienData.maxPower);
 	int health = generator(alienData.minHealth, alienData.maxHealth);
 	int capacity = generator(alienData.minCapacity, alienData.maxCapacity);
 	int B = generator(1, 100);
 	if (B <= percentages.percentAS)
-		unit = new AlienSoldier(timestep, health, power, capacity);
+		unit = new AlienSoldier(game, game->getTimestep(), health, power, capacity);
 	else if (B <= percentages.percentAS + percentages.percentAM)
-		unit = new AlienMonster(timestep, health, power, capacity);
+		unit = new AlienMonster(game, game->getTimestep(), health, power, capacity);
 	else
-		unit = new AlienDrone(timestep, health, power, capacity);
+		unit = new AlienDrone(game, game->getTimestep(), health, power, capacity);
 
 	return unit;
 }
 
-void RandGen::generateUnits(int timestep) {
+void RandGen::generateUnits() {
 	EarthArmy* earthArmy = game->getEarthArmy();
 	AlienArmy* alienArmy = game->getAlienArmy();
 
@@ -60,7 +60,7 @@ void RandGen::generateUnits(int timestep) {
 	if (A >= Prob) {
 		Unit* unit;
 		for (int i = 0; i < N; ++i) {
-			unit = generateEarthUnit(timestep);
+			unit = generateEarthUnit();
 			earthArmy->addUnit(unit, true); 
 		}
 
@@ -70,7 +70,7 @@ void RandGen::generateUnits(int timestep) {
 	if (A >= Prob) {
 		Unit* unit;
 		for (int i = 0; i < N; ++i) {
-			unit = generateAlienUnit(timestep);
+			unit = generateAlienUnit();
 			alienArmy->addUnit(unit, true);
 		}
 
