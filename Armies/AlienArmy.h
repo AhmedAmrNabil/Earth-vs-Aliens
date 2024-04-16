@@ -22,7 +22,7 @@ class AlienArmy : public Army {
         soldierCount = 0;
     }
    
-    bool addUnit(Unit* unit);
+    bool addUnit(Unit* unit, bool isNew = false);
     bool getUnit(UNIT_TYPE type, Unit*& unit, bool rear = false);
     void print();
     int getSoldierCount();

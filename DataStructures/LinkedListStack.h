@@ -11,34 +11,44 @@ class LinkedListStack : public StackADT<T>
 {
 private:
 	Node<T>* top;
+	int count;
 public:
+	LinkedListStack() 
+	{
+		top = nullptr;
+		count = 0;
+	}
+
 	bool isEmpty() const
 	{
 		return (top == nullptr);
 	}
 	bool push(const T& newEntry)
 	{
-		Node<T>* newNode = new Node <T> (newEntry);
+		Node<T>* newNode = new Node <T>(newEntry);
 		if (!newNode)return false;
-		if (!top) 
+		if (!top)
 		{
 			top = newNode;
+			++count;
 			return true;
 		}
-		else 
+		else
 		{
 			newNode->setNext(top);
 			top = newNode;
+			++count;
 			return true;
 		}
 	}
-	bool pop(T& TopEntry) 
+	bool pop(T& TopEntry)
 	{
 		if (!top)return false;
 		TopEntry = top->getItem();
 		Node<T>* temp = top;
 		top = top->getNext();
 		delete temp;
+		--count;
 		return true;
 	}
 	bool peek(T& TopEntry) const
@@ -50,7 +60,7 @@ public:
 	~LinkedListStack()
 	{
 		Node<T>* temp = top;
-		while (top) 
+		while (top)
 		{
 			top = top->getNext();
 			delete temp;
@@ -68,5 +78,6 @@ public:
 		}
 		cout << "]";
 	}
+	int getCount() { return count; }
 };
 

@@ -47,7 +47,7 @@ void Game::generateUnits() {
 		Unit* unit;
 		for (int i = 0; i < N; ++i) {
 			unit = RNG->generateEarthUnit(timestep);
-			earthArmy->addUnit(unit);
+			earthArmy->addUnit(unit,true);
 		}
 
 	}
@@ -57,7 +57,7 @@ void Game::generateUnits() {
 		Unit* unit;
 		for (int i = 0; i < N; ++i) {
 			unit = RNG->generateAlienUnit(timestep);
-			alienArmy->addUnit(unit);
+			alienArmy->addUnit(unit,true);
 		}
 
 	}

@@ -15,13 +15,9 @@ class EarthArmy : public Army {
     int gunnerCount;
     int soldierCount;
    public:
-    EarthArmy(): Army() {
-        tankCount = 0;
-        gunnerCount = 0;
-        soldierCount = 0;
-    }
+       EarthArmy();
     
-    bool addUnit(Unit* unit);
+    bool addUnit(Unit* unit, bool isNew = false);
     bool getUnit(UNIT_TYPE type, Unit*& unit, bool rear = false);
     void print();
     int getSoldierCount();
