@@ -8,9 +8,12 @@ using std::cout;
 template <typename T>
 class priQueue {
     priNode<T>* head;
+    int count;
 
    public:
-    priQueue() : head(nullptr) {}
+    priQueue() : head(nullptr) {
+        count = 0;
+    }
 
     ~priQueue() {
         T tmp;
@@ -26,6 +29,7 @@ class priQueue {
         if (head == nullptr || priority > head->getPri()) {
             newNode->setNext(head);
             head = newNode;
+            ++count;
             return true;
         }
 
@@ -35,6 +39,7 @@ class priQueue {
         }
         newNode->setNext(current->getNext());
         current->setNext(newNode);
+        ++count;
         return true;
     }
 
@@ -46,6 +51,7 @@ class priQueue {
         priNode<T>* temp = head;
         head = head->getNext();
         delete temp;
+        --count;
         return true;
     }
 
@@ -76,4 +82,5 @@ class priQueue {
         }
         cout << "]";
     }
+    int getCount() { return count; }
 };

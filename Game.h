@@ -8,30 +8,28 @@
 
 class Game
 {
-	EarthArmy* earthArmy;
-	AlienArmy* alienArmy;
-	RandGen* RNG;
+	EarthArmy earthArmy;
+	AlienArmy alienArmy;
+	RandGen RNG;
 	int timestep;
-	int randGenParams[18];
-	int N;
-	int Prob;
 	LinkedQueue <Unit*> killedUnits;
 	int killedCount;
 public:
 	Game();
 	void print();
 	bool getEarthUnit(UNIT_TYPE type, Unit*& unit);
-	bool getAlienUnit(UNIT_TYPE type, Unit*& unit1, bool rear = false);
+	bool getAlienUnit(UNIT_TYPE type, Unit*& unit);
 	bool addEarthUnit(Unit*& unit);
 	bool addAlienUnit(Unit*& unit);
 	void addToKilled(Unit*& unit);
-	/*void addToTemp(Unit*& unit);
-	void clearTemp();*/
 	void loadInput();
-	void generateUnits();
 	void gameTick();
 	void testCode();
+	int getTimestep();
 	double getSoldierRatio();
+	EarthArmy* getEarthArmy();
+	AlienArmy* getAlienArmy();
+	~Game();
 	
 };
 

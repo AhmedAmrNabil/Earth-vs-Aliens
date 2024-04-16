@@ -50,4 +50,5 @@ public:
 		}
 		cout << "]";
 	}
+	int getCount() { return monsterCount; }
 };

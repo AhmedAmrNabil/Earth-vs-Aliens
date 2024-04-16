@@ -2,12 +2,12 @@
 
 #include "../Game.h"
 
-AlienDrone::AlienDrone(int joinTime, int health, int power, int attackCapacity)
-    : Unit(AD,joinTime, health, power, attackCapacity) {
-    priority = 1;
+AlienDrone::AlienDrone(Game* game, int joinTime, int health, int power, int attackCapacity)
+    : Unit(game,AD,joinTime, health, power, attackCapacity) {
 }
 
-void AlienDrone::attack(Game* game, int timestep) {
+void AlienDrone::attack() {
+    int timestep = game->getTimestep();
     LinkedListStack<Unit*> tempEarthTanks;
     LinkedQueue<Unit*> temp;
     Unit* tank = nullptr;
