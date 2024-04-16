@@ -33,10 +33,12 @@ bool AlienArmy::addUnit(Unit* unit, bool isNew) {
 			inserted = alienDrones.enqueue(unit);
 		else
 			inserted = alienDrones.enqeueFront(unit);
-		if (inserted && isNew) {
+		if (inserted) {
 			insertRear = !insertRear;
-			++droneCount;
+			if(isNew)
+				++droneCount;
 		}
+		
 		break;
 	}
 	}
