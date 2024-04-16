@@ -108,7 +108,7 @@ void Game::testCode() {
 		Unit* ET1;
 		if (getEarthUnit(ET, ET1)) {
 			addToKilled(ET1);
-			cout << "An Earth Soldier was Picked and added to the killed list\n";
+			cout << "An Earth Tank was Picked and added to the killed list\n";
 		}
 	}
 	else if (X < 30) {
