@@ -55,7 +55,7 @@ class LinkedDeque : public QueueADT<T> {
 
     bool peekBack(T& backEntry) {
         if (isEmpty())return false;
-        frontEntry = tail;
+        backEntry = tail;
         return true;
     }
 
