@@ -2,6 +2,13 @@
 
 #include "../BattleUnits/Unit.h"
 
+AlienArmy::AlienArmy() {
+	monsterCount = 0;
+	droneCount = 0;
+	soldierCount = 0;
+}
+
+
 bool AlienArmy::addUnit(Unit* unit, bool isNew) {
 	if (unit == nullptr) return false;
 	UNIT_TYPE type = unit->getType();
@@ -62,7 +69,7 @@ void AlienArmy::print() {
 	cout << alienMonsters.getCount() << "\tAM ";
 	alienMonsters.print();
 	cout << endl;
-	cout <<alienDrones.getCount() << "\tAD ";
+	cout << alienDrones.getCount() << "\tAD ";
 	alienDrones.print();
 	cout << endl;
 }

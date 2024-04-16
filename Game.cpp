@@ -1,11 +1,10 @@
 #include "Game.h"
 
-Game::Game()
+Game::Game():RNG(this)
 {
 	timestep = 0;
 	killedCount = 0;
 	loadInput();
-	RNG.initParams(randGenParams);
 }
 
 void Game::print()
@@ -25,7 +24,7 @@ bool Game::getEarthUnit(UNIT_TYPE type, Unit*& unit)
 
 bool Game::getAlienUnit(UNIT_TYPE type, Unit*& unit1, bool rear)
 {
-	return alienArmy.getUnit(type, unit1,rear);
+	return alienArmy.getUnit(type, unit1, rear);
 }
 
 bool Game::addEarthUnit(Unit*& unit)
@@ -38,29 +37,8 @@ bool Game::addAlienUnit(Unit*& unit)
 	return (alienArmy.addUnit(unit));
 }
 
-void Game::generateUnits() {
-	int A = RNG.generator(1, 100);
-	if (A >= Prob) {
-		Unit* unit;
-		for (int i = 0; i < N; ++i) {
-			unit = RNG.generateEarthUnit(timestep);
-			earthArmy.addUnit(unit,true);
-		}
-
-	}
-
-	A = RNG.generator(1, 100);
-	if (A >= Prob) {
-		Unit* unit;
-		for (int i = 0; i < N; ++i) {
-			unit = RNG.generateAlienUnit(timestep);
-			alienArmy.addUnit(unit,true);
-		}
-
-	}
-}
 void Game::gameTick() {
-	generateUnits();
+	RNG.generateUnits(timestep);
 	testCode();
 	print();
 	//earthArmy->fight(game);
@@ -70,52 +48,53 @@ void Game::gameTick() {
 
 void Game::addToKilled(Unit*& unit)
 {
-	if (unit->isAlien())
-		alienArmy.decrementCount(unit);
-	else
-		earthArmy.decrementCount(unit);
 	killedUnits.enqueue(unit);
 	killedCount++;
 }
 
-//void Game::addToTemp(Unit*& unit)
-//{
-//	tempUnits.enqueue(unit);
-//}
-//
-//void Game::clearTemp() {
-//	Unit* tmp;
-//	while (tempUnits.dequeue(tmp)) {
-//		if (tmp->getType() > 2)
-//			alienArmy->addUnit(tmp);
-//		else
-//			earthArmy->addUnit(tmp);
-//	}
-//}
-
 void Game::loadInput()
 {
+	Percentages percentages;
+	ArmyData earthData;
+	ArmyData alienData;
 	ifstream input_file;
 	input_file.open("input.txt", ios::in);
 	input_file >> N;
 
-	for (int i = 0; i < 6; ++i) {
-		input_file >> randGenParams[i];
-	}
-
+	input_file >> percentages.percentES >> percentages.percentET >> percentages.percentEG;
+	input_file >> percentages.percentAS >> percentages.percentAM >> percentages.percentAD;
+	
 	input_file >> Prob;
+	input_file >> earthData.minPower >> earthData.maxPower;
+	input_file >> earthData.minHealth >> earthData.maxHealth;
+	input_file >> earthData.minCapacity >> earthData.maxCapacity;
 
-	for (int i = 0; i < 6; ++i) {
-		input_file >> randGenParams[2 * i + 6] >> randGenParams[2 * i + 7];
-		randGenParams[2 * i + 7] *= -1;
-	}
+	earthData.maxPower *= -1;
+	earthData.maxHealth *= -1;
+	earthData.maxCapacity *= -1;
+
+	input_file >> alienData.minPower >> alienData.maxPower;
+	input_file >> alienData.minHealth >> alienData.maxHealth;
+	input_file >> alienData.minCapacity >> alienData.maxCapacity;
+
+	alienData.maxPower *= -1;
+	alienData.maxHealth *= -1;
+	alienData.maxCapacity *= -1;
+
+	RNG.setData(earthData, alienData,percentages, N, Prob);
 
 	input_file.close();
 }
 
+EarthArmy* Game::getEarthArmy() {
+	return &earthArmy;
+}
+AlienArmy* Game::getAlienArmy() {
+	return &alienArmy;
+}
 void Game::testCode() {
 	cout << "\ncurrent timestep: " << timestep;
-	int X = RNG.generator(1, 101);
+	int X = RNG.generator(1, 100);
 	cout << ", X: " << X << endl;
 	if (X > 0 && X < 10) {
 		Unit* S1;

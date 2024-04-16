@@ -3,25 +3,37 @@
 
 #include "Armies/Army.h"
 
+struct Percentages {
+	int percentES;
+	int percentET;
+	int percentEG;
+	int percentAS;
+	int percentAM;
+	int percentAD;
+};
+
+struct ArmyData {
+	int minPower, maxPower;
+	int minHealth, maxHealth;
+	int minCapacity, maxCapacity;
+};
+
+
+class Game;
 class RandGen {
-    int percentES;
-    int percentET;
-    int percentAS;
-    int percentAM;
-    int earthMinPower, earthMaxPower;
-    int earthMinHealth, earthMaxHealth;
-    int earthMinCapacity, earthMaxCapacity;
-    int alienMinPower, alienMaxPower;
-    int alienMinHealth, alienMaxHealth;
-    int alienMinCapacity, alienMaxCapacity;
+	ArmyData earthData;
+	ArmyData alienData;
+	Percentages percentages;
+	int N, Prob;
+	Game* game;
 
-
-   public:
-    RandGen();
-    int generator(int begin, int end);
-    Unit* generateEarthUnit(int timestep);
-    Unit* generateAlienUnit(int timestep);
-    void initParams(int randGenparams[]);
+public:
+	RandGen(Game* game);
+	int generator(int begin, int end);
+	Unit* generateEarthUnit(int timestep);
+	Unit* generateAlienUnit(int timestep);
+	void generateUnits(int timestep);
+	void setData(ArmyData earthData, ArmyData alienData,Percentages percentages, int N, int Prob);
 };
 
 #endif

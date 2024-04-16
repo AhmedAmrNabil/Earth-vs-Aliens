@@ -12,7 +12,7 @@ class Game
 	AlienArmy alienArmy;
 	RandGen RNG;
 	int timestep;
-	int randGenParams[18];
+	int randGenParams[20];
 	int N;
 	int Prob;
 	LinkedQueue <Unit*> killedUnits;
@@ -25,13 +25,12 @@ public:
 	bool addEarthUnit(Unit*& unit);
 	bool addAlienUnit(Unit*& unit);
 	void addToKilled(Unit*& unit);
-	/*void addToTemp(Unit*& unit);
-	void clearTemp();*/
 	void loadInput();
-	void generateUnits();
 	void gameTick();
 	void testCode();
 	double getSoldierRatio();
+	EarthArmy* getEarthArmy();
+	AlienArmy* getAlienArmy();
 	~Game();
 	
 };
