@@ -2,12 +2,12 @@
 
 #include "../Game.h"
 
-AlienSoldier::AlienSoldier(int joinTime, int health, int power, int attackCapacity)
-    : Unit(AS, joinTime, health, power, attackCapacity) {
-    priority = 1;
+AlienSoldier::AlienSoldier(Game* game, int joinTime, int health, int power, int attackCapacity)
+    : Unit(game,AS, joinTime, health, power, attackCapacity) {
 }
 
-void AlienSoldier::attack(Game* game, int timestep) {
+void AlienSoldier::attack() {
+    int timestep = game->getTimestep();
     clearAttacked();
     Unit* enemyUnit;
     LinkedQueue<Unit*> temp;

@@ -10,10 +10,12 @@ template <typename T>
 class LinkedDeque : public QueueADT<T> {
    private:
     DNode<T>* tail;
+    int count;
 
    public:
     LinkedDeque() {
         tail = nullptr;
+        count = 0;
     }
 
     bool isEmpty() const override {
@@ -29,6 +31,7 @@ class LinkedDeque : public QueueADT<T> {
             newItem->setNext(tail->getNext());
         tail->setNext(newItem);
         tail = newItem;
+        ++count;
         return true;
     }
 
@@ -40,6 +43,19 @@ class LinkedDeque : public QueueADT<T> {
         else
             newItem->setNext(tail->getNext());
         tail->setNext(newItem);
+        ++count;
+        return true;
+    }
+
+    bool peekFront(T& frontEntry) {
+        if (isEmpty())return false;
+        frontEntry = tail->getNext();
+        return true;
+    }
+
+    bool peekBack(T& backEntry) {
+        if (isEmpty())return false;
+        backEntry = tail;
         return true;
     }
 
@@ -54,6 +70,7 @@ class LinkedDeque : public QueueADT<T> {
             tail->setNext(item->getNext());
 
         delete item;
+        --count;
         return true;
     }
 
@@ -70,6 +87,7 @@ class LinkedDeque : public QueueADT<T> {
         newTail->setNext(tail->getNext());
         delete tail;
         tail = newTail;
+        --count;
         return true;
     }
 
@@ -97,6 +115,7 @@ class LinkedDeque : public QueueADT<T> {
         T tmp;
         while (dequeue(tmp));
     }
+    int getCount() { return count; }
 };
 
 #endif

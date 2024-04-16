@@ -1,10 +1,10 @@
 #include "EarthTank.h"
 
-EarthTank::EarthTank(int joinTime, int health, int power, int attackCapacity)
-    : Unit(ET, joinTime, health, power, attackCapacity) {
-    priority = 1;
+EarthTank::EarthTank(Game* game,int joinTime, int health, int power, int attackCapacity)
+    : Unit(game, ET, joinTime, health, power, attackCapacity) {
 }
-void EarthTank::attack(Game* game, int timestep) {
+void EarthTank::attack() {
+    int timestep = game->getTimestep();
     Unit* monster;
     Unit* soldier;
     bool monstersOnly = true;
