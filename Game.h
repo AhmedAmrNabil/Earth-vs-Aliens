@@ -8,9 +8,9 @@
 
 class Game
 {
-	EarthArmy* earthArmy;
-	AlienArmy* alienArmy;
-	RandGen* RNG;
+	EarthArmy earthArmy;
+	AlienArmy alienArmy;
+	RandGen RNG;
 	int timestep;
 	int randGenParams[18];
 	int N;
@@ -32,6 +32,7 @@ public:
 	void gameTick();
 	void testCode();
 	double getSoldierRatio();
+	~Game();
 	
 };
 

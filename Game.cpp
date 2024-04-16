@@ -4,17 +4,14 @@ Game::Game()
 {
 	timestep = 0;
 	killedCount = 0;
-	earthArmy = new EarthArmy();
-	alienArmy = new AlienArmy();
-	RNG = new RandGen();
 	loadInput();
-	RNG->initParams(randGenParams);
+	RNG.initParams(randGenParams);
 }
 
 void Game::print()
 {
-	earthArmy->print();
-	alienArmy->print();
+	earthArmy.print();
+	alienArmy.print();
 	cout << "============== Killed/Destructed Units =============\n";
 	cout << killedCount << "    units ";
 	killedUnits.print();
@@ -23,41 +20,41 @@ void Game::print()
 
 bool Game::getEarthUnit(UNIT_TYPE type, Unit*& unit)
 {
-	return earthArmy->getUnit(type, unit);
+	return earthArmy.getUnit(type, unit);
 }
 
 bool Game::getAlienUnit(UNIT_TYPE type, Unit*& unit1, bool rear)
 {
-	return alienArmy->getUnit(type, unit1,rear);
+	return alienArmy.getUnit(type, unit1,rear);
 }
 
 bool Game::addEarthUnit(Unit*& unit)
 {
-	return (earthArmy->addUnit(unit));
+	return (earthArmy.addUnit(unit));
 }
 
 bool Game::addAlienUnit(Unit*& unit)
 {
-	return (alienArmy->addUnit(unit));
+	return (alienArmy.addUnit(unit));
 }
 
 void Game::generateUnits() {
-	int A = RNG->generator(1, 100);
+	int A = RNG.generator(1, 100);
 	if (A >= Prob) {
 		Unit* unit;
 		for (int i = 0; i < N; ++i) {
-			unit = RNG->generateEarthUnit(timestep);
-			earthArmy->addUnit(unit,true);
+			unit = RNG.generateEarthUnit(timestep);
+			earthArmy.addUnit(unit,true);
 		}
 
 	}
 
-	A = RNG->generator(1, 100);
+	A = RNG.generator(1, 100);
 	if (A >= Prob) {
 		Unit* unit;
 		for (int i = 0; i < N; ++i) {
-			unit = RNG->generateAlienUnit(timestep);
-			alienArmy->addUnit(unit,true);
+			unit = RNG.generateAlienUnit(timestep);
+			alienArmy.addUnit(unit,true);
 		}
 
 	}
@@ -74,9 +71,9 @@ void Game::gameTick() {
 void Game::addToKilled(Unit*& unit)
 {
 	if (unit->isAlien())
-		alienArmy->decrementCount(unit);
+		alienArmy.decrementCount(unit);
 	else
-		earthArmy->decrementCount(unit);
+		earthArmy.decrementCount(unit);
 	killedUnits.enqueue(unit);
 	killedCount++;
 }
@@ -118,26 +115,26 @@ void Game::loadInput()
 
 void Game::testCode() {
 	cout << "\ncurrent timestep: " << timestep;
-	int X = RNG->generator(1, 101);
+	int X = RNG.generator(1, 101);
 	cout << ", X: " << X << endl;
 	if (X > 0 && X < 10) {
 		Unit* S1;
 		Unit* S2 = nullptr;
-		if (earthArmy->getUnit(ES, S1, S2))
-			earthArmy->addUnit(S1);
+		if (earthArmy.getUnit(ES, S1, S2))
+			earthArmy.addUnit(S1);
 	}
 	else if (X < 20) {
 		Unit* ET1;
 		Unit* ET2 = nullptr;
-		if (earthArmy->getUnit(ET, ET1, ET2))
+		if (earthArmy.getUnit(ET, ET1, ET2))
 			addToKilled(ET1);
 	}
 	else if (X < 30) {
 		Unit* EG1;
 		Unit* EG2 = nullptr;
-		if (earthArmy->getUnit(EG, EG1, EG2)) {
+		if (earthArmy.getUnit(EG, EG1, EG2)) {
 			EG1->decrementHealth(EG1->getHealth() / 2, timestep);
-			earthArmy->addUnit(EG1);
+			earthArmy.addUnit(EG1);
 		}
 	}
 	else if (X < 40) {
@@ -153,15 +150,15 @@ void Game::testCode() {
 		Unit* AM1;
 		Unit* AM2 = nullptr;
 		for (int i = 0; i < 5; i++) {
-			if (alienArmy->getUnit(AM, AM1, AM2))
-				alienArmy->addUnit(AM1);
+			if (alienArmy.getUnit(AM, AM1, AM2))
+				alienArmy.addUnit(AM1);
 		}
 	}
 	else if (X < 60) {
 		Unit* AD1;
 		Unit* AD2 = nullptr;
 		for (int i = 0; i < 3; i++) {
-			if (alienArmy->getUnit(AD, AD1, AD2)) {
+			if (alienArmy.getUnit(AD, AD1, AD2)) {
 				addToKilled(AD1);
 				if (AD2)
 					addToKilled(AD2);
@@ -173,7 +170,11 @@ void Game::testCode() {
 
 double Game::getSoldierRatio()
 {
-	return (double(earthArmy->getSoldierCount()) / (alienArmy->getSoldierCount())) * 100;
+	return (double(earthArmy.getSoldierCount()) / (alienArmy.getSoldierCount())) * 100;
 }
 
 
+Game::~Game() {
+	Unit* unit;
+	while (killedUnits.dequeue(unit)) delete unit;
+}
