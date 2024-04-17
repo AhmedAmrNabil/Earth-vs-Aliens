@@ -38,11 +38,5 @@ bool Unit::isAlien() {
 bool Unit::isDead() { return health == 0; }
 int Unit::getAttackCapacity() { return attackCapacity; }
 int Unit::getHealth() { return health; }
-int Unit::getDamage() { return power; }
 int Unit::getId() const { return id; }
 UNIT_TYPE Unit::getType() { return type; }
-void Unit::clearAttacked() {
-	int tmp;
-	while (attackedIDs.dequeue(tmp))
-		;
-}

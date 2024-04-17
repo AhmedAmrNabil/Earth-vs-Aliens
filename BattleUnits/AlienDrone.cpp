@@ -12,11 +12,9 @@ void AlienDrone::attack() {
     LinkedQueue<Unit*> temp;
     Unit* tank = nullptr;
     Unit* gunnery = nullptr;
-    clearAttacked();
     for (int i = 0; i < this->getAttackCapacity() / 2; ++i) {
         if (game->getEarthUnit(ET, tank)) {
             tank->getAttacked(this, timestep);
-            attackedIDs.enqueue(tank->getId());
             if (tank->isDead())
                 game->addToKilled(tank);
             else
@@ -24,7 +22,6 @@ void AlienDrone::attack() {
         }
         if (game->getEarthUnit(EG, gunnery)) {
             gunnery->getAttacked(this, timestep);
-            attackedIDs.enqueue(gunnery->getId());
             if (gunnery->isDead())
                 game->addToKilled(gunnery);
             else
@@ -34,7 +31,6 @@ void AlienDrone::attack() {
     if (this->getAttackCapacity() % 2 == 1) {
         if (game->getEarthUnit(ET, tank)) {
             tank->getAttacked(this, timestep);
-            attackedIDs.enqueue(tank->getId());
             if (tank->isDead())
                 game->addToKilled(tank);
             else

@@ -12,11 +12,9 @@ void AlienMonster::attack() {
     LinkedQueue<Unit*> temp;
     Unit* tank = nullptr;
     Unit* soldier = nullptr;
-    clearAttacked();
     for (int i = 0; i < this->getAttackCapacity() / 2; ++i) {
         if (game->getEarthUnit(ET, tank)) {
             tank->getAttacked(this, timestep);
-            attackedIDs.enqueue(tank->getId());
             if (tank->isDead())
                 game->addToKilled(tank);
             else
@@ -24,7 +22,6 @@ void AlienMonster::attack() {
         }
         if (game->getEarthUnit(ES, soldier)) {
             soldier->getAttacked(this, timestep);
-            attackedIDs.enqueue(soldier->getId());
             if (soldier->isDead())
                 game->addToKilled(soldier);
             else

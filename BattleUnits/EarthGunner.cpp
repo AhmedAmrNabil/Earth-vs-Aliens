@@ -1,14 +1,17 @@
 #include "EarthGunner.h"
-
 #include "../Game.h"
+#include <cmath>
 
 EarthGunner::EarthGunner(Game* game, int joinTime, int health, int power, int attackCapacity)
     : Unit(game,EG, joinTime, health, power, attackCapacity) {
 };
 
+int EarthGunner::getPriority() {
+    return power * sqrt(health);
+}
+
 void EarthGunner::attack() {
     int timestep = game->getTimestep();
-    clearAttacked();
     Unit* drone = nullptr;
     Unit* monster = nullptr;
     LinkedListStack<Unit*> tempDrone;
@@ -20,7 +23,6 @@ void EarthGunner::attack() {
     while (monsterCount > 0) {
         if (game->getAlienUnit(AM, monster)) {
             monster->getAttacked(this, timestep);
-            attackedIDs.enqueue(monster->getId());
             if (monster->isDead())
                 game->addToKilled(monster);
             else
@@ -32,7 +34,6 @@ void EarthGunner::attack() {
     while (dronesAttacked < dronesCount) {
         if (game->getAlienUnit(AD, drone)) {
             drone->getAttacked(this, timestep);
-            attackedIDs.enqueue(drone->getId());
             if (drone->isDead())
                 game->addToKilled(drone);
             else

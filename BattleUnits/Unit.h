@@ -27,8 +27,6 @@ class Unit {
 
    protected:
 	Game* game;
-	LinkedQueue<int> attackedIDs;
-	void clearAttacked();
 	int health;
 	int power;
 
