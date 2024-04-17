@@ -40,7 +40,7 @@ using namespace std;
 int main() {
     Game G;
     char ch = 0;
-    while (ch != 27) {
+    while (ch != 27 && G.getTimestep() <= 50) {
         G.gameTick();
         ch = getChar();
     }
