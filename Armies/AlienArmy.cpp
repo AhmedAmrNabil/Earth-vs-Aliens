@@ -87,10 +87,21 @@ int AlienArmy::getSoldierCount() {
 
 AlienArmy::~AlienArmy() {
 	Unit* unit;
-	while (alienSoldiers.dequeue(unit))delete unit;
-	while (alienDrones.dequeue(unit))delete unit;
-	while (alienMonsters.pick(unit))delete unit;
-
+	while (alienSoldiers.dequeue(unit))
+	{
+		if (unit != nullptr)
+			delete unit;
+	}
+	while (alienDrones.dequeue(unit))
+	{
+		if (unit != nullptr)
+			delete unit;
+	}
+	while (alienMonsters.pick(unit))
+	{
+		if (unit != nullptr)
+			delete unit;
+	}
 }
 
 //void AlienArmy::decrementCount(Unit*& unit) {

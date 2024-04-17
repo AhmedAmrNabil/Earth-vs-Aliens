@@ -81,9 +81,21 @@ int EarthArmy::getSoldierCount() {
 EarthArmy::~EarthArmy() {
 	Unit* unit;
 	int pri;
-	while (earthSoldiers.dequeue(unit))delete unit;
-	while (earthTanks.pop(unit))delete unit;
-	while (earthGunnery.dequeue(unit, pri))delete unit;
+	while (earthSoldiers.dequeue(unit))
+	{
+		if (unit != nullptr)
+			delete unit;
+	}
+	while (earthTanks.pop(unit)) 
+	{
+		if (unit != nullptr)
+			delete unit;
+	}
+	while (earthGunnery.dequeue(unit, pri)) 
+	{
+		if (unit != nullptr)
+			delete unit;
+	}
 }
 //void EarthArmy::decrementCount(Unit*& unit) {
 //	if (unit == nullptr)return;
