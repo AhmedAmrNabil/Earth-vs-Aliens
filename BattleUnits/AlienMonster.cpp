@@ -31,7 +31,6 @@ void AlienMonster::attack() {
     if (this->getAttackCapacity() % 2 == 1) {
         if (game->getEarthUnit(ET, tank)) {
             tank->getAttacked(this, timestep);
-            attackedIDs.enqueue(tank->getId());
             if (tank->isDead())
                 game->addToKilled(tank);
             else

@@ -42,7 +42,6 @@ class Unit {
 	void getAttacked(Unit* enemyUnit, int timestep);
 	void decrementHealth(int damage, int timestep);
 	bool isAlien();
-	int getDamage();
 };
 
 ostream& operator<<(ostream& out, const Unit* unit);
