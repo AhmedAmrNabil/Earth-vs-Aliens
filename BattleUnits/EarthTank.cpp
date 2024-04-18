@@ -11,11 +11,9 @@ void EarthTank::attack() {
     LinkedQueue<Unit*> temp;
     ArrayMonster tmpMonsters;
     if (game->getSoldierRatio() < 30) monstersOnly = false;
-    clearAttacked();
     for (int i = 0; i < this->getAttackCapacity(); ++i) {
         if (game->getAlienUnit(AM, monster)) {
             monster->getAttacked(this, timestep);
-            attackedIDs.enqueue(monster->getId());
             if (monster->isDead())
                 game->addToKilled(monster);
             else
@@ -25,7 +23,6 @@ void EarthTank::attack() {
         if (!monstersOnly) {
             if (game->getAlienUnit(AS, soldier)) {
                 soldier->getAttacked(this, timestep);
-                attackedIDs.enqueue(soldier->getId());
                 if (soldier->isDead())
                     game->addToKilled(soldier);
                 else

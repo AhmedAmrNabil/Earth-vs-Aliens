@@ -175,5 +175,9 @@ int Game::getTimestep()
 
 Game::~Game() {
 	Unit* unit;
-	while (killedUnits.dequeue(unit)) delete unit;
+	while (killedUnits.dequeue(unit)) 
+	{
+		if (unit != nullptr)
+			delete unit;
+	}
 }

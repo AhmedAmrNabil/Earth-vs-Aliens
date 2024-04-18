@@ -7,6 +7,7 @@ class EarthGunner : public Unit {
    public:
     EarthGunner(Game* game, int joinTime, int health, int power, int attackCapacity);
     void attack() override;
+    int getPriority();
 };
 
 #endif
