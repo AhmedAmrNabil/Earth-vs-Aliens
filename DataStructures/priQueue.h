@@ -60,7 +60,6 @@ class priQueue {
             return false;
 
         topEntry = head->getItem(pri);
-        pri = head->getPri();
         return true;
     }
 
