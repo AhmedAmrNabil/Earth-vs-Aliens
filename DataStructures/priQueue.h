@@ -59,7 +59,7 @@ class priQueue {
         if (isEmpty())
             return false;
 
-        topEntry = head->getItem();
+        topEntry = head->getItem(pri);
         pri = head->getPri();
         return true;
     }
