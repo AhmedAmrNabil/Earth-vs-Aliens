@@ -11,7 +11,7 @@ Armies/EarthArmy.cpp
 BattleUnits/AlienDrone.cpp
 BattleUnits/AlienMonster.cpp
 BattleUnits/AlienSoldier.cpp
-BattleUnits/EarthGunner.cpp
+BattleUnits/EarthGunnery.cpp
 BattleUnits/EarthSoldier.cpp
 BattleUnits/EarthTank.cpp
 BattleUnits/Unit.cpp

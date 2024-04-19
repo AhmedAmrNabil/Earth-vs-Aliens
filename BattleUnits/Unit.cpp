@@ -27,7 +27,7 @@ void Unit::decrementHealth(int damage, int timestep) {
 }
 
 void Unit::getAttacked(Unit* enemyUnit, int timestep) {
-	int damage = (enemyUnit->power * enemyUnit->health / 100) / sqrt(this->health);
+	int damage = (enemyUnit->power * enemyUnit->health / 100.0) / sqrt(this->health);
 	decrementHealth(damage, timestep);
 }
 

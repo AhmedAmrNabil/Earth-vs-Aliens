@@ -36,7 +36,7 @@
     <ClCompile Include="BattleUnits\AlienSoldier.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="BattleUnits\EarthGunner.cpp">
+    <ClCompile Include="BattleUnits\EarthGunnery.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="BattleUnits\EarthSoldier.cpp">
@@ -101,7 +101,7 @@
     <ClInclude Include="BattleUnits\AlienMonster.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="BattleUnits\EarthGunner.h">
+    <ClInclude Include="BattleUnits\EarthGunnery.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="BattleUnits\EarthTank.h">
