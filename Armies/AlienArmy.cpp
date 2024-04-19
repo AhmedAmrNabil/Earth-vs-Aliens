@@ -7,6 +7,7 @@ AlienArmy::AlienArmy() {
 	droneCount = 0;
 	soldierCount = 0;
 	insertRear = false;
+	peekRear = false;
 }
 
 
@@ -85,7 +86,10 @@ bool AlienArmy::peek(UNIT_TYPE type, Unit*& unit) {
 	case AD: 
 	{
 		if (alienDrones.isEmpty()) return false;
-		alienDrones.peek(unit);
+		if (peekRear)
+			alienDrones.peekRear(unit);
+		else
+			alienDrones.peek(unit);
 		break;
 	}
 	}

@@ -16,6 +16,7 @@ class AlienArmy : public Army {
 	int soldierCount;
 	int droneCount;
 	bool insertRear;
+	bool peekRear;
 public:
 	AlienArmy();
 
