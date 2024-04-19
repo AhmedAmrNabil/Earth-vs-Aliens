@@ -47,15 +47,9 @@ class LinkedDeque : public QueueADT<T> {
         return true;
     }
 
-    bool peekFront(T& frontEntry) {
+    bool peekRear(T& backEntry) {
         if (isEmpty())return false;
-        frontEntry = tail->getNext();
-        return true;
-    }
-
-    bool peekBack(T& backEntry) {
-        if (isEmpty())return false;
-        backEntry = tail;
+        backEntry = tail->getItem();
         return true;
     }
 

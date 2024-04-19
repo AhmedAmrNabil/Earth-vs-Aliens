@@ -140,6 +140,7 @@
     <ClCompile Include="BattleUnits\EarthSoldier.cpp" />
     <ClCompile Include="BattleUnits\EarthTank.cpp" />
     <ClCompile Include="BattleUnits\Unit.cpp" />
+    <ClCompile Include="DataStructures\ArrayMonster.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="RandGen.cpp" />

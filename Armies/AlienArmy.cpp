@@ -7,6 +7,7 @@ AlienArmy::AlienArmy() {
 	droneCount = 0;
 	soldierCount = 0;
 	insertRear = false;
+	peekRear = false;
 }
 
 
@@ -68,8 +69,32 @@ bool AlienArmy::getUnit(UNIT_TYPE type, Unit*& unit) {
 	return true;
 }
 bool AlienArmy::peek(UNIT_TYPE type, Unit*& unit) {
-	//farag should implement here
-	return false;
+	switch (type) 
+	{
+	case AS: 
+	{
+		if (alienSoldiers.isEmpty()) return false;
+		alienSoldiers.peek(unit);
+		break;
+	}
+	case AM:
+	{
+		if (alienMonsters.isEmpty()) return false;
+		alienMonsters.peek(unit);
+		break;
+	}
+	case AD: 
+	{
+		if (alienDrones.isEmpty()) return false;
+		if (peekRear)
+			alienDrones.peekRear(unit);
+		else
+			alienDrones.peek(unit);
+		peekRear = !peekRear;
+		break;
+	}
+	}
+	return true;
 }
 void AlienArmy::print() {
 	cout << "============== Alien Army Alive Units =============\n";
