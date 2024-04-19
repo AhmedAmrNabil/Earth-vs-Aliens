@@ -15,6 +15,7 @@ BattleUnits/EarthGunnery.cpp
 BattleUnits/EarthSoldier.cpp
 BattleUnits/EarthTank.cpp
 BattleUnits/Unit.cpp
+DataStructures/ArrayMonster.cpp
 Game.cpp
 main.cpp
 RandGen.cpp)
