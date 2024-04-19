@@ -90,6 +90,7 @@ bool AlienArmy::peek(UNIT_TYPE type, Unit*& unit) {
 			alienDrones.peekRear(unit);
 		else
 			alienDrones.peek(unit);
+		peekRear = !peekRear;
 		break;
 	}
 	}
