@@ -1,6 +1,6 @@
 #include "EarthArmy.h"
 #include "../BattleUnits/Unit.h"
-#include "../BattleUnits/EarthGunner.h"
+#include "../BattleUnits/EarthGunnery.h"
 EarthArmy::EarthArmy() : Army() {
 	tankCount = 0;
 	gunnerCount = 0;
@@ -26,7 +26,7 @@ bool EarthArmy::addUnit(Unit* unit, bool isNew) {
 	}
 	case EG: {
 		int priority;
-		EarthGunner* earthGunner = dynamic_cast<EarthGunner*>(unit);
+		EarthGunnery* earthGunner = dynamic_cast<EarthGunnery*>(unit);
 		if (earthGunner != nullptr) {
 			priority = earthGunner->getPriority();
 			inserted = earthGunnery.enqueue(unit, priority);

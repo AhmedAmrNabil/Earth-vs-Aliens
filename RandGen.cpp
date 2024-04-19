@@ -3,7 +3,7 @@
 #include "BattleUnits/AlienDrone.h"
 #include "BattleUnits/AlienMonster.h"
 #include "BattleUnits/AlienSoldier.h"
-#include "BattleUnits/EarthGunner.h"
+#include "BattleUnits/EarthGunnery.h"
 #include "BattleUnits/EarthSoldier.h"
 #include "BattleUnits/EarthTank.h"
 #include "Armies/EarthArmy.h"
@@ -16,7 +16,7 @@ RandGen::RandGen(Game* game) {
 }
 
 int RandGen::generator(int begin, int end) {
-	int random = begin + (rand() % (end - begin + 1));
+	int random = min(begin, end) + (rand() % (abs(end - begin) + 1));
 	return random;
 }
 
@@ -31,7 +31,7 @@ Unit* RandGen::generateEarthUnit() {
 	else if (B <= percentages.percentES + percentages.percentET)
 		unit = new EarthTank(game, game->getTimestep(), health, power, capacity);
 	else
-		unit = new EarthGunner(game, game->getTimestep(), health, power, capacity);
+		unit = new EarthGunnery(game, game->getTimestep(), health, power, capacity);
 
 	return unit;
 }
@@ -55,25 +55,22 @@ Unit* RandGen::generateAlienUnit() {
 void RandGen::generateUnits() {
 	EarthArmy* earthArmy = game->getEarthArmy();
 	AlienArmy* alienArmy = game->getAlienArmy();
+	Unit* unit = nullptr;
 
 	int A = generator(1, 100);
-	if (A >= Prob) {
-		Unit* unit;
+	if (A <= Prob) {
 		for (int i = 0; i < N; ++i) {
 			unit = generateEarthUnit();
-			earthArmy->addUnit(unit, true); 
+			earthArmy->addUnit(unit, true);
 		}
-
 	}
-
+	unit = nullptr;
 	A = generator(1, 100);
-	if (A >= Prob) {
-		Unit* unit;
+	if (A <= Prob) {
 		for (int i = 0; i < N; ++i) {
 			unit = generateAlienUnit();
 			alienArmy->addUnit(unit, true);
 		}
-
 	}
 }
 

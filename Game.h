@@ -13,7 +13,6 @@ class Game
 	RandGen RNG;
 	int timestep;
 	LinkedQueue <Unit*> killedUnits;
-	int killedCount;
 public:
 	Game();
 	void print();
@@ -26,6 +25,7 @@ public:
 	void gameTick();
 	void testCode();
 	int getTimestep();
+	void startGame();
 	double getSoldierRatio();
 	EarthArmy* getEarthArmy();
 	AlienArmy* getAlienArmy();

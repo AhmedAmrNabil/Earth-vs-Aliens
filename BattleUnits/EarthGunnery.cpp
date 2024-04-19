@@ -1,16 +1,16 @@
-#include "EarthGunner.h"
+#include "EarthGunnery.h"
 #include "../Game.h"
 #include <cmath>
 
-EarthGunner::EarthGunner(Game* game, int joinTime, int health, int power, int attackCapacity)
+EarthGunnery::EarthGunnery(Game* game, int joinTime, int health, int power, int attackCapacity)
     : Unit(game,EG, joinTime, health, power, attackCapacity) {
 };
 
-int EarthGunner::getPriority() {
+int EarthGunnery::getPriority() {
     return power * sqrt(health);
 }
 
-void EarthGunner::attack() {
+void EarthGunnery::attack() {
     int timestep = game->getTimestep();
     Unit* drone = nullptr;
     Unit* monster = nullptr;
