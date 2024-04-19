@@ -67,7 +67,10 @@ bool AlienArmy::getUnit(UNIT_TYPE type, Unit*& unit) {
 	}
 	return true;
 }
-
+bool AlienArmy::peek(UNIT_TYPE type, Unit*& unit) {
+	//farag should implement here
+	return false;
+}
 void AlienArmy::print() {
 	cout << "============== Alien Army Alive Units =============\n";
 	cout << alienSoldiers.getCount() << "\tAS ";

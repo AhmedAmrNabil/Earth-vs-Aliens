@@ -61,6 +61,29 @@ bool EarthArmy::getUnit(UNIT_TYPE type, Unit*& unit) {
 	return true;
 }
 
+bool EarthArmy::peek(UNIT_TYPE type, Unit*& unit)
+{
+	switch (type) {
+	case (ES): {
+		if (earthSoldiers.isEmpty()) return false;
+		earthSoldiers.peek(unit);
+		break;
+	}
+	case (EG): {
+		int priority;
+		if (earthGunnery.isEmpty()) return false;
+		earthGunnery.peek(unit, priority);
+		break;
+	}
+	case (ET): {
+		if (earthTanks.isEmpty()) return false;
+		earthTanks.peek(unit);
+		break;
+	}
+	}
+	return true;
+}
+
 void EarthArmy::print() {
 	cout << "============== Earth Army Alive Units =============\n";
 	cout << earthSoldiers.getCount() << "\tES ";
