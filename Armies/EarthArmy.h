@@ -22,5 +22,4 @@ public:
 	void print();
 	int getSoldierCount();
 	~EarthArmy();
-	//void decrementCount(Unit*& unit);
 };
