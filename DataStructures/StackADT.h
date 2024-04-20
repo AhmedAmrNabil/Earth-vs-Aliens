@@ -5,6 +5,7 @@
 /** @file StackADT.h */
 
 #ifndef STACK_ADT_
+
 #define STACK_ADT_
 
 template<typename T>

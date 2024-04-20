@@ -1,4 +1,5 @@
-#pragma once
+#ifndef LINKED_STACK_H
+#define LINKED_STACK_H
 
 #include "StackADT.h"
 #include "Node.h"
@@ -81,3 +82,4 @@ public:
 	int getCount() { return count; }
 };
 
+#endif

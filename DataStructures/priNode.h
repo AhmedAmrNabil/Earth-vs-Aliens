@@ -1,4 +1,6 @@
-#pragma once
+#ifndef PRI_NODE_H
+#define PRI_NODE_H
+
 template <typename T>
 class priNode {
    private:
@@ -25,3 +27,5 @@ class priNode {
 
     int getPri() const { return pri; }
 };  // end Node
+
+#endif

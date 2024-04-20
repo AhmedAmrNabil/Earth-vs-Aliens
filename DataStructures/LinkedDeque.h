@@ -1,5 +1,5 @@
-#ifndef LINKED_QUEUE_H_
-#define LINKED_QUEUE_H_
+#ifndef LINKED_DEQUEUE_H
+#define LINKED_DEQUEUE_H
 #include <iostream>
 
 #include "DNode.h"

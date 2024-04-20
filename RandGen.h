@@ -1,5 +1,5 @@
-#ifndef RAND_GEN_H_
-#define RAND_GEN_H_
+#ifndef RAND_GEN_H
+#define RAND_GEN_H
 
 #include "Armies/Army.h"
 

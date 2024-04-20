@@ -1,5 +1,5 @@
-#ifndef UNIT_H_
-#define UNIT_H_
+#ifndef UNIT_H
+#define UNIT_H
 #include <cmath>
 
 #include "../DataStructures/LinkedQueue.h"

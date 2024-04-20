@@ -1,4 +1,5 @@
-#pragma once
+#ifndef ARRAY_MONSTER_H
+#define ARRAY_MONSTER_H
 #include "../BattleUnits/AlienMonster.h"
 
 class ArrayMonster
@@ -17,3 +18,5 @@ public:
 	void print();
 	int getCount();
 };
+
+#endif
