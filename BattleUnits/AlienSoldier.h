@@ -1,5 +1,5 @@
-#ifndef ALIEN_SOLDIER_H_
-#define ALIEN_SOLDIER_H_
+#ifndef ALIEN_SOLDIER_H
+#define ALIEN_SOLDIER_H
 
 #include "Unit.h"
 

@@ -1,5 +1,5 @@
-#ifndef EARTH_GUNNER_H_
-#define EARTH_GUNNER_H_
+#ifndef EARTH_GUNNER_H
+#define EARTH_GUNNER_H
 
 #include "Unit.h"
 

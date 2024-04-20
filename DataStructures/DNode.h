@@ -1,4 +1,5 @@
-#pragma once
+#ifndef D_NODE_H
+#define D_NODE_H
 
 template <typename T>
 class DNode {
@@ -31,3 +32,5 @@ class DNode {
     void setItem(const T& r_Item) { item = r_Item; };
     T getItem() const { return item; };
 };
+
+#endif

@@ -1,4 +1,5 @@
-#pragma once
+#ifndef ARMY_H
+#define ARMY_H
 
 #include "../BattleUnits/Unit.h"
 #include "../DataStructures/LinkedQueue.h"
@@ -12,5 +13,6 @@ class Army {
     virtual void print() = 0;
     virtual int getSoldierCount() = 0;
     virtual ~Army() {};
-    //virtual void decrementCount(Unit*& unit) = 0;
 };
+
+#endif

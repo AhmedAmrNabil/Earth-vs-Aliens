@@ -1,5 +1,5 @@
-#ifndef GAME_H_
-#define GAME_H_
+#ifndef GAME_H
+#define GAME_H
 #include <iostream>
 #include <fstream>
 #include "Armies/EarthArmy.h"

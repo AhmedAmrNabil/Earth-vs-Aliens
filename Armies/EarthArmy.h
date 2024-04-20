@@ -1,6 +1,9 @@
-#pragma once
+#ifndef EARTH_ARMY_H
+#define EARTH_ARMY_H
+
 #include "../DataStructures/LinkedListStack.h"
 #include "../DataStructures/priQueue.h"
+#include "../DataStructures/LinkedQueue.h"
 #include "Army.h"
 
 class Unit;
@@ -20,3 +23,5 @@ public:
 	int getSoldierCount();
 	~EarthArmy();
 };
+
+#endif
