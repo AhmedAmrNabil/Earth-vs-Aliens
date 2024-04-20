@@ -31,12 +31,9 @@ void Unit::getAttacked(Unit* enemyUnit, int timestep) {
 	decrementHealth(damage, timestep);
 }
 
-bool Unit::isAlien() {
-	return type >= AS;
-}
-
 bool Unit::isDead() { return health == 0; }
-int Unit::getAttackCapacity() { return attackCapacity; }
-int Unit::getHealth() { return health; }
+bool Unit::isAlien() const { return type >= AS; }
+int Unit::getAttackCapacity() const { return attackCapacity; }
+int Unit::getHealth() const { return health; }
 int Unit::getId() const { return id; }
-UNIT_TYPE Unit::getType() { return type; }
+UNIT_TYPE Unit::getType() const { return type; }

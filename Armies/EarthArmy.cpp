@@ -120,17 +120,3 @@ EarthArmy::~EarthArmy() {
 			delete unit;
 	}
 }
-//void EarthArmy::decrementCount(Unit*& unit) {
-//	if (unit == nullptr)return;
-//	switch (unit->getType()) {
-//	case (ES):
-//		if (soldierCount > 0) --soldierCount;
-//		break;
-//	case (ET):
-//		if (tankCount > 0) --tankCount;
-//		break;
-//	case (EG):
-//		if (gunnerCount > 0) --gunnerCount;
-//		break;
-//	}
-//}

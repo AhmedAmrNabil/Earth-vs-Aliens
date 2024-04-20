@@ -131,18 +131,3 @@ AlienArmy::~AlienArmy() {
 			delete unit;
 	}
 }
-
-//void AlienArmy::decrementCount(Unit*& unit) {
-//	if (unit == nullptr) return;
-//	switch (unit->getType()) {
-//	case (AS):
-//		if (soldierCount > 0) --soldierCount;
-//		break;
-//	case (AM):
-//		if (monsterCount > 0) --monsterCount;
-//		break;
-//	case (AD):
-//		if (droneCount > 0) --droneCount;
-//		break;
-//	}
-//}

@@ -74,7 +74,7 @@ public:
 		cout << "[" << top->getItem();
 		while (ptr->getNext()) {
 			ptr = ptr->getNext();
-			cout << "," << ptr->getItem();
+			cout << ", " << ptr->getItem();
 		}
 		cout << "]";
 	}
