@@ -15,5 +15,5 @@ public:
 	bool pick(Unit*& AM);
 	bool peek(Unit*& AM);
 	void print();
-	int getCount() { return monsterCount; }
+	int getCount();
 };

@@ -1,10 +1,7 @@
 #pragma once
-#include <iostream>
 #include "../DataStructures/LinkedListStack.h"
 #include "../DataStructures/priQueue.h"
 #include "Army.h"
-using namespace std;
-
 
 class Unit;
 class EarthArmy : public Army {
@@ -22,5 +19,4 @@ public:
 	void print();
 	int getSoldierCount();
 	~EarthArmy();
-	//void decrementCount(Unit*& unit);
 };

@@ -48,6 +48,10 @@ bool ArrayMonster::peek(Unit*& AM)
 	return false;
 }
 
+int ArrayMonster::getCount() {
+	return monsterCount;
+}
+
 void ArrayMonster::print()
 {
 	if (isEmpty()) return;

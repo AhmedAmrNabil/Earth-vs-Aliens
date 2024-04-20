@@ -1,13 +1,9 @@
 #pragma once
-
 #include "../DataStructures/ArrayMonster.h"
 #include "../DataStructures/LinkedDeque.h"
 #include "./Army.h"
 
-
 class Unit;
-class AlienDrone;
-class AlienSoldier;
 class AlienArmy : public Army {
 	ArrayMonster alienMonsters;
 	LinkedDeque<Unit*> alienDrones;
