@@ -146,15 +146,21 @@ void Game::testCode() {
 	else if (X < 50) {
 		Unit* AM1;
 		int count = 0;
+		LinkedQueue<Unit*>temp;
 		for (int i = 0; i < 5; i++) {
 			if (getAlienUnit(AM, AM1)) {
-				count++;
-				addAlienUnit(AM1);
-			} else {
+				temp.enqueue(AM1);
+			}
+			else {
 				break;
 			}
 		}
-		cout << count <<" Alien Monsters were Picked and inserted back to the original list\n";
+		cout << temp.getCount() << " Alien Monsters were Picked and inserted back to the original list\n";
+		while (!temp.isEmpty()) {
+			Unit* value;
+			temp.dequeue(value);
+			addAlienUnit(value);
+		}
 	}
 	else if (X < 60) {
 		Unit* AD1;

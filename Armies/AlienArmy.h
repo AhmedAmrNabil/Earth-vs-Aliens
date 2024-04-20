@@ -26,5 +26,4 @@ public:
 	void print();
 	int getSoldierCount();
 	~AlienArmy();
-	//void decrementCount(Unit*& unit);
 };

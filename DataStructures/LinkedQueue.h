@@ -214,7 +214,7 @@ void LinkedQueue<T>::print()
 	cout << "[" << frontPtr->getItem();
 	while (ptr->getNext()) {
 		ptr = ptr->getNext();
-		cout << "," << ptr->getItem();
+		cout << ", " << ptr->getItem();
 	}
 	cout << "]";
 }
