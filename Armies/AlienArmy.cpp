@@ -98,38 +98,30 @@ bool AlienArmy::peek(UNIT_TYPE type, Unit*& unit) {
 }
 void AlienArmy::fight()
 {
-	Unit* m, * d1,*d2, * s;
-	if (alienMonsters.peek(m))
+	Unit* M, * D1,*D2, * S;
+	if (alienSoldiers.peek(S)) 
 	{
-		cout << "AM " << m << " shots ";
-		m->attack();
-		cout << endl;
+		S->attack();
 	}
-	if (alienDrones.peek(d1)&&alienDrones.peekRear(d2)&&d1!=d2) 
+	if (alienMonsters.peek(M))
 	{
-		cout << "AD " << d1 << " shots ";
-		d1->attack();
-		cout << endl;
-		cout << "AD " << d2 << " shots ";
-		d2->attack();
-		cout << endl;
+		M->attack();
 	}
-	if (alienSoldiers.peek(s)) 
+	if (alienDrones.peek(D1) && alienDrones.peekRear(D2) && D1 != D2) 
 	{
-		cout << "AS " << s << " shots ";
-		s->attack();
-		cout << endl;
+		D1->attack();
+		D2->attack();
 	}
 }
 void AlienArmy::print() {
-	cout << "============== Alien Army Alive Units =============\n";
-	cout << alienSoldiers.getCount() << "\tAS ";
+	cout << "\t============== Alien Army Alive Units =============\n";
+	cout << "\t" << alienSoldiers.getCount() << "\tAS ";
 	alienSoldiers.print();
 	cout << endl;
-	cout << alienMonsters.getCount() << "\tAM ";
+	cout << "\t" << alienMonsters.getCount() << "\tAM ";
 	alienMonsters.print();
 	cout << endl;
-	cout << alienDrones.getCount() << "\tAD ";
+	cout << "\t" << alienDrones.getCount() << "\tAD ";
 	alienDrones.print();
 	cout << endl;
 }

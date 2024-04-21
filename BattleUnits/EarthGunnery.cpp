@@ -36,7 +36,12 @@ void EarthGunnery::attack() {
         else break;
         --dronesCount;
     }
-    tempList.print();
+    if (!tempList.isEmpty()) {
+        cout << "\tEG " << this << " shots ";
+        cout << "\t";
+        tempList.print();
+        cout << endl;
+    }
     while (!tempList.isEmpty()) {
         tempList.pop(enemyUnit);
         if (enemyUnit->isDead())

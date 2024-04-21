@@ -88,32 +88,27 @@ void EarthArmy::fight()
 {
 	Unit *S,*T,*G;
 	int pri;
-	if(earthSoldiers.peek(S)){
-		cout << "ES " << S << " shots ";
+	cout << "\t==============Units fighting at current step=======\n";
+	if(earthSoldiers.peek(S)){	
 		S->attack();
-		cout << endl;
 	}
 	if (earthTanks.peek(T)) {
-		cout << "ET " << T << " shots ";
 		T->attack();
-		cout << endl;
 	}
 	if (earthGunnery.peek(G, pri)) {
-		cout << "EG " << G << " shots ";
 		G->attack();
-		cout << endl;
 	}
 }
 
 void EarthArmy::print() {
-	cout << "============== Earth Army Alive Units =============\n";
-	cout << earthSoldiers.getCount() << "\tES ";
+	cout << "\t============== Earth Army Alive Units =============\n";
+	cout <<"\t" << earthSoldiers.getCount() << "\tES ";
 	earthSoldiers.print();
 	cout << endl;
-	cout << earthTanks.getCount() << "\tET ";
+	cout << "\t" << earthTanks.getCount() << "\tET ";
 	earthTanks.print();
 	cout << endl;
-	cout << earthGunnery.getCount() << "\tEG ";
+	cout << "\t" << earthGunnery.getCount() << "\tEG ";
 	earthGunnery.print();
 	cout << endl;
 }
