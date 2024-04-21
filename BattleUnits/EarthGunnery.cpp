@@ -12,42 +12,37 @@ int EarthGunnery::getPriority() {
 
 void EarthGunnery::attack() {
     int timestep = game->getTimestep();
-    Unit* drone = nullptr;
-    Unit* monster = nullptr;
-    LinkedListStack<Unit*> tempDrone;
-    LinkedQueue<Unit*> tempMonster;
+    Unit* enemyUnit = nullptr;
+    LinkedListStack<Unit*> tempList;
 
     int monsterCount = this->getAttackCapacity() / 2;
     int dronesCount = this->getAttackCapacity() - monsterCount;
     int dronesAttacked = 0;
     while (monsterCount > 0) {
-        if (game->getAlienUnit(AM, monster)) {
-            monster->getAttacked(this, timestep);
-            if (monster->isDead())
-                game->addToKilled(monster);
-            else
-                tempMonster.enqueue(monster);
+        if (game->getAlienUnit(AM, enemyUnit)) {
+            enemyUnit->getAttacked(this, timestep);
+            tempList.push(enemyUnit);
         }
+        else break;
         --monsterCount;
     }
 
+    dronesCount += monsterCount;
+
     while (dronesAttacked < dronesCount) {
-        if (game->getAlienUnit(AD, drone)) {
-            drone->getAttacked(this, timestep);
-            if (drone->isDead())
-                game->addToKilled(drone);
-            else
-                tempDrone.push(drone);
+        if (game->getAlienUnit(AD, enemyUnit)) {
+            enemyUnit->getAttacked(this, timestep);
+            tempList.push(enemyUnit);
         }
+        else break;
         ++dronesAttacked;
     }
-
-    while (!tempDrone.isEmpty()) {
-        tempDrone.pop(drone);
-        game->addAlienUnit(drone);
-    }
-    while (!tempMonster.isEmpty()) {
-        tempMonster.dequeue(monster);
-        game->addAlienUnit(monster);
+    tempList.print();
+    while (!tempList.isEmpty()) {
+        tempList.pop(enemyUnit);
+        if (enemyUnit->isDead())
+            game->addToKilled(enemyUnit);
+        else
+            game->addAlienUnit(enemyUnit);
     }
 }
