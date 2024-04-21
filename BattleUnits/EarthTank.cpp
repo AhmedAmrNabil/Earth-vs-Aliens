@@ -7,35 +7,42 @@ void EarthTank::attack() {
     int timestep = game->getTimestep();
     Unit* monster;
     Unit* soldier;
-    bool monstersOnly = true;
-    LinkedQueue<Unit*> temp;
-    ArrayMonster tmpMonsters;
-    if (game->getSoldierRatio() < 30) monstersOnly = false;
-    for (int i = 0; i < this->getAttackCapacity(); ++i) {
+    bool attackSoldiers = false;
+    LinkedQueue<Unit*> total;
+    int monsterCount , soldierCount;
+    if (game->getSoldierRatio() < 30) attackSoldiers = true;
+    if(attackSoldiers) {
+        monsterCount = getAttackCapacity() / 2;
+        soldierCount = getAttackCapacity() - monsterCount;
+    }
+    else {
+        monsterCount = getAttackCapacity();
+        soldierCount = 0;
+    }
+    while (attackSoldiers && soldierCount != 0 ) {
+        if (game->getAlienUnit(AS, soldier)) {
+            soldier->getAttacked(this, timestep);
+            total.enqueue(soldier);
+            if (game->getSoldierRatio() > 80) attackSoldiers = false;
+            soldierCount--;
+        }
+        else break;
+    }
+    monsterCount += soldierCount;
+    while (monsterCount != 0) {
         if (game->getAlienUnit(AM, monster)) {
             monster->getAttacked(this, timestep);
-            if (monster->isDead())
-                game->addToKilled(monster);
-            else
-                tmpMonsters.insert(monster);
+            total.enqueue(monster);
+            monsterCount--;
         }
-        if (game->getSoldierRatio() > 80) monstersOnly = true;
-        if (!monstersOnly) {
-            if (game->getAlienUnit(AS, soldier)) {
-                soldier->getAttacked(this, timestep);
-                if (soldier->isDead())
-                    game->addToKilled(soldier);
-                else
-                    temp.enqueue(soldier);
-            }
-        }
+        else break;
     }
-    while (!temp.isEmpty()) {
-        temp.dequeue(soldier);
-        game->addAlienUnit(soldier);
-    }
-    while (!tmpMonsters.isEmpty()) {
-        tmpMonsters.pick(monster);
-        game->addAlienUnit(monster);
+
+    total.print();
+    Unit* unit;
+    while (!total.isEmpty()) {
+        total.dequeue(unit);
+        if (unit->isDead()) game->addToKilled(unit);
+        else game->addAlienUnit(unit);
     }
 }

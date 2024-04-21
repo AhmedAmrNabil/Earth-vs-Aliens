@@ -96,6 +96,9 @@ bool AlienArmy::peek(UNIT_TYPE type, Unit*& unit) {
 	}
 	return true;
 }
+void AlienArmy::fight(Game* game)
+{
+}
 void AlienArmy::print() {
 	cout << "============== Alien Army Alive Units =============\n";
 	cout << alienSoldiers.getCount() << "\tAS ";

@@ -19,6 +19,7 @@ public:
 	bool addUnit(Unit* unit, bool isNew = false);
 	bool getUnit(UNIT_TYPE type, Unit*& unit);
 	bool peek(UNIT_TYPE type, Unit*& unit);
+	void fight(Game* game);
 	void print();
 	int getSoldierCount();
 	~EarthArmy();

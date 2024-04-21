@@ -84,6 +84,18 @@ bool EarthArmy::peek(UNIT_TYPE type, Unit*& unit)
 	return true;
 }
 
+void EarthArmy::fight(Game* game)
+{
+	Unit* S,*T,*G;
+	int pri;
+	earthSoldiers.peek(S);
+	earthTanks.peek(T);
+	earthGunnery.peek(G,pri);
+	S->attack();
+	T->attack();
+	G->attack();
+}
+
 void EarthArmy::print() {
 	cout << "============== Earth Army Alive Units =============\n";
 	cout << earthSoldiers.getCount() << "\tES ";
