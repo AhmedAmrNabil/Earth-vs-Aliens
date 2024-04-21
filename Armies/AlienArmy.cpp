@@ -98,17 +98,20 @@ bool AlienArmy::peek(UNIT_TYPE type, Unit*& unit) {
 }
 void AlienArmy::fight()
 {
-	Unit* m, * d, * s;
+	Unit* m, * d1,*d2, * s;
 	if (alienMonsters.peek(m))
 	{
 		cout << "AM " << m << " shots ";
 		m->attack();
 		cout << endl;
 	}
-	if (alienDrones.peek(d)) 
+	if (alienDrones.peek(d1)&&alienDrones.peekRear(d2)&&d1!=d2) 
 	{
-		cout << "AD " << d << " shots ";
-		d->attack();
+		cout << "AD " << d1 << " shots ";
+		d1->attack();
+		cout << endl;
+		cout << "AD " << d2 << " shots ";
+		d2->attack();
 		cout << endl;
 	}
 	if (alienSoldiers.peek(s)) 
