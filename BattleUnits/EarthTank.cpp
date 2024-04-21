@@ -8,8 +8,6 @@ void EarthTank::attack() {
     Unit* monster;
     Unit* soldier;
     bool attackSoldiers = false;
-    LinkedQueue<Unit*> temp;
-    LinkedQueue<Unit*>tmpMonsters;
     LinkedQueue<Unit*> total;
     int monsterCount , soldierCount;
     if (game->getSoldierRatio() < 30) attackSoldiers = true;
@@ -24,7 +22,7 @@ void EarthTank::attack() {
     while (attackSoldiers && soldierCount != 0 ) {
         if (game->getAlienUnit(AS, soldier)) {
             soldier->getAttacked(this, timestep);
-            temp.enqueue(soldier);
+            total.enqueue(soldier);
             if (game->getSoldierRatio() > 80) attackSoldiers = false;
             soldierCount--;
         }
@@ -34,22 +32,12 @@ void EarthTank::attack() {
     while (monsterCount != 0) {
         if (game->getAlienUnit(AM, monster)) {
             monster->getAttacked(this, timestep);
-            tmpMonsters.enqueue(monster);
+            total.enqueue(monster);
             monsterCount--;
         }
         else break;
     }
-    
-    while (!temp.isEmpty()) {
-        temp.dequeue(soldier);
-        total.enqueue(soldier);
-        
-    }
-    while (!tmpMonsters.isEmpty()) {
-        tmpMonsters.dequeue(monster);
-        total.enqueue(soldier);
-       
-    }
+
     total.print();
     Unit* unit;
     while (!total.isEmpty()) {
