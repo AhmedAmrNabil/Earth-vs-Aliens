@@ -42,9 +42,8 @@ void Game::gameTick() {
 	testCode();
 	print();
 	++timestep;
-	//earthArmy->fight(game);
-	//alienArmy->fight(game);
-
+	//earthArmy.fight(this);
+	//alienArmy.fight(this);
 }
 
 void Game::addToKilled(Unit*& unit)
