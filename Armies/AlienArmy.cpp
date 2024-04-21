@@ -113,7 +113,7 @@ void AlienArmy::print() {
 }
 
 int AlienArmy::getSoldierCount() {
-	return soldierCount;
+	return alienSoldiers.getCount();
 }
 
 AlienArmy::~AlienArmy() {

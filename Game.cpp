@@ -39,11 +39,10 @@ bool Game::addAlienUnit(Unit*& unit)
 
 void Game::gameTick() {
 	RNG.generateUnits();
-	testCode();
 	print();
 	++timestep;
-	//earthArmy.fight(this);
-	//alienArmy.fight(this);
+	earthArmy.fight(this);
+	alienArmy.fight(this);
 }
 
 void Game::addToKilled(Unit*& unit)
@@ -92,89 +91,6 @@ EarthArmy* Game::getEarthArmy() {
 AlienArmy* Game::getAlienArmy() {
 	return &alienArmy;
 }
-void Game::testCode() {
-	cout << "\ncurrent timestep: " << timestep;
-	int X = RNG.generator(1, 100);
-	cout << ", X: " << X << endl;
-	if (X > 0 && X < 10) {
-		Unit* S1;
-		if (getEarthUnit(ES, S1)) {
-			addEarthUnit(S1);
-			cout << "An Earth Soldier was Picked and inserted back to the original list\n";
-		} else {
-			cout << "No Earth Soldiers found for Picking\n";
-		}
-	}
-	else if (X < 20) {
-		Unit* ET1;
-		if (getEarthUnit(ET, ET1)) {
-			addToKilled(ET1);
-			cout << "An Earth Tank was Picked and added to the killed list\n";
-		} else {
-			cout << "No Earth Tank found for Picking\n";
-		}
-	}
-	else if (X < 30) {
-		Unit* EG1;
-		if (getEarthUnit(EG, EG1)) {
-			EG1->decrementHealth(EG1->getHealth() / 2, timestep);
-			addEarthUnit(EG1);
-			cout << "An Earth Gunnery was Picked, decremented half its health and inserted back to the original list\n";
-		} else {
-			cout << "No Earth Gunnery found for Picking\n";
-		}
-	}
-	else if (X < 40) {
-		Unit* AS1;
-		LinkedQueue<Unit*> temp;
-		for (int i = 0; i < 5; i++) {
-			if (getAlienUnit(AS, AS1)) {
-				AS1->decrementHealth(AS1->getHealth() / 2, timestep); //assuming it's decremented by half as well
-				temp.enqueue(AS1);
-			} else {
-				break;
-			}
-		}
-		cout << temp.getCount() <<" Alien Soldiers were Picked, decremented half their health, added to a temp list then inserted back to the original list\n";
-		while (!temp.isEmpty()) {
-			Unit* value;
-			temp.dequeue(value);
-			addAlienUnit(value);
-		}
-	}
-	else if (X < 50) {
-		Unit* AM1;
-		int count = 0;
-		LinkedQueue<Unit*>temp;
-		for (int i = 0; i < 5; i++) {
-			if (getAlienUnit(AM, AM1)) {
-				temp.enqueue(AM1);
-			}
-			else {
-				break;
-			}
-		}
-		cout << temp.getCount() << " Alien Monsters were Picked and inserted back to the original list\n";
-		while (!temp.isEmpty()) {
-			Unit* value;
-			temp.dequeue(value);
-			addAlienUnit(value);
-		}
-	}
-	else if (X < 60) {
-		Unit* AD1;
-		int count = 0;
-		for (int i = 0; i < 6; i++) {
-			if (getAlienUnit(AD, AD1)) {
-				addToKilled(AD1);
-				count++;
-			} else {
-				break;
-			}
-		}
-		cout << count <<" Alien Drones were Picked from front and rear of their list and added to the Killed list\n";
-	}
-}
 
 double Game::getSoldierRatio()
 {
@@ -188,7 +104,7 @@ int Game::getTimestep()
 
 void Game::startGame() {
 	char ch = 0;
-	while (ch != 27 && timestep <= 50) { // timestep condition for test code.
+	while (ch != 27) { // timestep condition for test code.
 		gameTick();
 		ch = _getch();
 	}

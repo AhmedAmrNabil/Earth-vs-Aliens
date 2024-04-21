@@ -86,14 +86,23 @@ bool EarthArmy::peek(UNIT_TYPE type, Unit*& unit)
 
 void EarthArmy::fight(Game* game)
 {
-	Unit* S,*T,*G;
+	Unit *S,*T,*G;
 	int pri;
-	earthSoldiers.peek(S);
-	earthTanks.peek(T);
-	earthGunnery.peek(G,pri);
-	S->attack();
-	T->attack();
-	G->attack();
+	if(earthSoldiers.peek(S)){
+		cout << "ES " << S << " shots ";
+		S->attack();
+		cout << "\n";
+	}
+	if (earthTanks.peek(T)) {
+		cout << "ET " << T << " shots ";
+		T->attack();
+		cout << "\n";
+	}
+	if (earthGunnery.peek(G, pri)) {
+		cout << "EG " << G << " shots ";
+		G->attack();
+		cout << "\n";
+	}
 }
 
 void EarthArmy::print() {
@@ -110,7 +119,7 @@ void EarthArmy::print() {
 }
 
 int EarthArmy::getSoldierCount() {
-	return soldierCount;
+	return earthSoldiers.getCount();
 }
 
 EarthArmy::~EarthArmy() {
