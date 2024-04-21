@@ -7,12 +7,17 @@ Game::Game():RNG(this)
 	loadInput();
 }
 
-void Game::print()
+void Game::printarmies()
 {
+	cout << "\nCurrent Timestep: " << timestep << endl;
 	earthArmy.print();
 	alienArmy.print();
-	cout << "============== Killed/Destructed Units =============\n";
-	cout << killedUnits.getCount() << "    units ";
+}
+
+void Game::printkilledunits()
+{
+	cout << "\t============== Killed/Destructed Units ============\n";
+	cout << "\t" << killedUnits.getCount() << "    units ";
 	killedUnits.print();
 	cout << endl;
 }
@@ -39,10 +44,11 @@ bool Game::addAlienUnit(Unit*& unit)
 
 void Game::gameTick() {
 	RNG.generateUnits();
-	print();
-	++timestep;
+	printarmies();
 	earthArmy.fight();
 	alienArmy.fight();
+	printkilledunits();
+	++timestep;
 }
 
 void Game::addToKilled(Unit*& unit)

@@ -19,7 +19,12 @@ void AlienSoldier::attack() {
 		else break;
 		--soldierCount;
 	}
-	tempList.print();
+	if (!tempList.isEmpty()) {
+		cout << "\tAS " << this << " shots ";
+		cout << "\t";
+		tempList.print();
+		cout << endl;
+	}
 	while (!tempList.isEmpty()) {
 		tempList.dequeue(enemyUnit);
 		if (enemyUnit->isDead())

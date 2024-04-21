@@ -37,8 +37,12 @@ void EarthTank::attack() {
         }
         else break;
     }
-
-    total.print();
+    if (!total.isEmpty()) {
+        cout << "\tET " << this << " shots ";
+        cout << "\t";
+        total.print();
+        cout << endl;
+    }
     Unit* unit;
     while (!total.isEmpty()) {
         total.dequeue(unit);

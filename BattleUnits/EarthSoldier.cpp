@@ -19,7 +19,12 @@ void EarthSoldier::attack() {
 		else break;
 		--soldierCount;
 	}
-	tempList.print();
+	if (!tempList.isEmpty()) {
+		cout << "\tES " << this << " shots ";
+		cout << "\t";
+		tempList.print();
+		cout << endl;
+	}
 	while (!tempList.isEmpty()) {
 		tempList.dequeue(enemyUnit);
 		if (enemyUnit->isDead())

@@ -36,7 +36,12 @@ void AlienDrone::attack() {
         }
         else break;
     }
-    total.print();
+    if (!total.isEmpty()) {
+        cout << "\tAD " << this << " shots ";
+        cout << "\t";
+        total.print();
+        cout << endl;
+    }
     while (!tempEarthTanks.isEmpty()) {
         Unit* tmp = nullptr;
         tempEarthTanks.pop(tmp);

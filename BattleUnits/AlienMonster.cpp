@@ -36,7 +36,12 @@ void AlienMonster::attack() {
         }
         else break;
     }
-    total.print();
+    if (!total.isEmpty()) {
+        cout << "\tAM " << this << " shots ";
+        cout << "\t";
+        total.print();
+        cout << endl;
+    }
     while (!tempEarthTanks.isEmpty()) 
     {
        Unit* tmp = nullptr;

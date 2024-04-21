@@ -15,7 +15,8 @@ class Game
 	LinkedQueue <Unit*> killedUnits;
 public:
 	Game();
-	void print();
+	void printarmies();
+	void printkilledunits();
 	bool getEarthUnit(UNIT_TYPE type, Unit*& unit);
 	bool getAlienUnit(UNIT_TYPE type, Unit*& unit);
 	bool addEarthUnit(Unit*& unit);
@@ -23,7 +24,6 @@ public:
 	void addToKilled(Unit*& unit);
 	void loadInput();
 	void gameTick();
-	void testCode();
 	int getTimestep();
 	void startGame();
 	double getSoldierRatio();
