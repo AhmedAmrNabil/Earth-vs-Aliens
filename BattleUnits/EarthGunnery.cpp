@@ -17,7 +17,6 @@ void EarthGunnery::attack() {
 
     int monsterCount = this->getAttackCapacity() / 2;
     int dronesCount = this->getAttackCapacity() - monsterCount;
-    int dronesAttacked = 0;
     while (monsterCount > 0) {
         if (game->getAlienUnit(AM, enemyUnit)) {
             enemyUnit->getAttacked(this, timestep);
@@ -29,13 +28,13 @@ void EarthGunnery::attack() {
 
     dronesCount += monsterCount;
 
-    while (dronesAttacked < dronesCount) {
+    while (dronesCount>0) {
         if (game->getAlienUnit(AD, enemyUnit)) {
             enemyUnit->getAttacked(this, timestep);
             tempList.push(enemyUnit);
         }
         else break;
-        ++dronesAttacked;
+        --dronesCount;
     }
     tempList.print();
     while (!tempList.isEmpty()) {

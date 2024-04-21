@@ -12,38 +12,43 @@ void AlienMonster::attack() {
     LinkedQueue<Unit*> temp;
     Unit* tank = nullptr;
     Unit* soldier = nullptr;
-    for (int i = 0; i < this->getAttackCapacity() / 2; ++i) {
+    int soldierCount = this->getAttackCapacity() / 2;
+    int tankCount = this->getAttackCapacity() - soldierCount;
+    while (tankCount > 0)
+    {
         if (game->getEarthUnit(ET, tank)) {
             tank->getAttacked(this, timestep);
-            if (tank->isDead())
-                game->addToKilled(tank);
-            else
-                tempEarthTanks.push(tank);
+            tempEarthTanks.push(tank);
+            --tankCount;
         }
+        else break;
+    }
+    soldierCount += tankCount;
+    while (soldierCount > 0)
+    {
         if (game->getEarthUnit(ES, soldier)) {
             soldier->getAttacked(this, timestep);
-            if (soldier->isDead())
-                game->addToKilled(soldier);
-            else
-                temp.enqueue(soldier);
+            temp.enqueue(soldier);
+            --soldierCount;
         }
+        else break;
     }
-    if (this->getAttackCapacity() % 2 == 1) {
-        if (game->getEarthUnit(ET, tank)) {
-            tank->getAttacked(this, timestep);
-            if (tank->isDead())
-                game->addToKilled(tank);
-            else
-                tempEarthTanks.push(tank);
-        }
+    tempEarthTanks.print();
+    while (!tempEarthTanks.isEmpty()) 
+    {
+       Unit* tmp = nullptr;
+       tempEarthTanks.pop(tmp);
+       if (tmp->isDead())
+           game->addToKilled(tmp);
+       else
+           game->addEarthUnit(tmp);
     }
-    while (!tempEarthTanks.isEmpty()) {
-        Unit* tmp = nullptr;
-        tempEarthTanks.pop(tank);
-        game->addEarthUnit(tmp);
-    }
+    temp.print();
     while (!temp.isEmpty()) {
         temp.dequeue(soldier);
-        game->addEarthUnit(soldier);
+        if (soldier->isDead())
+            game->addToKilled(soldier);
+        else
+            game->addEarthUnit(soldier);
     }
 }

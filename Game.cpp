@@ -41,8 +41,8 @@ void Game::gameTick() {
 	RNG.generateUnits();
 	print();
 	++timestep;
-	earthArmy.fight(this);
-	alienArmy.fight(this);
+	earthArmy.fight();
+	alienArmy.fight();
 }
 
 void Game::addToKilled(Unit*& unit)

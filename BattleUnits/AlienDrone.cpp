@@ -12,38 +12,42 @@ void AlienDrone::attack() {
     LinkedQueue<Unit*> temp;
     Unit* tank = nullptr;
     Unit* gunnery = nullptr;
-    for (int i = 0; i < this->getAttackCapacity() / 2; ++i) {
+    int gunnerCount = this->getAttackCapacity() / 2;
+    int tankCount=this->getAttackCapacity()- gunnerCount;
+    while (tankCount > 0) 
+    {
         if (game->getEarthUnit(ET, tank)) {
             tank->getAttacked(this, timestep);
-            if (tank->isDead())
-                game->addToKilled(tank);
-            else
-                tempEarthTanks.push(tank);
+            tempEarthTanks.push(tank);
+            --tankCount;
         }
+        else break;
+    }
+    gunnerCount += tankCount;
+    while (gunnerCount > 0)
+    {
         if (game->getEarthUnit(EG, gunnery)) {
             gunnery->getAttacked(this, timestep);
-            if (gunnery->isDead())
-                game->addToKilled(gunnery);
-            else
-                temp.enqueue(gunnery);
+            temp.enqueue(gunnery);
+            --gunnerCount;
         }
+        else break;
     }
-    if (this->getAttackCapacity() % 2 == 1) {
-        if (game->getEarthUnit(ET, tank)) {
-            tank->getAttacked(this, timestep);
-            if (tank->isDead())
-                game->addToKilled(tank);
-            else
-                tempEarthTanks.push(tank);
-        }
-    }
+    tempEarthTanks.print();
     while (!tempEarthTanks.isEmpty()) {
         Unit* tmp = nullptr;
         tempEarthTanks.pop(tmp);
-        game->addEarthUnit(tmp);
+        if (tmp->isDead())
+            game->addToKilled(tmp);
+        else
+            game->addEarthUnit(tmp);
     }
+    temp.print();
     while (!temp.isEmpty()) {
         temp.dequeue(gunnery);
-        game->addEarthUnit(gunnery);
+        if(gunnery->isDead())
+            game->addToKilled(gunnery);
+        else
+            game->addEarthUnit(gunnery);
     }
 }
