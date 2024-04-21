@@ -21,7 +21,7 @@ public:
 	bool addUnit(Unit* unit, bool isNew = false);
 	bool getUnit(UNIT_TYPE type, Unit*& unit);
 	bool peek(UNIT_TYPE type, Unit*& unit);
-	void fight(Game* game);
+	void fight();
 	void print();
 	int getSoldierCount();
 	~AlienArmy();
