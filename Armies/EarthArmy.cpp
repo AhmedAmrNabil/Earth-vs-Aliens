@@ -88,9 +88,9 @@ void EarthArmy::fight(Game* game)
 {
 	Unit* S,*T,*G;
 	int pri;
-	earthSoldiers.dequeue(S);
-	earthTanks.pop(T);
-	earthGunnery.dequeue(G,pri);
+	earthSoldiers.peek(S);
+	earthTanks.peek(T);
+	earthGunnery.peek(G,pri);
 	S->attack();
 	T->attack();
 	G->attack();
