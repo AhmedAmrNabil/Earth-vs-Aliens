@@ -46,17 +46,11 @@ void AlienMonster::attack() {
     {
        Unit* tmp = nullptr;
        tempEarthTanks.pop(tmp);
-       if (tmp->isDead())
-           game->addToKilled(tmp);
-       else
-           game->addEarthUnit(tmp);
+       game->handleUnit(tmp);
     }
     while (!temp.isEmpty()) {
         temp.dequeue(soldier);
-        if (soldier->isDead())
-            game->addToKilled(soldier);
-        else
-            game->addEarthUnit(soldier);
+        game->handleUnit(soldier);
     }
     while (!total.isEmpty())
     {

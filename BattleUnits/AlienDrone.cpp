@@ -45,17 +45,11 @@ void AlienDrone::attack() {
     while (!tempEarthTanks.isEmpty()) {
         Unit* tmp = nullptr;
         tempEarthTanks.pop(tmp);
-        if (tmp->isDead())
-            game->addToKilled(tmp);
-        else
-            game->addEarthUnit(tmp);
+        game->handleUnit(tmp);
     }
     while (!temp.isEmpty()) {
         temp.dequeue(gunnery);
-        if(gunnery->isDead())
-            game->addToKilled(gunnery);
-        else
-            game->addEarthUnit(gunnery);
+        game->handleUnit(gunnery);
     }
     while (!total.isEmpty()) 
     {

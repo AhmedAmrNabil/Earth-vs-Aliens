@@ -9,6 +9,7 @@ Unit::Unit(Game* game,UNIT_TYPE type, int joinTime, int health, int power, int a
 	: game(game),type(type), joinTime(joinTime), health(health), power(power), attackCapacity(attackCapacity) {
 	firstAttackedTime = -1;
 	destructionTime = -1;
+	initialhealth = health;
 	id = isAlien() ? lastAlienId++ : lastEarthId++;
 }
 
@@ -31,9 +32,21 @@ void Unit::getAttacked(Unit* enemyUnit, int timestep) {
 	decrementHealth(damage, timestep);
 }
 
+void Unit::getHealed(Unit* healUnit)
+{
+	int heal = (healUnit->power * healUnit->health / 100.0) / sqrt(this->health);
+	health += heal;
+}
+
+bool Unit::isLow() const
+{
+	double ratio = (health / initialhealth) * 100;
+	return (ratio < 20 && ratio > 0) && (type == ES || type == ET) ;
+}
 bool Unit::isDead() { return health == 0; }
 bool Unit::isAlien() const { return type >= AS; }
-int Unit::getAttackCapacity() const { return attackCapacity; }
 int Unit::getHealth() const { return health; }
+int Unit::getAttackCapacity() const { return attackCapacity; }
 int Unit::getId() const { return id; }
+int Unit::getDestructionTime() const{ return destructionTime; }
 UNIT_TYPE Unit::getType() const { return type; }

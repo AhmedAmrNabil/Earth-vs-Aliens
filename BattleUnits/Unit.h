@@ -5,6 +5,7 @@
 #include"../DataStructures/LinkedQueue.h"
 
 enum UNIT_TYPE {
+	HU,
 	ES,
 	ET,
 	EG,
@@ -29,18 +30,21 @@ class Unit {
 	Game* game;
 	int health;
 	int power;
-
+	int initialhealth;
 
    public:
 	Unit(Game* game,UNIT_TYPE type, int joinTime, int health, int power, int attackCapacity);
 	virtual void attack() = 0;
 	void decrementHealth(int damage, int timestep);
 	void getAttacked(Unit* enemyUnit, int timestep);
+	void getHealed(Unit* HealUnit);
 	bool isDead();
 	bool isAlien() const;
+	bool isLow() const;
 	int getAttackCapacity() const;
 	int getHealth() const;
 	int getId() const;
+	int getDestructionTime() const;
 	UNIT_TYPE getType() const;
 };
 

@@ -27,9 +27,6 @@ void EarthSoldier::attack() {
 	}
 	while (!tempList.isEmpty()) {
 		tempList.dequeue(enemyUnit);
-		if (enemyUnit->isDead())
-			game->addToKilled(enemyUnit);
-		else
-			game->addAlienUnit(enemyUnit);
+		game->handleUnit(enemyUnit);
 	}
 }

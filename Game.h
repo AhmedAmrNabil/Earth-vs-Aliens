@@ -13,15 +13,20 @@ class Game
 	RandGen RNG;
 	int timestep;
 	LinkedQueue <Unit*> killedUnits;
+	LinkedQueue <Unit*> UML;
 public:
 	Game();
 	void printarmies();
 	void printkilledunits();
+	void printUML();
 	bool getEarthUnit(UNIT_TYPE type, Unit*& unit);
 	bool getAlienUnit(UNIT_TYPE type, Unit*& unit);
+	bool getfromUML(Unit*& unit);
+	void addToUML(Unit*& unit);
 	bool addEarthUnit(Unit*& unit);
 	bool addAlienUnit(Unit*& unit);
 	void addToKilled(Unit*& unit);
+	void handleUnit(Unit*& unit);
 	void loadInput();
 	void gameTick();
 	int getTimestep();

@@ -139,6 +139,7 @@
     <ClCompile Include="BattleUnits\EarthGunnery.cpp" />
     <ClCompile Include="BattleUnits\EarthSoldier.cpp" />
     <ClCompile Include="BattleUnits\EarthTank.cpp" />
+    <ClCompile Include="BattleUnits\HealUnit.cpp" />
     <ClCompile Include="BattleUnits\Unit.cpp" />
     <ClCompile Include="DataStructures\ArrayMonster.cpp" />
     <ClCompile Include="Game.cpp" />
@@ -155,6 +156,7 @@
     <ClInclude Include="BattleUnits\EarthSoldier.h" />
     <ClInclude Include="BattleUnits\EarthTank.h" />
     <ClInclude Include="BattleUnits\AlienSoldier.h" />
+    <ClInclude Include="BattleUnits\HealUnit.h" />
     <ClInclude Include="BattleUnits\Unit.h" />
     <ClInclude Include="DataStructures\ArrayMonster.h" />
     <ClInclude Include="DataStructures\DNode.h" />

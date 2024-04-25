@@ -22,6 +22,14 @@ void Game::printkilledunits()
 	cout << endl;
 }
 
+void Game::printUML()
+{
+	cout << "\t============== Unit Maintenance List ============\n";
+	cout << "\t" << UML.getCount() << "    units ";
+	UML.print();
+	cout << endl;
+}
+
 bool Game::getEarthUnit(UNIT_TYPE type, Unit*& unit)
 {
 	return earthArmy.getUnit(type, unit);
@@ -30,6 +38,11 @@ bool Game::getEarthUnit(UNIT_TYPE type, Unit*& unit)
 bool Game::getAlienUnit(UNIT_TYPE type, Unit*& unit)
 {
 	return alienArmy.getUnit(type, unit);
+}
+
+bool Game::getfromUML(Unit*& unit)
+{
+	return UML.dequeue(unit);
 }
 
 bool Game::addEarthUnit(Unit*& unit)
@@ -44,16 +57,33 @@ bool Game::addAlienUnit(Unit*& unit)
 
 void Game::gameTick() {
 	RNG.generateUnits();
+	healUnits();
 	printarmies();
 	earthArmy.fight();
 	alienArmy.fight();
 	printkilledunits();
+	printUML();
 	++timestep;
 }
 
 void Game::addToKilled(Unit*& unit)
 {
 	killedUnits.enqueue(unit);
+}
+
+void Game::addToUML(Unit*& unit)
+{
+	UML.enqueue(unit);
+}
+
+void Game::handleUnit(Unit*& unit)
+{
+	if (unit->isDead()) addToKilled(unit);
+	else if (unit->isLow()) addToUML(unit);
+	else {
+		if (unit->isAlien()) addAlienUnit(unit);
+		else addEarthUnit(unit);
+	}
 }
 
 void Game::loadInput()

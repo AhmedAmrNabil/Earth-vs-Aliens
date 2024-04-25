@@ -11,9 +11,11 @@ class EarthArmy : public Army {
 	priQueue<Unit*> earthGunnery;
 	LinkedListStack<Unit*> earthTanks;
 	LinkedQueue<Unit*> earthSoldiers;
+	LinkedListStack<Unit*> HL;
 	int tankCount;
 	int gunnerCount;
 	int soldierCount;
+	int healCount;
 public:
 	EarthArmy();
 	bool addUnit(Unit* unit, bool isNew = false);
