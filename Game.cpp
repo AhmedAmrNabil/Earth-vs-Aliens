@@ -57,7 +57,6 @@ bool Game::addAlienUnit(Unit*& unit)
 
 void Game::gameTick() {
 	RNG.generateUnits();
-	healUnits();
 	printarmies();
 	earthArmy.fight();
 	alienArmy.fight();
@@ -96,7 +95,7 @@ void Game::loadInput()
 	input_file.open("input.txt", ios::in);
 	input_file >> N;
 
-	input_file >> percentages.percentES >> percentages.percentET >> percentages.percentEG;
+	input_file >> percentages.percentES >> percentages.percentET >> percentages.percentEG >> percentages.percentHU;
 	input_file >> percentages.percentAS >> percentages.percentAM >> percentages.percentAD;
 	
 	input_file >> Prob;
