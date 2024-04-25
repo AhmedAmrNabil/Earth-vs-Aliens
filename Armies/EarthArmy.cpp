@@ -108,6 +108,7 @@ void EarthArmy::fight()
 	cout << "\t==============Units fighting at current step=======\n";
 	if (HL.peek(H)) {
 		H->attack();
+		//if(H->isDead()) 
 	}
 	if(earthSoldiers.peek(S)){	
 		S->attack();

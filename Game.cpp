@@ -75,7 +75,7 @@ void Game::addToUML(Unit*& unit)
 	UML.enqueue(unit);
 }
 
-void Game::handleUnit(Unit*& unit)
+void Game::handleUnit(Unit* unit)
 {
 	if (unit->isDead()) addToKilled(unit);
 	else if (unit->isLow()) addToUML(unit);
