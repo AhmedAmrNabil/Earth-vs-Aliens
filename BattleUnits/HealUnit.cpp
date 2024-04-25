@@ -26,6 +26,8 @@ void HealUnit::attack()
 		tempList.dequeue(unit);
 		game->handleUnit(unit);
 	}
-	this-> health = 0;
-	game->addToKilled(unit);  //probably temporary
+	if(healCount != this->getAttackCapacity()) {
+		this->health = 0;
+		game->addToKilled(unit);  //probably temporary
+	}
 }
