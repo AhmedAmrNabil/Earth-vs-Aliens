@@ -28,13 +28,13 @@ void Unit::decrementHealth(int damage, int timestep) {
 }
 
 void Unit::getAttacked(Unit* enemyUnit, int timestep) {
-	int damage = (enemyUnit->power * enemyUnit->health / 100.0) / sqrt(this->health);
+	double damage = (enemyUnit->power * enemyUnit->health / 100.0) / sqrt(this->health);
 	decrementHealth(damage, timestep);
 }
 
 void Unit::getHealed(Unit* healUnit)
 {
-	int heal = (healUnit->power * healUnit->health / 100.0) / sqrt(this->health);
+	double heal = (healUnit->power * healUnit->health / 100.0) / sqrt(this->health);
 	health += heal;
 }
 
@@ -45,7 +45,7 @@ bool Unit::isLow() const
 }
 bool Unit::isDead() { return health == 0; }
 bool Unit::isAlien() const { return type >= AS; }
-int Unit::getHealth() const { return health; }
+double Unit::getHealth() const { return health; }
 int Unit::getAttackCapacity() const { return attackCapacity; }
 int Unit::getId() const { return id; }
 int Unit::getDestructionTime() const{ return destructionTime; }

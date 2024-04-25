@@ -21,12 +21,7 @@ void HealUnit::attack()
 		}
 		else break;
 	}
-	/*if (!tempList.isEmpty()) {
-		cout << "\tES " << this << " shots ";
-		cout << "\t";
-		tempList.print();
-		cout << endl;
-	}*/
+
 	while (!tempList.isEmpty()) {
 		tempList.dequeue(unit);
 		game->handleUnit(unit);

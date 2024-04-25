@@ -28,9 +28,9 @@ class Unit {
 
    protected:
 	Game* game;
-	int health;
-	int power;
-	int initialhealth;
+	double health;
+	double power;
+	double initialhealth;
 
    public:
 	Unit(Game* game,UNIT_TYPE type, int joinTime, int health, int power, int attackCapacity);
@@ -42,7 +42,7 @@ class Unit {
 	bool isAlien() const;
 	bool isLow() const;
 	int getAttackCapacity() const;
-	int getHealth() const;
+	double getHealth() const;
 	int getId() const;
 	int getDestructionTime() const;
 	UNIT_TYPE getType() const;
