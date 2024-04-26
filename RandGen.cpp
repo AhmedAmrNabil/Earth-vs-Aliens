@@ -20,10 +20,15 @@ int RandGen::generator(int begin, int end) {
 	return random;
 }
 
+double generateDouble(double begin, double end) {
+	double random = begin + (end - begin) * rand() / double(RAND_MAX);
+	return random;
+}
+
 Unit* RandGen::generateEarthUnit() {
 	Unit* unit;
-	int power = generator(earthData.minPower, earthData.maxPower);
-	int health = generator(earthData.minHealth, earthData.maxHealth);
+	double power = generator(earthData.minPower, earthData.maxPower);
+	double health = generator(earthData.minHealth, earthData.maxHealth);
 	int capacity = generator(earthData.minCapacity, earthData.maxCapacity);
 	int B = generator(1, 100);
 	if (B <= percentages.percentES)
@@ -38,8 +43,8 @@ Unit* RandGen::generateEarthUnit() {
 
 Unit* RandGen::generateAlienUnit() {
 	Unit* unit;
-	int power = generator(alienData.minPower, alienData.maxPower);
-	int health = generator(alienData.minHealth, alienData.maxHealth);
+	double power = generator(alienData.minPower, alienData.maxPower);
+	double health = generator(alienData.minHealth, alienData.maxHealth);
 	int capacity = generator(alienData.minCapacity, alienData.maxCapacity);
 	int B = generator(1, 100);
 	if (B <= percentages.percentAS)

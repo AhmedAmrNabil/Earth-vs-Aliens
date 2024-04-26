@@ -20,7 +20,7 @@ std::ostream& operator<<(std::ostream& out, const Unit* unit) {
 	return out;
 }
 
-void Unit::decrementHealth(int damage, int timestep) {
+void Unit::decrementHealth(double damage, int timestep) {
 	health -= damage;
 	if (health <= 0) {
 		health = 0;
@@ -34,25 +34,23 @@ void Unit::getAttacked(Unit* enemyUnit, int timestep) {
 	decrementHealth(damage, timestep);
 }
 
-void Unit::getHealed(Unit* healUnit)
-{
+void Unit::getHealed(Unit* healUnit) {
 	double heal = (healUnit->power * healUnit->health / 100.0) / sqrt(this->health);
 	health += heal;
 }
 
-void Unit::setUMLJoinTime(int jointime)
-{
+void Unit::setUMLJoinTime(int jointime) {
 	joinUMLTime = jointime;
 }
 
-int Unit::getUMLJoinTime() { return joinUMLTime; }
 
-bool Unit::isLow() const
-{
+bool Unit::isLow() const {
 	double ratio = (health / initialhealth) * 100;
 	return (ratio < 20 && ratio > 0) && (type == ES || type == ET) ;
 }
-bool Unit::isDead() { return health == 0; }
+
+int Unit::getUMLJoinTime() { return joinUMLTime; }
+bool Unit::isDead() const { return health == 0; }
 bool Unit::isAlien() const { return type >= AS; }
 double Unit::getHealth() const { return health; }
 int Unit::getAttackCapacity() const { return attackCapacity; }

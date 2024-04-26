@@ -31,6 +31,7 @@ class RandGen {
 public:
 	RandGen(Game* game);
 	int generator(int begin, int end);
+	double generateDouble(double begin, double end);
 	Unit* generateEarthUnit();
 	Unit* generateAlienUnit();
 	void generateUnits();
