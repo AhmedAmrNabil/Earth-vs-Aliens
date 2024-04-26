@@ -10,6 +10,7 @@ Unit::Unit(Game* game,UNIT_TYPE type, int joinTime, int health, int power, int a
 	firstAttackedTime = -1;
 	destructionTime = -1;
 	initialhealth = health;
+	joinUMLTime = -1;
 	id = isAlien() ? lastAlienId++ : lastEarthId++;
 }
 

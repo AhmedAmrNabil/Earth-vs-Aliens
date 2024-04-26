@@ -24,7 +24,7 @@ void Game::printkilledunits()
 
 void Game::printUML()
 {
-	cout << "\t============== Unit Maintenance List ============\n";
+	cout << "\t============== Unit Maintenance List ==============\n";
 	cout << "\t" << UML.getCount() << "    units ";
 	UML.print();
 	cout << endl;
@@ -43,12 +43,12 @@ bool Game::getAlienUnit(UNIT_TYPE type, Unit*& unit)
 bool Game::getfromUML(Unit*& unit)
 {
 	int pri;
-	UML.dequeue(unit , pri);
-	while (timestep - unit->getUMLJoinTime() > 10) {
+	bool b = UML.dequeue(unit , pri);
+	while (b && timestep - unit->getUMLJoinTime() > 10) {
 		addToKilled(unit);
-		UML.dequeue(unit , pri);
+		b = UML.dequeue(unit , pri);
 	}
-	return unit;
+	return b;
 }
 
 bool Game::addEarthUnit(Unit*& unit)
@@ -85,7 +85,7 @@ void Game::addToUML(Unit*& unit , int joinUMLtime)
 	unit->setUMLJoinTime(joinUMLtime);
 }
 
-void Game::handleUnit(Unit* unit)
+void Game::handleUnit(Unit*& unit)
 {
 	if (unit->isDead()) addToKilled(unit);
 	else if (unit->isLow()) addToUML(unit , timestep);

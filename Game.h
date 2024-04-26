@@ -29,7 +29,7 @@ public:
 	bool addEarthUnit(Unit*& unit);
 	bool addAlienUnit(Unit*& unit);
 	void addToKilled(Unit*& unit);
-	void handleUnit(Unit* unit);
+	void handleUnit(Unit*& unit);
 	void loadInput();
 	void gameTick();
 	int getTimestep();
