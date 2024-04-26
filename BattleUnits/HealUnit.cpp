@@ -21,13 +21,18 @@ void HealUnit::attack()
 		}
 		else break;
 	}
-
+	if (!tempList.isEmpty()) {
+		cout << "\tHU " << this << " healed ";
+		cout << "\t";
+		tempList.print();
+		cout << endl;
+	}
 	while (!tempList.isEmpty()) {
 		tempList.dequeue(unit);
 		game->handleUnit(unit);
 	}
-	if(healCount != this->getAttackCapacity()) { 
-		this->health = 0; 
-		game->handleUnit(this);
-	}
+	//if(healCount != this->getAttackCapacity()) { 
+		//this->health = 0; 
+		//game->handleUnit(this);
+	//}
 }
