@@ -42,7 +42,13 @@ bool Game::getAlienUnit(UNIT_TYPE type, Unit*& unit)
 
 bool Game::getfromUML(Unit*& unit)
 {
-	return UML.dequeue(unit);
+	int pri;
+	UML.dequeue(unit , pri);
+	while (timestep - unit->getUMLJoinTime() > 10) {
+		addToKilled(unit);
+		UML.dequeue(unit , pri);
+	}
+	return unit;
 }
 
 bool Game::addEarthUnit(Unit*& unit)
@@ -70,15 +76,19 @@ void Game::addToKilled(Unit*& unit)
 	killedUnits.enqueue(unit);
 }
 
-void Game::addToUML(Unit*& unit)
+void Game::addToUML(Unit*& unit , int joinUMLtime)
 {
-	UML.enqueue(unit);
+	int pri;
+	if (unit->getType() == ES) pri = (earthData.maxHealth - unit->getHealth()) * 1000;
+	else pri = -1;
+	UML.enqueue(unit , pri);
+	unit->setUMLJoinTime(joinUMLtime);
 }
 
 void Game::handleUnit(Unit* unit)
 {
 	if (unit->isDead()) addToKilled(unit);
-	else if (unit->isLow()) addToUML(unit);
+	else if (unit->isLow()) addToUML(unit , timestep);
 	else {
 		if (unit->isAlien()) addAlienUnit(unit);
 		else addEarthUnit(unit);
@@ -88,9 +98,6 @@ void Game::handleUnit(Unit* unit)
 void Game::loadInput()
 {
 	int N, Prob;
-	Percentages percentages;
-	ArmyData earthData;
-	ArmyData alienData;
 	ifstream input_file;
 	input_file.open("input.txt", ios::in);
 	input_file >> N;

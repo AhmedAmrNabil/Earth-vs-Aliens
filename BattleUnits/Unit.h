@@ -22,6 +22,7 @@ class Unit {
 	int joinTime;
 	int firstAttackedTime;
 	int destructionTime;
+	int joinUMLTime;
 	int attackCapacity;
 	static int lastEarthId;
 	static int lastAlienId;
@@ -38,6 +39,8 @@ class Unit {
 	void decrementHealth(int damage, int timestep);
 	void getAttacked(Unit* enemyUnit, int timestep);
 	void getHealed(Unit* HealUnit);
+	void setUMLJoinTime(int jointime);
+	int getUMLJoinTime();
 	bool isDead();
 	bool isAlien() const;
 	bool isLow() const;

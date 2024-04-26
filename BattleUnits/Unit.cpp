@@ -38,6 +38,13 @@ void Unit::getHealed(Unit* healUnit)
 	health += heal;
 }
 
+void Unit::setUMLJoinTime(int jointime)
+{
+	joinUMLTime = jointime;
+}
+
+int Unit::getUMLJoinTime() { return joinUMLTime; }
+
 bool Unit::isLow() const
 {
 	double ratio = (health / initialhealth) * 100;

@@ -13,7 +13,10 @@ class Game
 	RandGen RNG;
 	int timestep;
 	LinkedQueue <Unit*> killedUnits;
-	LinkedQueue <Unit*> UML;
+	priQueue <Unit*> UML;
+	Percentages percentages;
+	ArmyData earthData;
+	ArmyData alienData;
 public:
 	Game();
 	void printarmies();
@@ -22,7 +25,7 @@ public:
 	bool getEarthUnit(UNIT_TYPE type, Unit*& unit);
 	bool getAlienUnit(UNIT_TYPE type, Unit*& unit);
 	bool getfromUML(Unit*& unit);
-	void addToUML(Unit*& unit);
+	void addToUML(Unit*& unit , int joinUMLtime);
 	bool addEarthUnit(Unit*& unit);
 	bool addAlienUnit(Unit*& unit);
 	void addToKilled(Unit*& unit);
