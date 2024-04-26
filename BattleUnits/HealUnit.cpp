@@ -3,7 +3,7 @@
 #include "../DataStructures/LinkedQueue.h"
 
 
-HealUnit::HealUnit(Game* game, int joinTime, int health, int power, int attackCapacity)
+HealUnit::HealUnit(Game* game, int joinTime, double health, double power, int attackCapacity)
 	: Unit(game, ET, joinTime, health, power, attackCapacity)
 {
 }

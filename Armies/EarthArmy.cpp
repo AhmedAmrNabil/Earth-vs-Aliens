@@ -142,6 +142,25 @@ int EarthArmy::getSoldierCount() {
 	return earthSoldiers.getCount();
 }
 
+int EarthArmy::getTotalSoldierCount() {
+	return soldierCount;
+}
+int EarthArmy::getTotalGunneryCount() {
+	return gunnerCount;
+}
+int EarthArmy::getTotalTankCount() {
+	return tankCount;
+}
+int EarthArmy::getTotalHealCount() {
+	return healCount;
+}
+
+
+bool EarthArmy::isAlive() {
+	int totalCount = earthSoldiers.getCount() + earthTanks.getCount() + earthGunnery.getCount();
+	return totalCount > 0;
+}
+
 EarthArmy::~EarthArmy() {
 	Unit* unit;
 	int pri;

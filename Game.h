@@ -32,6 +32,7 @@ public:
 	void gameTick();
 	int getTimestep();
 	void startGame();
+	void endGame();
 	double getSoldierRatio();
 	EarthArmy* getEarthArmy();
 	AlienArmy* getAlienArmy();

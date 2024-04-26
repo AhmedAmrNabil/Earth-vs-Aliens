@@ -6,7 +6,7 @@
 int Unit::lastAlienId = 2000;
 int Unit::lastEarthId = 1;
 
-Unit::Unit(Game* game,UNIT_TYPE type, int joinTime, int health, int power, int attackCapacity)
+Unit::Unit(Game* game,UNIT_TYPE type, int joinTime, double health, double power, int attackCapacity)
 	: game(game),type(type), joinTime(joinTime), health(health), power(power), attackCapacity(attackCapacity) {
 	firstAttackedTime = -1;
 	destructionTime = -1;
@@ -44,11 +44,14 @@ void Unit::setUMLJoinTime(int jointime) {
 }
 
 
+
 bool Unit::isLow() const {
 	double ratio = (health / initialhealth) * 100;
 	return (ratio < 20 && ratio > 0) && (type == ES || type == ET) ;
 }
 
+int Unit::getJoinTime() const { return joinTime; }
+int Unit::getFirstAttackTime() const { return firstAttackedTime; }
 int Unit::getUMLJoinTime() { return joinUMLTime; }
 bool Unit::isDead() const { return health == 0; }
 bool Unit::isAlien() const { return type >= AS; }

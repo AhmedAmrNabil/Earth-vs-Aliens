@@ -4,7 +4,7 @@
 
 class HealUnit : public Unit {
 public:
-	HealUnit(Game* game, int joinTime, int health, int power, int attackCapacity);
+	HealUnit(Game* game, int joinTime, double health, double power, int attackCapacity);
 	void attack();
 };
 

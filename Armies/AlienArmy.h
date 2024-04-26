@@ -23,7 +23,11 @@ public:
 	bool peek(UNIT_TYPE type, Unit*& unit);
 	void fight();
 	void print();
+	bool isAlive();
 	int getSoldierCount();
+	int getTotalSoldierCount();
+	int getTotalMonsterCount();
+	int getTotalDroneCount();
 	~AlienArmy();
 };
 

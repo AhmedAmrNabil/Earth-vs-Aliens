@@ -5,7 +5,7 @@
 
 class AlienDrone : public Unit {
    public:
-    AlienDrone(Game* game, int joinTime, int health, int power, int attackCapacity);
+    AlienDrone(Game* game, int joinTime, double health, double power, int attackCapacity);
     void attack() override;
 };
 

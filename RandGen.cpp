@@ -5,6 +5,7 @@
 #include "BattleUnits/AlienSoldier.h"
 #include "BattleUnits/EarthGunnery.h"
 #include "BattleUnits/EarthSoldier.h"
+#include "BattleUnits/HealUnit.h"
 #include "BattleUnits/EarthTank.h"
 #include "Armies/EarthArmy.h"
 #include "Armies/AlienArmy.h"
@@ -35,8 +36,10 @@ Unit* RandGen::generateEarthUnit() {
 		unit = new EarthSoldier(game, game->getTimestep(), health, power, capacity);
 	else if (B <= percentages.percentES + percentages.percentET)
 		unit = new EarthTank(game, game->getTimestep(), health, power, capacity);
-	else
+	else if (B <= percentages.percentES + percentages.percentET + percentages.percentEG)
 		unit = new EarthGunnery(game, game->getTimestep(), health, power, capacity);
+	else
+		unit = new HealUnit(game, game->getTimestep(), health, power, capacity);
 
 	return unit;
 }

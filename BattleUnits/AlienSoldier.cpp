@@ -3,7 +3,7 @@
 #include "../DataStructures/LinkedQueue.h"
 
 
-AlienSoldier::AlienSoldier(Game* game, int joinTime, int health, int power, int attackCapacity)
+AlienSoldier::AlienSoldier(Game* game, int joinTime, double health, double power, int attackCapacity)
 	: Unit(game, AS, joinTime, health, power, attackCapacity) {
 }
 

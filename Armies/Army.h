@@ -12,6 +12,7 @@ class Army {
     virtual void fight() = 0;
     virtual void print() = 0;
     virtual int getSoldierCount() = 0;
+    virtual bool isAlive() = 0;
     virtual ~Army() {};
 };
 

@@ -3,7 +3,7 @@
 #include "../DataStructures/LinkedQueue.h"
 
 
-EarthSoldier::EarthSoldier(Game* game, int joinTime, int health, int power, int attackCapacity)
+EarthSoldier::EarthSoldier(Game* game, int joinTime, double health, double power, int attackCapacity)
 	: Unit(game, ES, joinTime, health, power, attackCapacity) {
 }
 
