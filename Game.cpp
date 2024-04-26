@@ -22,6 +22,14 @@ void Game::printkilledunits()
 	cout << endl;
 }
 
+void Game::printUML()
+{
+	cout << "\t============== Unit Maintenance List ============\n";
+	cout << "\t" << UML.getCount() << "    units ";
+	UML.print();
+	cout << endl;
+}
+
 bool Game::getEarthUnit(UNIT_TYPE type, Unit*& unit)
 {
 	return earthArmy.getUnit(type, unit);
@@ -30,6 +38,17 @@ bool Game::getEarthUnit(UNIT_TYPE type, Unit*& unit)
 bool Game::getAlienUnit(UNIT_TYPE type, Unit*& unit)
 {
 	return alienArmy.getUnit(type, unit);
+}
+
+bool Game::getfromUML(Unit*& unit)
+{
+	int pri;
+	UML.dequeue(unit , pri);
+	while (timestep - unit->getUMLJoinTime() > 10) {
+		addToKilled(unit);
+		UML.dequeue(unit , pri);
+	}
+	return unit;
 }
 
 bool Game::addEarthUnit(Unit*& unit)
@@ -48,6 +67,7 @@ void Game::gameTick() {
 	earthArmy.fight();
 	alienArmy.fight();
 	printkilledunits();
+	printUML();
 	++timestep;
 }
 
@@ -56,17 +76,33 @@ void Game::addToKilled(Unit*& unit)
 	killedUnits.enqueue(unit);
 }
 
+void Game::addToUML(Unit*& unit , int joinUMLtime)
+{
+	int pri;
+	if (unit->getType() == ES) pri = (earthData.maxHealth - unit->getHealth()) * 1000;
+	else pri = -1;
+	UML.enqueue(unit , pri);
+	unit->setUMLJoinTime(joinUMLtime);
+}
+
+void Game::handleUnit(Unit* unit)
+{
+	if (unit->isDead()) addToKilled(unit);
+	else if (unit->isLow()) addToUML(unit , timestep);
+	else {
+		if (unit->isAlien()) addAlienUnit(unit);
+		else addEarthUnit(unit);
+	}
+}
+
 void Game::loadInput()
 {
 	int N, Prob;
-	Percentages percentages;
-	ArmyData earthData;
-	ArmyData alienData;
 	ifstream input_file;
 	input_file.open("input.txt", ios::in);
 	input_file >> N;
 
-	input_file >> percentages.percentES >> percentages.percentET >> percentages.percentEG;
+	input_file >> percentages.percentES >> percentages.percentET >> percentages.percentEG >> percentages.percentHU;
 	input_file >> percentages.percentAS >> percentages.percentAM >> percentages.percentAD;
 	
 	input_file >> Prob;

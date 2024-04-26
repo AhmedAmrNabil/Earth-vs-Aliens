@@ -44,9 +44,6 @@ void EarthGunnery::attack() {
     }
     while (!tempList.isEmpty()) {
         tempList.pop(enemyUnit);
-        if (enemyUnit->isDead())
-            game->addToKilled(enemyUnit);
-        else
-            game->addAlienUnit(enemyUnit);
+        game->handleUnit(enemyUnit);
     }
 }

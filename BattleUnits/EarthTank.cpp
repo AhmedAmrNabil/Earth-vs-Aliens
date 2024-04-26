@@ -46,7 +46,6 @@ void EarthTank::attack() {
     Unit* unit;
     while (!total.isEmpty()) {
         total.dequeue(unit);
-        if (unit->isDead()) game->addToKilled(unit);
-        else game->addAlienUnit(unit);
+        game->handleUnit(unit);
     }
 }

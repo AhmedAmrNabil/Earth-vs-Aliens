@@ -27,9 +27,6 @@ void AlienSoldier::attack() {
 	}
 	while (!tempList.isEmpty()) {
 		tempList.dequeue(enemyUnit);
-		if (enemyUnit->isDead())
-			game->addToKilled(enemyUnit);
-		else
-			game->addEarthUnit(enemyUnit);
+		game->handleUnit(enemyUnit);
 	}
 }

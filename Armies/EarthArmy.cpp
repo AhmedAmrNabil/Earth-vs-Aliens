@@ -5,6 +5,7 @@ EarthArmy::EarthArmy() : Army() {
 	tankCount = 0;
 	gunnerCount = 0;
 	soldierCount = 0;
+	healCount = 0;
 }
 
 bool EarthArmy::addUnit(Unit* unit, bool isNew) {
@@ -12,6 +13,12 @@ bool EarthArmy::addUnit(Unit* unit, bool isNew) {
 	UNIT_TYPE type = unit->getType();
 	bool inserted = false;
 	switch (type) {
+	case HU: {
+		inserted = HL.push(unit);
+		if (inserted && isNew)
+			++healCount;
+		break;
+	}
 	case ES: {
 		inserted = earthSoldiers.enqueue(unit);
 		if (inserted && isNew)
@@ -41,6 +48,11 @@ bool EarthArmy::addUnit(Unit* unit, bool isNew) {
 
 bool EarthArmy::getUnit(UNIT_TYPE type, Unit*& unit) {
 	switch (type) {
+	case HU: {
+		if (HL.isEmpty()) return false;
+		HL.pop(unit);
+		break;
+	}
 	case (ES): {
 		if (earthSoldiers.isEmpty()) return false;
 		earthSoldiers.dequeue(unit);
@@ -64,6 +76,11 @@ bool EarthArmy::getUnit(UNIT_TYPE type, Unit*& unit) {
 bool EarthArmy::peek(UNIT_TYPE type, Unit*& unit)
 {
 	switch (type) {
+	case HU: {
+		if (HL.isEmpty()) return false;
+		HL.peek(unit);
+		break;
+	}
 	case (ES): {
 		if (earthSoldiers.isEmpty()) return false;
 		earthSoldiers.peek(unit);
@@ -86,9 +103,13 @@ bool EarthArmy::peek(UNIT_TYPE type, Unit*& unit)
 
 void EarthArmy::fight()
 {
-	Unit *S,*T,*G;
+	Unit *S,*T,*G,*H;
 	int pri;
 	cout << "\t==============Units fighting at current step=======\n";
+	if (HL.peek(H)) {
+		H->attack();
+		//if(H->isDead()) 
+	}
 	if(earthSoldiers.peek(S)){	
 		S->attack();
 	}
@@ -102,6 +123,9 @@ void EarthArmy::fight()
 
 void EarthArmy::print() {
 	cout << "\t============== Earth Army Alive Units =============\n";
+	cout << "\t" << HL.getCount() << "\tHU ";
+	HL.print();
+	cout << endl;
 	cout <<"\t" << earthSoldiers.getCount() << "\tES ";
 	earthSoldiers.print();
 	cout << endl;
@@ -120,6 +144,11 @@ int EarthArmy::getSoldierCount() {
 EarthArmy::~EarthArmy() {
 	Unit* unit;
 	int pri;
+	while (HL.pop(unit))
+	{
+		if (unit != nullptr)
+			delete unit;
+	}
 	while (earthSoldiers.dequeue(unit))
 	{
 		if (unit != nullptr)

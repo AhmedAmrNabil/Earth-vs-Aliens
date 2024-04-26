@@ -7,6 +7,7 @@ struct Percentages {
 	int percentES;
 	int percentET;
 	int percentEG;
+	int percentHU;
 	int percentAS;
 	int percentAM;
 	int percentAD;
