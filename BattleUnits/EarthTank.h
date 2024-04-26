@@ -2,7 +2,6 @@
 #define EARTH_TANK_H
 
 #include "Unit.h"
-#include "../Game.h"
 
 class EarthTank : public Unit 
 {

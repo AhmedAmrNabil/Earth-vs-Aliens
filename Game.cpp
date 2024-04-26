@@ -1,5 +1,9 @@
 #include "Game.h"
 #include <conio.h>
+#include <fstream>
+#include <fstream>
+
+
 
 Game::Game():RNG(this)
 {

@@ -1,7 +1,6 @@
 #ifndef RAND_GEN_H
 #define RAND_GEN_H
 
-#include "Armies/Army.h"
 
 struct Percentages {
 	int percentES;
@@ -21,6 +20,7 @@ struct ArmyData {
 
 
 class Game;
+class Unit;
 class RandGen {
 	ArmyData earthData;
 	ArmyData alienData;

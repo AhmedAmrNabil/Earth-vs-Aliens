@@ -1,5 +1,7 @@
 #include "HealUnit.h"
 #include "../Game.h"
+#include "../DataStructures/LinkedQueue.h"
+
 
 HealUnit::HealUnit(Game* game, int joinTime, int health, int power, int attackCapacity)
 	: Unit(game, ET, joinTime, health, power, attackCapacity)

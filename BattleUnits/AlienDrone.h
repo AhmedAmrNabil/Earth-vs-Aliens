@@ -1,7 +1,6 @@
 #ifndef ALIEN_DRONE_H
 #define ALIEN_DRONE_H
 
-#include "../DataStructures/LinkedListStack.h"
 #include "Unit.h"
 
 class AlienDrone : public Unit {

@@ -1,8 +1,7 @@
 #ifndef UNIT_H
 #define UNIT_H
-#include <cmath>
+#include <iostream>
 
-#include"../DataStructures/LinkedQueue.h"
 
 enum UNIT_TYPE {
 	HU,
@@ -51,6 +50,6 @@ class Unit {
 	UNIT_TYPE getType() const;
 };
 
-ostream& operator<<(ostream& out, const Unit* unit);
+std::ostream& operator<<(std::ostream& out, const Unit* unit);
 
 #endif

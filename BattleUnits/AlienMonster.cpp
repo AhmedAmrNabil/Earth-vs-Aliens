@@ -1,6 +1,8 @@
 #include "AlienMonster.h"
-
 #include "../Game.h"
+#include "../DataStructures/LinkedQueue.h"
+#include "../DataStructures/LinkedListStack.h"
+
 
 AlienMonster::AlienMonster(Game* game, int joinTime, int health, int power, int attackCapacity)
     : Unit(game,AM, joinTime, health, power, attackCapacity) {

@@ -1,6 +1,7 @@
 #include "AlienSoldier.h"
-
 #include "../Game.h"
+#include "../DataStructures/LinkedQueue.h"
+
 
 AlienSoldier::AlienSoldier(Game* game, int joinTime, int health, int power, int attackCapacity)
 	: Unit(game, AS, joinTime, health, power, attackCapacity) {

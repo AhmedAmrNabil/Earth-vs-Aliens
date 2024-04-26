@@ -1,6 +1,7 @@
 #include "EarthArmy.h"
 #include "../BattleUnits/Unit.h"
 #include "../BattleUnits/EarthGunnery.h"
+
 EarthArmy::EarthArmy() : Army() {
 	tankCount = 0;
 	gunnerCount = 0;

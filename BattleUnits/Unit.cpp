@@ -1,6 +1,7 @@
 #include "Unit.h"
-
 #include <iostream>
+#include <cmath>
+
 
 int Unit::lastAlienId = 2000;
 int Unit::lastEarthId = 1;

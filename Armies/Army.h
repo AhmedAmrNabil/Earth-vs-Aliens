@@ -2,7 +2,6 @@
 #define ARMY_H
 
 #include "../BattleUnits/Unit.h"
-#include "../DataStructures/LinkedQueue.h"
 
 class Army {
    public:
