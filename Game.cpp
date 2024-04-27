@@ -94,7 +94,7 @@ void Game::addToUML(Unit*& unit , int joinUMLtime)
 	unit->setUMLJoinTime(joinUMLtime);
 }
 
-void Game::handleUnit(Unit*& unit)
+void Game::handleUnit(Unit* unit)
 {
 	if (unit->isDead()) addToKilled(unit);
 	else if (unit->isLow()) addToUML(unit , timestep);

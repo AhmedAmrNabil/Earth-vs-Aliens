@@ -39,8 +39,8 @@ void HealUnit::attack()
 	while (!total.isEmpty()) {
 		total.dequeue(unit);
 	}
-	//if(healCount != this->getAttackCapacity()) { 
-		//this->health = 0; 
-		//game->handleUnit(this);
-	//}
+	if(healCount != this->getAttackCapacity()) { 
+		this->health = 0; 
+		game->handleUnit(this);
+	}
 }
