@@ -1,6 +1,7 @@
 #include "EarthArmy.h"
 #include "../BattleUnits/Unit.h"
 #include "../BattleUnits/EarthGunnery.h"
+
 EarthArmy::EarthArmy() : Army() {
 	tankCount = 0;
 	gunnerCount = 0;
@@ -139,6 +140,25 @@ void EarthArmy::print() {
 
 int EarthArmy::getSoldierCount() {
 	return earthSoldiers.getCount();
+}
+
+int EarthArmy::getTotalSoldierCount() {
+	return soldierCount;
+}
+int EarthArmy::getTotalGunneryCount() {
+	return gunnerCount;
+}
+int EarthArmy::getTotalTankCount() {
+	return tankCount;
+}
+int EarthArmy::getTotalHealCount() {
+	return healCount;
+}
+
+
+bool EarthArmy::isAlive() {
+	int totalCount = earthSoldiers.getCount() + earthTanks.getCount() + earthGunnery.getCount() + HL.getCount() ;
+	return totalCount > 0;
 }
 
 EarthArmy::~EarthArmy() {

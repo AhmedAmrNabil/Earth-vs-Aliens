@@ -1,6 +1,6 @@
 #ifndef ARRAY_MONSTER_H
 #define ARRAY_MONSTER_H
-#include "../BattleUnits/AlienMonster.h"
+#include "../BattleUnits/Unit.h"
 
 class ArrayMonster
 {

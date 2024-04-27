@@ -23,6 +23,11 @@ public:
 	bool peek(UNIT_TYPE type, Unit*& unit);
 	void fight();
 	void print();
+	bool isAlive();
+	int getTotalSoldierCount();
+	int getTotalGunneryCount();
+	int getTotalTankCount();
+	int getTotalHealCount();
 	int getSoldierCount();
 	~EarthArmy();
 };

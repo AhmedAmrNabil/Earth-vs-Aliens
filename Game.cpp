@@ -1,5 +1,9 @@
 #include "Game.h"
 #include <conio.h>
+#include <fstream>
+#include <fstream>
+
+
 
 Game::Game():RNG(this)
 {
@@ -146,12 +150,124 @@ int Game::getTimestep()
 
 void Game::startGame() {
 	char ch = 0;
-	while (ch != 27) { // timestep condition for test code.
+	while (ch != 27 && (earthArmy.isAlive() && alienArmy.isAlive() || timestep < 40)) { 
 		gameTick();
 		ch = _getch();
 	}
+	endGame();
 }
 
+void Game::endGame() {
+	ofstream outputFile;
+	outputFile.open("output.txt", ios::out);
+	Unit* deadUnit;
+	int Df,Dd,Db;
+	int Tj, Ta, Td;
+	int countES, countAS, countET, countEG, countAM, countAD, countHU;
+	int totalCountES, totalCountAS, totalCountET, totalCountEG, totalCountAM, totalCountAD, totalCountHU;
+	int totalInitialEarthCount;
+	int totalInitialAlienCount;
+	int totalEarthCount;
+	int totalAlienCount;
+	int earthSumDf,earthSumDd,earthSumDb;
+	int alienSumDf,alienSumDd,alienSumDb;
+	countES = countAS = countET = countEG = countAM = countAD = countHU = 0;
+	earthSumDf = earthSumDd = earthSumDb = alienSumDf = alienSumDd = alienSumDb = 0;
+	while (killedUnits.dequeue(deadUnit)) {
+		Tj = deadUnit->getJoinTime();
+		Ta = deadUnit->getFirstAttackTime();
+		Td = deadUnit->getDestructionTime();
+		Df = Ta - Tj;
+		Dd = Td - Ta;
+		Db = Td - Tj;
+		outputFile  << Td << '\t'
+					<< deadUnit->getId() << '\t'
+					<< Tj << '\t'
+					<< Df << '\t'
+					<< Dd << '\t'
+					<< Db << '\n';
+		switch (deadUnit->getType()) {
+		case ES: ++countES; break;
+		case ET: ++countET; break;
+		case EG: ++countEG; break;
+		case HU: ++countHU; break;
+		case AS: ++countAS; break;
+		case AM: ++countAM; break;
+		case AD: ++countAD; break;
+		}
+		
+		if(deadUnit->isAlien()){
+			alienSumDf += Df;
+			alienSumDd += Dd;
+			alienSumDb += Db;
+		} else {
+			earthSumDf += Df;
+			earthSumDd += Dd;
+			earthSumDb += Db;
+		}
+
+	}
+
+	string battleResult = ""; // Assume the win state when earth win not alien (but i am sided with aliens :D )
+	if (earthArmy.isAlive() && !alienArmy.isAlive())battleResult = "Win";
+	else if (!earthArmy.isAlive() && alienArmy.isAlive())battleResult = "Loss";
+	else if (!earthArmy.isAlive() && !alienArmy.isAlive())battleResult = "Drawn";
+	outputFile << battleResult << '\n';
+	totalCountES = earthArmy.getTotalSoldierCount();
+	totalCountET = earthArmy.getTotalTankCount();
+	totalCountEG = earthArmy.getTotalGunneryCount();
+	totalCountHU = earthArmy.getTotalHealCount();
+	totalCountAS = alienArmy.getTotalSoldierCount();
+	totalCountAM = alienArmy.getTotalMonsterCount();
+	totalCountAD = alienArmy.getTotalDroneCount();
+
+	//earth army print
+	outputFile  << totalCountES << '\t'
+				<< totalCountET << '\t'
+				<< totalCountEG << '\t'
+				<< totalCountHU << '\n';
+	
+	outputFile	<< countES * 100.0 / totalCountES << '\t'
+				<< countET * 100.0 / totalCountET << '\t'
+				<< countEG * 100.0 / totalCountEG << '\t'
+				<< countHU * 100.0 / totalCountHU << '\n';
+
+	totalEarthCount = countES + countET + countEG + countHU;
+	totalInitialEarthCount = totalCountES + totalCountET + totalCountEG + totalCountHU;
+	
+	outputFile  << totalEarthCount * 100.0 / totalInitialEarthCount << '\n';
+	
+	outputFile  <<	double(earthSumDf) / totalEarthCount << '\t'
+				<<	double(earthSumDd) / totalEarthCount << '\t'
+				<<	double(earthSumDb) / totalEarthCount << '\n'; 
+
+	outputFile  <<	double(earthSumDf) * 100.0 / earthSumDb << '\t'
+				<<	double(earthSumDd) * 100.0 / earthSumDb << '\n'; 
+
+	// Alien army print
+	outputFile  << totalCountAS << '\t'
+				<< totalCountAM << '\t'
+				<< totalCountAD << '\n';
+	
+	outputFile	<< countAS * 100.0 / totalCountAS << '\t'
+				<< countAM * 100.0 / totalCountAM << '\t'
+				<< countAD * 100.0 / totalCountAD << '\n';
+
+	totalAlienCount = countAS + countAM + countAD;
+	totalInitialAlienCount = totalCountAS + totalCountAM + totalCountAD;
+
+	outputFile  << totalAlienCount * 100.0 / totalInitialAlienCount << '\n';
+	
+	outputFile  <<	double(alienSumDf) / totalAlienCount << '\t'
+				<<	double(alienSumDd) / totalAlienCount << '\t'
+				<<	double(alienSumDb) / totalAlienCount << '\n'; 
+
+	outputFile  <<	double(alienSumDf) * 100.0 / alienSumDb << '\t'
+				<<	double(alienSumDd) * 100.0 / alienSumDb << '\n'; 
+				
+
+	outputFile.close();
+}
 
 Game::~Game() {
 	Unit* unit;

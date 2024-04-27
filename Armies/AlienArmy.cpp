@@ -130,6 +130,23 @@ int AlienArmy::getSoldierCount() {
 	return alienSoldiers.getCount();
 }
 
+int AlienArmy::getTotalSoldierCount() {
+	return soldierCount;
+}
+
+int AlienArmy::getTotalMonsterCount() {
+	return monsterCount;
+}
+
+int AlienArmy::getTotalDroneCount() {
+	return droneCount;
+}
+
+bool AlienArmy::isAlive() {
+	int totalCount = alienSoldiers.getCount() + alienMonsters.getCount() + alienDrones.getCount();
+	return totalCount > 0;
+}
+
 AlienArmy::~AlienArmy() {
 	Unit* unit;
 	while (alienSoldiers.dequeue(unit))

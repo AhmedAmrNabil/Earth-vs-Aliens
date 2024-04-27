@@ -1,6 +1,8 @@
 #include "ArrayMonster.h"
 #include <cstdlib> 
 #include <time.h> 
+#include <iostream>
+using std::cout;
 
 ArrayMonster::ArrayMonster() :arrayMonster()
 {

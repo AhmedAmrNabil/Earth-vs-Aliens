@@ -1,8 +1,10 @@
 #include "EarthGunnery.h"
 #include "../Game.h"
 #include <cmath>
+#include "../DataStructures/LinkedListStack.h"
 
-EarthGunnery::EarthGunnery(Game* game, int joinTime, int health, int power, int attackCapacity)
+
+EarthGunnery::EarthGunnery(Game* game, int joinTime, double health, double power, int attackCapacity)
     : Unit(game,EG, joinTime, health, power, attackCapacity) {
 };
 

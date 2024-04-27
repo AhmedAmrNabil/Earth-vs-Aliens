@@ -1,8 +1,7 @@
 #ifndef UNIT_H
 #define UNIT_H
-#include <cmath>
+#include <iostream>
 
-#include"../DataStructures/LinkedQueue.h"
 
 enum UNIT_TYPE {
 	HU,
@@ -34,23 +33,25 @@ class Unit {
 	double initialhealth;
 
    public:
-	Unit(Game* game,UNIT_TYPE type, int joinTime, int health, int power, int attackCapacity);
+	Unit(Game* game,UNIT_TYPE type, int joinTime, double health, double power, int attackCapacity);
 	virtual void attack() = 0;
-	void decrementHealth(int damage, int timestep);
+	void decrementHealth(double damage, int timestep);
 	void getAttacked(Unit* enemyUnit, int timestep);
 	void getHealed(Unit* HealUnit);
 	void setUMLJoinTime(int jointime);
 	int getUMLJoinTime();
-	bool isDead();
+	bool isDead() const;
 	bool isAlien() const;
 	bool isLow() const;
 	int getAttackCapacity() const;
 	double getHealth() const;
 	int getId() const;
 	int getDestructionTime() const;
+	int getFirstAttackTime() const;
+	int getJoinTime() const;
 	UNIT_TYPE getType() const;
 };
 
-ostream& operator<<(ostream& out, const Unit* unit);
+std::ostream& operator<<(std::ostream& out, const Unit* unit);
 
 #endif

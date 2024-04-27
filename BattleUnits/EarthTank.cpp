@@ -1,6 +1,8 @@
 #include "EarthTank.h"
+#include "../Game.h"
+#include "../DataStructures/LinkedQueue.h"
 
-EarthTank::EarthTank(Game* game,int joinTime, int health, int power, int attackCapacity)
+EarthTank::EarthTank(Game* game,int joinTime, double health, double power, int attackCapacity)
     : Unit(game, ET, joinTime, health, power, attackCapacity) {
 }
 void EarthTank::attack() {

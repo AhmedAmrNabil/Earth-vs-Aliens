@@ -1,7 +1,5 @@
 #ifndef GAME_H
 #define GAME_H
-#include <iostream>
-#include <fstream>
 #include "Armies/EarthArmy.h"
 #include "Armies/AlienArmy.h"
 #include "RandGen.h"
@@ -34,6 +32,7 @@ public:
 	void gameTick();
 	int getTimestep();
 	void startGame();
+	void endGame();
 	double getSoldierRatio();
 	EarthArmy* getEarthArmy();
 	AlienArmy* getAlienArmy();
