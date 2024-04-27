@@ -23,6 +23,7 @@ public:
 	bool getEarthUnit(UNIT_TYPE type, Unit*& unit);
 	bool getAlienUnit(UNIT_TYPE type, Unit*& unit);
 	bool getfromUML(Unit*& unit);
+	bool isUMLEmpty();
 	void addToUML(Unit*& unit , int joinUMLtime);
 	bool addEarthUnit(Unit*& unit);
 	bool addAlienUnit(Unit*& unit);

@@ -55,6 +55,11 @@ bool Game::getfromUML(Unit*& unit)
 	return b;
 }
 
+bool Game::isUMLEmpty()
+{
+	return (UML.isEmpty());
+}
+
 bool Game::addEarthUnit(Unit*& unit)
 {
 	return earthArmy.addUnit(unit);

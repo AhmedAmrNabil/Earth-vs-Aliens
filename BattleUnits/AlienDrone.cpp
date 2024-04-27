@@ -13,7 +13,6 @@ void AlienDrone::attack() {
     int timestep = game->getTimestep();
     LinkedListStack<Unit*> tempEarthTanks;
     LinkedQueue<Unit*> temp;
-    LinkedQueue<Unit*> total;
     Unit* tank = nullptr;
     Unit* gunnery = nullptr;
     int gunnerCount = this->getAttackCapacity() / 2;
@@ -23,7 +22,6 @@ void AlienDrone::attack() {
         if (game->getEarthUnit(ET, tank)) {
             tank->getAttacked(this, timestep);
             tempEarthTanks.push(tank);
-            total.enqueue(tank);
             --tankCount;
         }
         else break;
@@ -34,15 +32,15 @@ void AlienDrone::attack() {
         if (game->getEarthUnit(EG, gunnery)) {
             gunnery->getAttacked(this, timestep);
             temp.enqueue(gunnery);
-            total.enqueue(gunnery);
             --gunnerCount;
         }
         else break;
     }
-    if (!total.isEmpty()) {
+    if (!tempEarthTanks.isEmpty()) {
         cout << "\tAD " << this << " shots ";
         cout << "\t";
-        total.print();
+        tempEarthTanks.print();
+        if (!temp.isEmpty()) temp.print();
         cout << endl;
     }
     while (!tempEarthTanks.isEmpty()) {
@@ -53,9 +51,5 @@ void AlienDrone::attack() {
     while (!temp.isEmpty()) {
         temp.dequeue(gunnery);
         game->handleUnit(gunnery);
-    }
-    while (!total.isEmpty()) 
-    {
-        total.dequeue(tank);
     }
 }
