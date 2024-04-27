@@ -103,7 +103,7 @@ void Game::handleUnit(Unit*& unit)
 		else addEarthUnit(unit);
 	}
 }
-
+ 
 void Game::loadInput()
 {
 	int N, Prob;
