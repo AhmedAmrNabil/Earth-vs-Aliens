@@ -39,7 +39,7 @@ void EarthTank::attack() {
         }
         else break;
     }
-    if (!tmpsoldier.isEmpty()) {
+    if (!tmpsoldier.isEmpty() && game->isInteractive()) {
         cout << "\tET " << this << " shots ";
         cout << "\t";
         tmpsoldier.print();

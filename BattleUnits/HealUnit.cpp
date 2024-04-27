@@ -26,7 +26,7 @@ void HealUnit::attack()
 		}
 		else break;
 	}
-	if (!total.isEmpty()) {
+	if (!total.isEmpty() && game->isInteractive()) {
 		cout << "\tHU " << this << " healed ";
 		cout << "\t";
 		total.print();

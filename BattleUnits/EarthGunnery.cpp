@@ -41,7 +41,7 @@ void EarthGunnery::attack() {
         --dronesCount;
     }
 
-    if (!tempListDrone.isEmpty() || !tempListMonster.isEmpty()) {
+    if ((!tempListDrone.isEmpty() || !tempListMonster.isEmpty()) && game->isInteractive()) {
         cout << "\tEG " << this << " shots ";
         cout << "\t";
         tempListMonster.print();

@@ -35,11 +35,11 @@ void AlienMonster::attack() {
         }
         else break;
     }
-    if (!tempEarthTanks.isEmpty()) {
+    if ((!tempEarthTanks.isEmpty() || !temp.isEmpty()) && game->isInteractive()) {
         cout << "\tAM " << this << " shots ";
         cout << "\t";
         tempEarthTanks.print();
-        if (!temp.isEmpty()) temp.print();
+        temp.print();
         cout << endl;
     }
     while (!tempEarthTanks.isEmpty())

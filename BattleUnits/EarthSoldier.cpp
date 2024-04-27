@@ -20,7 +20,7 @@ void EarthSoldier::attack() {
 		else break;
 		--soldierCount;
 	}
-	if (!tempList.isEmpty()) {
+	if (!tempList.isEmpty() && game->isInteractive()) {
 		cout << "\tES " << this << " shots ";
 		cout << "\t";
 		tempList.print();

@@ -4,6 +4,11 @@
 #include "Armies/AlienArmy.h"
 #include "RandGen.h"
 
+enum GAME_MODE {
+	INTERACTIVE,
+	SILENT
+};
+
 class Game
 {
 	EarthArmy earthArmy;
@@ -15,6 +20,7 @@ class Game
 	Percentages percentages;
 	ArmyData earthData;
 	ArmyData alienData;
+	GAME_MODE gameMode;
 public:
 	Game();
 	void printarmies();
@@ -33,6 +39,7 @@ public:
 	void gameTick();
 	int getTimestep();
 	void startGame();
+	bool isInteractive();
 	void endGame();
 	double getSoldierRatio();
 	EarthArmy* getEarthArmy();

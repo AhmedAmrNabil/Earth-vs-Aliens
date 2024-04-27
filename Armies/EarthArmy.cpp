@@ -106,7 +106,6 @@ void EarthArmy::fight()
 {
 	Unit *S,*T,*G,*H;
 	int pri;
-	cout << "\t==============Units fighting at current step=======\n";
 	if (HL.pop(H)) {
 		H->attack();
 		if (!H->isDead())
