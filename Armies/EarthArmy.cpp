@@ -106,20 +106,21 @@ void EarthArmy::fight()
 {
 	Unit *S,*T,*G,*H;
 	int pri;
-	cout << "\t==============Units fighting at current step=======\n";
-	if (HL.peek(H)) {
+	if (HL.pop(H)) {
 		H->attack();
-		//if(H->isDead()) 
+		if (!H->isDead())
+			HL.push(H);
 	}
-	if(earthSoldiers.peek(S)){	
+	
+	if(earthSoldiers.peek(S))
 		S->attack();
-	}
-	if (earthTanks.peek(T)) {
+	
+	if (earthTanks.peek(T)) 
 		T->attack();
-	}
-	if (earthGunnery.peek(G, pri)) {
+	
+	if (earthGunnery.peek(G, pri)) 
 		G->attack();
-	}
+	
 }
 
 void EarthArmy::print() {

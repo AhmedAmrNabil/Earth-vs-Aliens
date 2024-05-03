@@ -20,7 +20,7 @@ void AlienSoldier::attack() {
 		else break;
 		--soldierCount;
 	}
-	if (!tempList.isEmpty()) {
+	if (!tempList.isEmpty() && game->isInteractive()) {
 		cout << "\tAS " << this << " shots ";
 		cout << "\t";
 		tempList.print();

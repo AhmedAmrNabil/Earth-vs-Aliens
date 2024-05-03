@@ -2,6 +2,7 @@
 #include "../Game.h"
 #include <cmath>
 #include "../DataStructures/LinkedListStack.h"
+#include "../DataStructures/LinkedQueue.h"
 
 
 EarthGunnery::EarthGunnery(Game* game, int joinTime, double health, double power, int attackCapacity)
@@ -15,14 +16,15 @@ int EarthGunnery::getPriority() {
 void EarthGunnery::attack() {
     int timestep = game->getTimestep();
     Unit* enemyUnit = nullptr;
-    LinkedListStack<Unit*> tempList;
+    LinkedListStack<Unit*> tempListDrone;
+    LinkedQueue<Unit*> tempListMonster;
 
     int monsterCount = this->getAttackCapacity() / 2;
     int dronesCount = this->getAttackCapacity() - monsterCount;
     while (monsterCount > 0) {
         if (game->getAlienUnit(AM, enemyUnit)) {
             enemyUnit->getAttacked(this, timestep);
-            tempList.push(enemyUnit);
+            tempListMonster.enqueue(enemyUnit);
         }
         else break;
         --monsterCount;
@@ -33,19 +35,26 @@ void EarthGunnery::attack() {
     while (dronesCount>0) {
         if (game->getAlienUnit(AD, enemyUnit)) {
             enemyUnit->getAttacked(this, timestep);
-            tempList.push(enemyUnit);
+            tempListDrone.push(enemyUnit);
         }
         else break;
         --dronesCount;
     }
-    if (!tempList.isEmpty()) {
+
+    if ((!tempListDrone.isEmpty() || !tempListMonster.isEmpty()) && game->isInteractive()) {
         cout << "\tEG " << this << " shots ";
         cout << "\t";
-        tempList.print();
+        tempListMonster.print();
+        tempListDrone.print();
         cout << endl;
     }
-    while (!tempList.isEmpty()) {
-        tempList.pop(enemyUnit);
+    while (!tempListDrone.isEmpty()) {
+        tempListDrone.pop(enemyUnit);
+        game->handleUnit(enemyUnit);
+    }
+
+    while (!tempListMonster.isEmpty()) {
+        tempListMonster.dequeue(enemyUnit);
         game->handleUnit(enemyUnit);
     }
 }

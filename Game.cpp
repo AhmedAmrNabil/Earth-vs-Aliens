@@ -7,8 +7,13 @@
 
 Game::Game():RNG(this)
 {
+	gameMode = INTERACTIVE;
 	timestep = 1;
 	loadInput();
+}
+
+bool Game::isInteractive() {
+	return (gameMode == INTERACTIVE);
 }
 
 void Game::printarmies()
@@ -55,6 +60,11 @@ bool Game::getfromUML(Unit*& unit)
 	return b;
 }
 
+bool Game::isUMLEmpty()
+{
+	return (UML.isEmpty());
+}
+
 bool Game::addEarthUnit(Unit*& unit)
 {
 	return earthArmy.addUnit(unit);
@@ -67,11 +77,16 @@ bool Game::addAlienUnit(Unit*& unit)
 
 void Game::gameTick() {
 	RNG.generateUnits();
-	printarmies();
+	if (gameMode == INTERACTIVE) {
+		printarmies();
+		cout << "\t==============Units fighting at current step=======\n";
+	}
 	earthArmy.fight();
 	alienArmy.fight();
-	printkilledunits();
-	printUML();
+	if (gameMode == INTERACTIVE) {
+		printkilledunits();
+		printUML();
+	}
 	++timestep;
 }
 
@@ -89,7 +104,7 @@ void Game::addToUML(Unit*& unit , int joinUMLtime)
 	unit->setUMLJoinTime(joinUMLtime);
 }
 
-void Game::handleUnit(Unit*& unit)
+void Game::handleUnit(Unit* unit)
 {
 	if (unit->isDead()) addToKilled(unit);
 	else if (unit->isLow()) addToUML(unit , timestep);
@@ -98,7 +113,7 @@ void Game::handleUnit(Unit*& unit)
 		else addEarthUnit(unit);
 	}
 }
-
+ 
 void Game::loadInput()
 {
 	int N, Prob;
@@ -150,9 +165,19 @@ int Game::getTimestep()
 
 void Game::startGame() {
 	char ch = 0;
+	cout << "Run The game in interactive or silent mode ? ( [I]nteractive / [S]ilent ): ";
+	cin >> ch;
+	if (ch == 'i' || ch == 'I')gameMode = INTERACTIVE;
+	else { 
+		cout << "Silent Mode\nSimulation Starts...\n";
+		gameMode = SILENT; 
+	
+	}
+	ch = 0;
 	while (ch != 27 && (earthArmy.isAlive() && alienArmy.isAlive() || timestep < 40)) { 
 		gameTick();
-		ch = _getch();
+		if(gameMode == INTERACTIVE)
+			ch = _getch();
 	}
 	endGame();
 }
@@ -267,6 +292,7 @@ void Game::endGame() {
 				
 
 	outputFile.close();
+	cout << "Simulation ends, Output file is created\n";
 }
 
 Game::~Game() {

@@ -10,7 +10,8 @@ void EarthTank::attack() {
     Unit* monster;
     Unit* soldier;
     bool attackSoldiers = false;
-    LinkedQueue<Unit*> total;
+    LinkedQueue<Unit*> tmpmonster;
+    LinkedQueue<Unit*> tmpsoldier;
     int monsterCount , soldierCount;
     if (game->getSoldierRatio() < 30) attackSoldiers = true;
     if(attackSoldiers) {
@@ -24,8 +25,7 @@ void EarthTank::attack() {
     while (attackSoldiers && soldierCount != 0 ) {
         if (game->getAlienUnit(AS, soldier)) {
             soldier->getAttacked(this, timestep);
-            total.enqueue(soldier);
-            if (game->getSoldierRatio() > 80) attackSoldiers = false;
+            tmpsoldier.enqueue(soldier);
             soldierCount--;
         }
         else break;
@@ -34,20 +34,25 @@ void EarthTank::attack() {
     while (monsterCount != 0) {
         if (game->getAlienUnit(AM, monster)) {
             monster->getAttacked(this, timestep);
-            total.enqueue(monster);
+            tmpmonster.enqueue(monster);
             monsterCount--;
         }
         else break;
     }
-    if (!total.isEmpty()) {
+    if (!tmpsoldier.isEmpty() && game->isInteractive()) {
         cout << "\tET " << this << " shots ";
         cout << "\t";
-        total.print();
+        tmpsoldier.print();
+        if (!tmpmonster.isEmpty()) tmpmonster.print();
         cout << endl;
     }
     Unit* unit;
-    while (!total.isEmpty()) {
-        total.dequeue(unit);
+    while (!tmpsoldier.isEmpty()) {
+        tmpsoldier.dequeue(unit);
+        game->handleUnit(unit);
+    }
+    while (!tmpmonster.isEmpty()) {
+        tmpmonster.dequeue(unit);
         game->handleUnit(unit);
     }
 }
