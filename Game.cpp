@@ -2,10 +2,15 @@
 #include <conio.h>
 #include <fstream>
 #include <fstream>
+#include <string>
+#include <sstream>
+#include <iomanip>
 
 
 
-Game::Game():RNG(this)
+
+
+Game::Game() :RNG(this)
 {
 	gameMode = INTERACTIVE;
 	timestep = 1;
@@ -52,10 +57,10 @@ bool Game::getAlienUnit(UNIT_TYPE type, Unit*& unit)
 bool Game::getfromUML(Unit*& unit)
 {
 	int pri;
-	bool b = UML.dequeue(unit , pri);
+	bool b = UML.dequeue(unit, pri);
 	while (b && timestep - unit->getUMLJoinTime() > 10) {
 		addToKilled(unit);
-		b = UML.dequeue(unit , pri);
+		b = UML.dequeue(unit, pri);
 	}
 	return b;
 }
@@ -95,25 +100,25 @@ void Game::addToKilled(Unit*& unit)
 	killedUnits.enqueue(unit);
 }
 
-void Game::addToUML(Unit*& unit , int joinUMLtime)
+void Game::addToUML(Unit*& unit, int joinUMLtime)
 {
 	int pri;
 	if (unit->getType() == ES) pri = (earthData.maxHealth - unit->getHealth()) * 1000;
 	else pri = -1;
-	UML.enqueue(unit , pri);
+	UML.enqueue(unit, pri);
 	unit->setUMLJoinTime(joinUMLtime);
 }
 
 void Game::handleUnit(Unit* unit)
 {
 	if (unit->isDead()) addToKilled(unit);
-	else if (unit->isLow()) addToUML(unit , timestep);
+	else if (unit->isLow()) addToUML(unit, timestep);
 	else {
 		if (unit->isAlien()) addAlienUnit(unit);
 		else addEarthUnit(unit);
 	}
 }
- 
+
 void Game::loadInput()
 {
 	int N, Prob;
@@ -123,7 +128,7 @@ void Game::loadInput()
 
 	input_file >> percentages.percentES >> percentages.percentET >> percentages.percentEG >> percentages.percentHU;
 	input_file >> percentages.percentAS >> percentages.percentAM >> percentages.percentAD;
-	
+
 	input_file >> Prob;
 	input_file >> earthData.minPower >> earthData.maxPower;
 	input_file >> earthData.minHealth >> earthData.maxHealth;
@@ -141,7 +146,7 @@ void Game::loadInput()
 	alienData.maxHealth *= -1;
 	alienData.maxCapacity *= -1;
 
-	RNG.setData(earthData, alienData,percentages, N, Prob);
+	RNG.setData(earthData, alienData, percentages, N, Prob);
 
 	input_file.close();
 }
@@ -168,25 +173,32 @@ void Game::startGame() {
 	cout << "Run The game in interactive or silent mode ? ( [I]nteractive / [S]ilent ): ";
 	cin >> ch;
 	if (ch == 'i' || ch == 'I')gameMode = INTERACTIVE;
-	else { 
+	else {
 		cout << "Silent Mode\nSimulation Starts...\n";
-		gameMode = SILENT; 
-	
+		gameMode = SILENT;
+
 	}
 	ch = 0;
-	while (ch != 27 && (earthArmy.isAlive() && alienArmy.isAlive() || timestep < 40)) { 
+	while (ch != 27 && (earthArmy.isAlive() && alienArmy.isAlive() || timestep < 40)) {
 		gameTick();
-		if(gameMode == INTERACTIVE)
+		if (gameMode == INTERACTIVE)
 			ch = _getch();
 	}
 	endGame();
+}
+
+string Game::getRatio(double x, double y) {
+	if (y == 0)return "";
+	std::stringstream ss;
+	ss << std::fixed << std::setprecision(2) << x / y;
+	return ss.str();
 }
 
 void Game::endGame() {
 	ofstream outputFile;
 	outputFile.open("output.txt", ios::out);
 	Unit* deadUnit;
-	int Df,Dd,Db;
+	int Df, Dd, Db;
 	int Tj, Ta, Td;
 	int countES, countAS, countET, countEG, countAM, countAD, countHU;
 	int totalCountES, totalCountAS, totalCountET, totalCountEG, totalCountAM, totalCountAD, totalCountHU;
@@ -194,8 +206,8 @@ void Game::endGame() {
 	int totalInitialAlienCount;
 	int totalEarthCount;
 	int totalAlienCount;
-	int earthSumDf,earthSumDd,earthSumDb;
-	int alienSumDf,alienSumDd,alienSumDb;
+	int earthSumDf, earthSumDd, earthSumDb;
+	int alienSumDf, alienSumDd, alienSumDb;
 	countES = countAS = countET = countEG = countAM = countAD = countHU = 0;
 	earthSumDf = earthSumDd = earthSumDb = alienSumDf = alienSumDd = alienSumDb = 0;
 	while (killedUnits.dequeue(deadUnit)) {
@@ -205,12 +217,12 @@ void Game::endGame() {
 		Df = Ta - Tj;
 		Dd = Td - Ta;
 		Db = Td - Tj;
-		outputFile  << Td << '\t'
-					<< deadUnit->getId() << '\t'
-					<< Tj << '\t'
-					<< Df << '\t'
-					<< Dd << '\t'
-					<< Db << '\n';
+		outputFile << Td << "\t\t"
+			<< deadUnit->getId() << "\t\t"
+			<< Tj << "\t\t"
+			<< Df << "\t\t"
+			<< Dd << "\t\t"
+			<< Db << '\n';
 		switch (deadUnit->getType()) {
 		case ES: ++countES; break;
 		case ET: ++countET; break;
@@ -220,12 +232,13 @@ void Game::endGame() {
 		case AM: ++countAM; break;
 		case AD: ++countAD; break;
 		}
-		
-		if(deadUnit->isAlien()){
+
+		if (deadUnit->isAlien()) {
 			alienSumDf += Df;
 			alienSumDd += Dd;
 			alienSumDb += Db;
-		} else {
+		}
+		else {
 			earthSumDf += Df;
 			earthSumDd += Dd;
 			earthSumDb += Db;
@@ -247,49 +260,49 @@ void Game::endGame() {
 	totalCountAD = alienArmy.getTotalDroneCount();
 
 	//earth army print
-	outputFile  << totalCountES << '\t'
-				<< totalCountET << '\t'
-				<< totalCountEG << '\t'
-				<< totalCountHU << '\n';
-	
-	outputFile	<< countES * 100.0 / totalCountES << '\t'
-				<< countET * 100.0 / totalCountET << '\t'
-				<< countEG * 100.0 / totalCountEG << '\t'
-				<< countHU * 100.0 / totalCountHU << '\n';
+	outputFile << totalCountES << "\t\t"
+		<< totalCountET << "\t\t"
+		<< totalCountEG << "\t\t"
+		<< totalCountHU << '\n';
+
+	outputFile << getRatio(countES * 100.0, totalCountES) << "\t\t"
+		<< getRatio(countET * 100.0, totalCountET) << "\t\t"
+		<< getRatio(countEG * 100.0, totalCountEG) << "\t\t"
+		<< getRatio(countHU * 100.0, totalCountHU) << '\n';
 
 	totalEarthCount = countES + countET + countEG + countHU;
 	totalInitialEarthCount = totalCountES + totalCountET + totalCountEG + totalCountHU;
-	
-	outputFile  << totalEarthCount * 100.0 / totalInitialEarthCount << '\n';
-	
-	outputFile  <<	double(earthSumDf) / totalEarthCount << '\t'
-				<<	double(earthSumDd) / totalEarthCount << '\t'
-				<<	double(earthSumDb) / totalEarthCount << '\n'; 
 
-	outputFile  <<	double(earthSumDf) * 100.0 / earthSumDb << '\t'
-				<<	double(earthSumDd) * 100.0 / earthSumDb << '\n'; 
+	outputFile << getRatio(totalEarthCount * 100.0, totalInitialEarthCount) << '\n';
+
+	outputFile << getRatio(earthSumDf, totalEarthCount) << "\t\t"
+		<< getRatio(earthSumDd, totalEarthCount) << "\t\t"
+		<< getRatio(earthSumDb, totalEarthCount) << '\n';
+
+	outputFile << getRatio(earthSumDf * 100.0, earthSumDb) << "\t\t"
+		<< getRatio(earthSumDd * 100.0, earthSumDb) << '\n';
 
 	// Alien army print
-	outputFile  << totalCountAS << '\t'
-				<< totalCountAM << '\t'
-				<< totalCountAD << '\n';
-	
-	outputFile	<< countAS * 100.0 / totalCountAS << '\t'
-				<< countAM * 100.0 / totalCountAM << '\t'
-				<< countAD * 100.0 / totalCountAD << '\n';
+	outputFile << totalCountAS << "\t\t"
+		<< totalCountAM << "\t\t"
+		<< totalCountAD << '\n';
+
+	outputFile << getRatio(countAS * 100.0, totalCountAS) << "\t\t"
+		<< getRatio(countAM * 100.0, totalCountAM) << "\t\t"
+		<< getRatio(countAD * 100.0, totalCountAD) << '\n';
 
 	totalAlienCount = countAS + countAM + countAD;
 	totalInitialAlienCount = totalCountAS + totalCountAM + totalCountAD;
 
-	outputFile  << totalAlienCount * 100.0 / totalInitialAlienCount << '\n';
-	
-	outputFile  <<	double(alienSumDf) / totalAlienCount << '\t'
-				<<	double(alienSumDd) / totalAlienCount << '\t'
-				<<	double(alienSumDb) / totalAlienCount << '\n'; 
+	outputFile << getRatio(totalAlienCount * 100.0, totalInitialAlienCount) << '\n';
 
-	outputFile  <<	double(alienSumDf) * 100.0 / alienSumDb << '\t'
-				<<	double(alienSumDd) * 100.0 / alienSumDb << '\n'; 
-				
+	outputFile << getRatio(alienSumDf, totalAlienCount) << "\t\t"
+		<< getRatio(alienSumDd, totalAlienCount) << "\t\t"
+		<< getRatio(alienSumDb, totalAlienCount) << '\n';
+
+	outputFile << getRatio(alienSumDf * 100.0, alienSumDb) << "\t\t"
+		<< getRatio(alienSumDd * 100.0, alienSumDb) << '\n';
+
 
 	outputFile.close();
 	cout << "Simulation ends, Output file is created\n";
@@ -297,7 +310,7 @@ void Game::endGame() {
 
 Game::~Game() {
 	Unit* unit;
-	while (killedUnits.dequeue(unit)) 
+	while (killedUnits.dequeue(unit))
 	{
 		if (unit != nullptr)
 			delete unit;

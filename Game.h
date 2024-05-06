@@ -40,6 +40,7 @@ public:
 	int getTimestep();
 	void startGame();
 	bool isInteractive();
+	string getRatio(double x, double y);
 	void endGame();
 	double getSoldierRatio();
 	EarthArmy* getEarthArmy();
