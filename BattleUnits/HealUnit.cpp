@@ -40,7 +40,7 @@ void HealUnit::attack()
 		total.dequeue(unit);
 	}
 	if(healCount != this->getAttackCapacity()) { 
-		this->health = 0; 
+		this->decrementHealth(this->health,timestep);
 		game->handleUnit(this);
 	}
 }
