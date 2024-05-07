@@ -59,6 +59,7 @@ bool Game::getfromUML(Unit*& unit)
 	int pri;
 	bool b = UML.dequeue(unit, pri);
 	while (b && timestep - unit->getUMLJoinTime() > 10) {
+		unit->decrementHealth(unit->getHealth(), timestep);
 		addToKilled(unit);
 		b = UML.dequeue(unit, pri);
 	}
@@ -195,6 +196,12 @@ string Game::getRatio(double x, double y) {
 }
 
 void Game::endGame() {
+	Unit* temp;
+	int pri = 0;
+	while (UML.dequeue(temp,pri)) {
+		temp->decrementHealth(temp->getHealth(), timestep);
+		addToKilled(temp);
+	}
 	ofstream outputFile;
 	outputFile.open("output.txt", ios::out);
 	Unit* deadUnit;
@@ -251,7 +258,7 @@ void Game::endGame() {
 	else if (!earthArmy.isAlive() && alienArmy.isAlive())battleResult = "Loss";
 	else if (!earthArmy.isAlive() && !alienArmy.isAlive())battleResult = "Drawn";
 	outputFile << battleResult << '\n';
-	totalCountES = earthArmy.getTotalSoldierCount();
+	totalCountES = earthArmy.getTotalSoldierCount()+UML.getCount();
 	totalCountET = earthArmy.getTotalTankCount();
 	totalCountEG = earthArmy.getTotalGunneryCount();
 	totalCountHU = earthArmy.getTotalHealCount();

@@ -158,7 +158,7 @@ int EarthArmy::getTotalHealCount() {
 
 
 bool EarthArmy::isAlive() {
-	int totalCount = earthSoldiers.getCount() + earthTanks.getCount() + earthGunnery.getCount() + HL.getCount() ;
+	int totalCount = earthSoldiers.getCount() + earthTanks.getCount() + earthGunnery.getCount() ;
 	return totalCount > 0;
 }
 

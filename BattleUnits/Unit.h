@@ -20,13 +20,13 @@ class Unit {
 	UNIT_TYPE type;
 	int joinTime;
 	int firstAttackedTime;
-	int destructionTime;
 	int joinUMLTime;
 	int attackCapacity;
 	static int lastEarthId;
 	static int lastAlienId;
 
    protected:
+	int destructionTime;
 	Game* game;
 	double health;
 	double power;
