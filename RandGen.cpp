@@ -53,7 +53,7 @@ Unit* RandGen::generateAlienUnit() {
 	if (B <= percentages.percentAS)
 		unit = new AlienSoldier(game, game->getTimestep(), health, power, capacity);
 	else if (B <= percentages.percentAS + percentages.percentAM)
-		unit = new AlienMonster(game, game->getTimestep(), health, power, capacity);
+		unit = new AlienMonster(game, game->getTimestep(), health, power, capacity,percentages.percentIf);
 	else
 		unit = new AlienDrone(game, game->getTimestep(), health, power, capacity);
 

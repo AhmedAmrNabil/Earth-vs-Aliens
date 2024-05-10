@@ -16,14 +16,28 @@ bool EarthSoldier::attack() {
 	LinkedQueue<Unit*> tempList;
 	int soldierCount = this->getAttackCapacity();
 	while (soldierCount) {
-		if (game->getAlienUnit(AS, enemyUnit)) {
-			enemyUnit->getAttacked(this, timestep);
-			tempList.enqueue(enemyUnit);
-			attacked = true;
+		if (!this->infected) {
+			if (game->getAlienUnit(AS, enemyUnit)) {
+				enemyUnit->getAttacked(this, timestep);
+				tempList.enqueue(enemyUnit);
+				attacked = true;
+			}
+			else break;
 		}
-		else break;
+		else {
+			if (game->getEarthUnit(ES, enemyUnit)) {
+				if (enemyUnit != this) {
+					tempList.enqueue(enemyUnit);
+					enemyUnit->getAttacked(this, timestep);
+					attacked = true;
+				}
+				else game->handleUnit(enemyUnit);
+			}
+			else break;
+		}
 		--soldierCount;
 	}
+	Unit* infectUnit;
 	if (!tempList.isEmpty() && game->isInteractive()) {
 		cout << "\tES " << this << " shots ";
 		cout << "\t";
@@ -34,6 +48,17 @@ bool EarthSoldier::attack() {
 		tempList.dequeue(enemyUnit);
 		game->handleUnit(enemyUnit);
 	}
+
+
+	if (game->spreadInfect(infectUnit)) {
+		EarthSoldier* s1 = dynamic_cast<EarthSoldier*>(infectUnit);
+		if (!s1->isInfected()) {
+			s1->setInfected(true);
+			game->incrementInfected();
+		}
+		game->handleUnit(infectUnit);
+	}
+
 	return attacked;
 }
 

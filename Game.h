@@ -52,6 +52,7 @@ public:
 	void decrementInfected();
 	double getInfectionPercentage();
 	bool isDraw();
+	bool spreadInfect(Unit*& unit);
 	~Game();
 	
 };

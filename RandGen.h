@@ -10,6 +10,7 @@ struct Percentages {
 	int percentAS;
 	int percentAM;
 	int percentAD;
+	int percentIf;
 };
 
 struct ArmyData {
