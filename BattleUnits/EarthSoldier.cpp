@@ -7,8 +7,9 @@ EarthSoldier::EarthSoldier(Game* game, int joinTime, double health, double power
 	: Unit(game, ES, joinTime, health, power, attackCapacity) {
 }
 
-void EarthSoldier::attack() {
+bool EarthSoldier::attack() {
 	int timestep = game->getTimestep();
+	bool attacked = false;
 	Unit* enemyUnit;
 	LinkedQueue<Unit*> tempList;
 	int soldierCount = this->getAttackCapacity();
@@ -16,6 +17,7 @@ void EarthSoldier::attack() {
 		if (game->getAlienUnit(AS, enemyUnit)) {
 			enemyUnit->getAttacked(this, timestep);
 			tempList.enqueue(enemyUnit);
+			attacked = true;
 		}
 		else break;
 		--soldierCount;
@@ -30,4 +32,5 @@ void EarthSoldier::attack() {
 		tempList.dequeue(enemyUnit);
 		game->handleUnit(enemyUnit);
 	}
+	return attacked;
 }

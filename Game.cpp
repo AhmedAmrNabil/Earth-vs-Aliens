@@ -15,6 +15,8 @@ Game::Game() :RNG(this)
 	gameMode = INTERACTIVE;
 	timestep = 1;
 	loadInput();
+	alienAttacked = true;
+	earthAttacked = true;
 }
 
 bool Game::isInteractive() {
@@ -87,8 +89,8 @@ void Game::gameTick() {
 		printarmies();
 		cout << "\t==============Units fighting at current step=======\n";
 	}
-	earthArmy.fight();
-	alienArmy.fight();
+	earthAttacked = earthArmy.fight();
+	alienAttacked = alienArmy.fight();
 	if (gameMode == INTERACTIVE) {
 		printkilledunits();
 		printUML();
@@ -180,7 +182,7 @@ void Game::startGame() {
 
 	}
 	ch = 0;
-	while (ch != 27 && (earthArmy.isAlive() && alienArmy.isAlive() || timestep < 40)) {
+	while (ch != 27 && (earthArmy.isAlive() && alienArmy.isAlive() && !isDraw() || timestep < 40)) {
 		gameTick();
 		if (gameMode == INTERACTIVE)
 			ch = _getch();
@@ -193,6 +195,10 @@ string Game::getRatio(double x, double y) {
 	std::stringstream ss;
 	ss << std::fixed << std::setprecision(2) << x / y;
 	return ss.str();
+}
+
+bool Game::isDraw() {
+	return !(earthAttacked || alienAttacked);
 }
 
 void Game::endGame() {
@@ -254,9 +260,9 @@ void Game::endGame() {
 	}
 
 	string battleResult = ""; // Assume the win state when earth win not alien (but i am sided with aliens :D )
-	if (earthArmy.isAlive() && !alienArmy.isAlive())battleResult = "Win";
-	else if (!earthArmy.isAlive() && alienArmy.isAlive())battleResult = "Loss";
-	else if (!earthArmy.isAlive() && !alienArmy.isAlive())battleResult = "Drawn";
+	if (!earthArmy.isAlive() && !alienArmy.isAlive() || isDraw()) battleResult = "Drawn";
+	else if (earthArmy.isAlive() && !alienArmy.isAlive()) battleResult = "Win";
+	else if (!earthArmy.isAlive() && alienArmy.isAlive()) battleResult = "Loss";
 	outputFile << battleResult << '\n';
 	totalCountES = earthArmy.getTotalSoldierCount()+UML.getCount();
 	totalCountET = earthArmy.getTotalTankCount();

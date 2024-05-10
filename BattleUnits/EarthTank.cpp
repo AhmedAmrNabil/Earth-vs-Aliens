@@ -5,7 +5,8 @@
 EarthTank::EarthTank(Game* game,int joinTime, double health, double power, int attackCapacity)
     : Unit(game, ET, joinTime, health, power, attackCapacity) {
 }
-void EarthTank::attack() {
+bool EarthTank::attack() {
+    bool attacked = false;
     int timestep = game->getTimestep();
     Unit* monster;
     Unit* soldier;
@@ -27,6 +28,7 @@ void EarthTank::attack() {
             soldier->getAttacked(this, timestep);
             tmpsoldier.enqueue(soldier);
             soldierCount--;
+            attacked = true;
         }
         else break;
     }
@@ -36,8 +38,9 @@ void EarthTank::attack() {
             monster->getAttacked(this, timestep);
             tmpmonster.enqueue(monster);
             monsterCount--;
+            attacked = true;
         }
-        else break;
+        else break;    
     }
     if (!tmpsoldier.isEmpty() && game->isInteractive()) {
         cout << "\tET " << this << " shots ";
@@ -55,4 +58,5 @@ void EarthTank::attack() {
         tmpmonster.dequeue(unit);
         game->handleUnit(unit);
     }
+    return attacked;
 }

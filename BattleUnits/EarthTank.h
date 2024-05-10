@@ -8,7 +8,7 @@ class EarthTank : public Unit
 
 public:
 	EarthTank(Game* game, int joinTime, double health, double power, int attackCapacity);
-	void attack() override;
+	bool attack() override;
 };
 
 #endif

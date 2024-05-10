@@ -34,7 +34,7 @@ class Unit {
 
    public:
 	Unit(Game* game,UNIT_TYPE type, int joinTime, double health, double power, int attackCapacity);
-	virtual void attack() = 0;
+	virtual bool attack() = 0;
 	void decrementHealth(double damage, int timestep);
 	void getAttacked(Unit* enemyUnit, int timestep);
 	void getHealed(Unit* HealUnit);
