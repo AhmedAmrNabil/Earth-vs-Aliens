@@ -1,7 +1,7 @@
 #include "Unit.h"
 #include <iostream>
 #include <cmath>
-
+#include "EarthSoldier.h"
 
 int Unit::lastAlienId = 2000;
 int Unit::lastEarthId = 1;
@@ -15,7 +15,11 @@ Unit::Unit(Game* game,UNIT_TYPE type, int joinTime, double health, double power,
 	id = isAlien() ? lastAlienId++ : lastEarthId++;
 }
 
-std::ostream& operator<<(std::ostream& out, const Unit* unit) {
+std::ostream& operator<<(std::ostream& out, Unit* unit) {
+	EarthSoldier* soldier = dynamic_cast <EarthSoldier*>(unit);
+	if (soldier && (soldier->isInfected() && !soldier->isImmune())) {
+		out << "XX ";
+	}
 	out << unit->getId();
 	return out;
 }

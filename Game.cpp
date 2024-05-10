@@ -17,6 +17,7 @@ Game::Game() :RNG(this)
 	loadInput();
 	alienAttacked = true;
 	earthAttacked = true;
+	infectionCount = 0;
 }
 
 bool Game::isInteractive() {
@@ -94,6 +95,7 @@ void Game::gameTick() {
 	if (gameMode == INTERACTIVE) {
 		printkilledunits();
 		printUML();
+		cout << "\tCurrent Infection Percentage is " << getInfectionPercentage();
 	}
 	++timestep;
 }
@@ -159,6 +161,24 @@ EarthArmy* Game::getEarthArmy() {
 }
 AlienArmy* Game::getAlienArmy() {
 	return &alienArmy;
+}
+
+void Game::incrementInfected()
+{
+	infectionCount++;
+}
+
+void Game::decrementInfected()
+{
+	infectionCount--;
+}
+
+double Game::getInfectionPercentage()
+{
+	if (infectionCount == 0 || earthArmy.getSoldierCount() == 0) {
+		return 0;
+	}
+	return (infectionCount/earthArmy.getSoldierCount())*100;
 }
 
 double Game::getSoldierRatio()
