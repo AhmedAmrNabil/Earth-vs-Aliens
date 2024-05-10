@@ -2,10 +2,15 @@
 #include "../Game.h"
 #include "../DataStructures/LinkedQueue.h"
 #include "../DataStructures/LinkedListStack.h"
+#include <cstdlib> 
+#include <time.h> 
+#include "EarthSoldier.h"
 
 
-AlienMonster::AlienMonster(Game* game, int joinTime, double health, double power, int attackCapacity)
+AlienMonster::AlienMonster(Game* game, int joinTime, double health, double power, int attackCapacity,int infectionPercent)
     : Unit(game,AM, joinTime, health, power, attackCapacity) {
+    this->infectionPercent = infectionPercent;
+    srand(time(0));
 }
 
 bool AlienMonster::attack() {
@@ -34,6 +39,21 @@ bool AlienMonster::attack() {
             soldier->getAttacked(this, timestep);
             temp.enqueue(soldier);
             --soldierCount;
+            if (this->willInfect()) {
+                EarthSoldier* s1 = dynamic_cast<EarthSoldier*>(soldier);
+                s1->setInfected(true);
+                game->incrementInfected();
+            }
+            attacked = true;
+        }
+        else break;
+    }
+    while (soldierCount > 0) 
+    {
+        if (game->getEarthUnit(ET, tank)) {
+            tank->getAttacked(this, timestep);
+            tempEarthTanks.push(tank);
+            --soldierCount;
             attacked = true;
         }
         else break;
@@ -56,4 +76,10 @@ bool AlienMonster::attack() {
         game->handleUnit(soldier);
     }
     return attacked;
+}
+
+bool AlienMonster::willInfect()
+{
+    int random = rand() % 100;
+    return (random <= infectionPercent);
 }

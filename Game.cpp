@@ -5,11 +5,8 @@
 #include <string>
 #include <sstream>
 #include <iomanip>
-
-
-
-
-
+#include <cstdlib> 
+#include <time.h> 
 Game::Game() :RNG(this)
 {
 	gameMode = INTERACTIVE;
@@ -18,6 +15,7 @@ Game::Game() :RNG(this)
 	alienAttacked = true;
 	earthAttacked = true;
 	infectionCount = 0;
+	srand(time(0));
 }
 
 bool Game::isInteractive() {
@@ -151,6 +149,7 @@ void Game::loadInput()
 	alienData.maxHealth *= -1;
 	alienData.maxCapacity *= -1;
 
+	input_file >> percentages.percentIf;
 	RNG.setData(earthData, alienData, percentages, N, Prob);
 
 	input_file.close();
@@ -178,7 +177,8 @@ double Game::getInfectionPercentage()
 	if (infectionCount == 0 || earthArmy.getSoldierCount() == 0) {
 		return 0;
 	}
-	return (infectionCount/earthArmy.getSoldierCount())*100;
+	double b = (double(infectionCount) / earthArmy.getTotalSoldierCount()) * 100;
+	return b;
 }
 
 double Game::getSoldierRatio()
@@ -219,6 +219,29 @@ string Game::getRatio(double x, double y) {
 
 bool Game::isDraw() {
 	return !(earthAttacked || alienAttacked);
+}
+
+bool Game::spreadInfect(Unit*& unit)
+{
+	int sc = earthArmy.getSoldierCount();
+	int random = rand() % sc;
+	LinkedQueue<Unit*> temp;
+	bool infected = false;
+	for (int i = 1; i <= random&& this->getEarthUnit(ES, unit); i++)
+	{
+		this->getEarthUnit(ES, unit);
+		if (i != random) {
+			temp.enqueue(unit);
+		}
+		else infected = true;
+	}
+	while (!temp.isEmpty()) 
+	{
+		Unit* u1;
+		temp.dequeue(u1);
+		this->addEarthUnit(u1);
+	}
+	return infected;
 }
 
 void Game::endGame() {

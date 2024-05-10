@@ -2,6 +2,7 @@
 #define ARRAY_MONSTER_H
 #include "../BattleUnits/Unit.h"
 
+
 class ArrayMonster
 {
 private:
