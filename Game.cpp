@@ -225,21 +225,24 @@ bool Game::spreadInfect(Unit*& unit)
 {
 	int sc = earthArmy.getSoldierCount();
 	int random = rand() % sc;
+	int random2 = rand() % 100;
 	LinkedQueue<Unit*> temp;
 	bool infected = false;
-	for (int i = 1; i <= random&& this->getEarthUnit(ES, unit); i++)
-	{
-		this->getEarthUnit(ES, unit);
-		if (i != random) {
-			temp.enqueue(unit);
+	if (random2 <= 2) {
+		for (int i = 1; i <= random && this->getEarthUnit(ES, unit); i++)
+		{
+			this->getEarthUnit(ES, unit);
+			if (i != random) {
+				temp.enqueue(unit);
+			}
+			else infected = true;
 		}
-		else infected = true;
-	}
-	while (!temp.isEmpty()) 
-	{
-		Unit* u1;
-		temp.dequeue(u1);
-		this->addEarthUnit(u1);
+		while (!temp.isEmpty())
+		{
+			Unit* u1;
+			temp.dequeue(u1);
+			this->addEarthUnit(u1);
+		}
 	}
 	return infected;
 }
