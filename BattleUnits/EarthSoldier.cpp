@@ -52,9 +52,11 @@ bool EarthSoldier::attack() {
 	{
 		if (game->spreadInfect(infectUnit)) {
 			EarthSoldier* s1 = dynamic_cast<EarthSoldier*>(infectUnit);
-			s1->setInfected(true);
-			game->addEarthUnit(infectUnit);
-			game->incrementInfected();
+			if (!s1->isInfected()) {
+				s1->setInfected(true);
+				game->incrementInfected();
+			}
+			game->handleUnit(infectUnit);
 		}
 	}
 	return attacked;
