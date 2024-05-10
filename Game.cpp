@@ -223,6 +223,7 @@ bool Game::isDraw() {
 
 bool Game::spreadInfect(Unit*& unit)
 {
+	if (this->infectionCount < 1) return false;
 	int sc = earthArmy.getSoldierCount();
 	int random = rand() % sc;
 	int random2 = rand() % 100;
