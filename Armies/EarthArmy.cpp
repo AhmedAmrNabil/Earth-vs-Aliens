@@ -102,8 +102,11 @@ bool EarthArmy::peek(UNIT_TYPE type, Unit*& unit)
 	return true;
 }
 
-void EarthArmy::fight()
+bool EarthArmy::fight()
 {
+	bool soldierAttack = false;
+	bool tankAttack = false;
+	bool gunneryAttack = false;
 	Unit *S,*T,*G,*H;
 	int pri;
 	if (HL.pop(H)) {
@@ -113,13 +116,14 @@ void EarthArmy::fight()
 	}
 	
 	if(earthSoldiers.peek(S))
-		S->attack();
+		soldierAttack = S->attack();
 	
 	if (earthTanks.peek(T)) 
-		T->attack();
+		tankAttack = T->attack();
 	
 	if (earthGunnery.peek(G, pri)) 
-		G->attack();
+		gunneryAttack = G->attack();
+	return soldierAttack || tankAttack || gunneryAttack;
 	
 }
 

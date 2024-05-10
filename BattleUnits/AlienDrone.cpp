@@ -9,7 +9,7 @@ AlienDrone::AlienDrone(Game* game, int joinTime, double health, double power, in
     : Unit(game,AD,joinTime, health, power, attackCapacity) {
 }
 
-void AlienDrone::attack() {
+bool AlienDrone::attack() {
     int timestep = game->getTimestep();
     LinkedListStack<Unit*> tempEarthTanks;
     LinkedQueue<Unit*> temp;
@@ -17,12 +17,14 @@ void AlienDrone::attack() {
     Unit* gunnery = nullptr;
     int gunnerCount = this->getAttackCapacity() / 2;
     int tankCount=this->getAttackCapacity()- gunnerCount;
+    bool attacked = false;
     while (tankCount > 0) 
     {
         if (game->getEarthUnit(ET, tank)) {
             tank->getAttacked(this, timestep);
             tempEarthTanks.push(tank);
             --tankCount;
+            attacked = true;
         }
         else break;
     }
@@ -33,6 +35,7 @@ void AlienDrone::attack() {
             gunnery->getAttacked(this, timestep);
             temp.enqueue(gunnery);
             --gunnerCount;
+            attacked = true;
         }
         else break;
     }
@@ -52,4 +55,5 @@ void AlienDrone::attack() {
         temp.dequeue(gunnery);
         game->handleUnit(gunnery);
     }
+    return attacked;
 }

@@ -96,22 +96,27 @@ bool AlienArmy::peek(UNIT_TYPE type, Unit*& unit) {
 	}
 	return true;
 }
-void AlienArmy::fight()
+bool AlienArmy::fight()
 {
+	bool soliderAttack = false;
+	bool monsterAttack = false;
+	bool droneAttack1 = false;
+	bool droneAttack2 = false;
 	Unit* M, * D1,*D2, * S;
 	if (alienSoldiers.peek(S)) 
 	{
-		S->attack();
+		soliderAttack = S->attack();
 	}
 	if (alienMonsters.peek(M))
 	{
-		M->attack();
+		monsterAttack = M->attack();
 	}
 	if (alienDrones.peek(D1) && alienDrones.peekRear(D2) && D1 != D2) 
 	{
-		D1->attack();
-		D2->attack();
+		droneAttack1 = D1->attack();
+		droneAttack2 = D2->attack();
 	}
+	return soliderAttack || monsterAttack || droneAttack1 || droneAttack2;
 }
 void AlienArmy::print() {
 	cout << "\t============== Alien Army Alive Units =============\n";

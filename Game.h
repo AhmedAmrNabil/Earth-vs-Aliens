@@ -21,6 +21,8 @@ class Game
 	ArmyData earthData;
 	ArmyData alienData;
 	GAME_MODE gameMode;
+	bool earthAttacked;
+	bool alienAttacked;
 public:
 	Game();
 	void printarmies();
@@ -45,6 +47,7 @@ public:
 	double getSoldierRatio();
 	EarthArmy* getEarthArmy();
 	AlienArmy* getAlienArmy();
+	bool isDraw();
 	~Game();
 	
 };

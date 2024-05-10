@@ -13,11 +13,12 @@ int EarthGunnery::getPriority() {
     return power * sqrt(health);
 }
 
-void EarthGunnery::attack() {
+bool EarthGunnery::attack() {
     int timestep = game->getTimestep();
     Unit* enemyUnit = nullptr;
     LinkedListStack<Unit*> tempListDrone;
     LinkedQueue<Unit*> tempListMonster;
+    bool attacked = false;
 
     int monsterCount = this->getAttackCapacity() / 2;
     int dronesCount = this->getAttackCapacity() - monsterCount;
@@ -25,6 +26,7 @@ void EarthGunnery::attack() {
         if (game->getAlienUnit(AM, enemyUnit)) {
             enemyUnit->getAttacked(this, timestep);
             tempListMonster.enqueue(enemyUnit);
+            attacked = true;
         }
         else break;
         --monsterCount;
@@ -36,6 +38,7 @@ void EarthGunnery::attack() {
         if (game->getAlienUnit(AD, enemyUnit)) {
             enemyUnit->getAttacked(this, timestep);
             tempListDrone.push(enemyUnit);
+            attacked = true;
         }
         else break;
         --dronesCount;
@@ -57,4 +60,5 @@ void EarthGunnery::attack() {
         tempListMonster.dequeue(enemyUnit);
         game->handleUnit(enemyUnit);
     }
+    return attacked;
 }

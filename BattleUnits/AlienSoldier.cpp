@@ -7,15 +7,17 @@ AlienSoldier::AlienSoldier(Game* game, int joinTime, double health, double power
 	: Unit(game, AS, joinTime, health, power, attackCapacity) {
 }
 
-void AlienSoldier::attack() {
+bool AlienSoldier::attack() {
 	int timestep = game->getTimestep();
 	Unit* enemyUnit;
 	LinkedQueue<Unit*> tempList;
 	int soldierCount = this->getAttackCapacity();
+	bool attacked = false;
 	while (soldierCount) {
 		if (game->getEarthUnit(ES, enemyUnit)) {
 			enemyUnit->getAttacked(this, timestep);
 			tempList.enqueue(enemyUnit);
+			attacked = true;
 		}
 		else break;
 		--soldierCount;
@@ -30,4 +32,5 @@ void AlienSoldier::attack() {
 		tempList.dequeue(enemyUnit);
 		game->handleUnit(enemyUnit);
 	}
+	return attacked;
 }

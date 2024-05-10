@@ -8,7 +8,7 @@ AlienMonster::AlienMonster(Game* game, int joinTime, double health, double power
     : Unit(game,AM, joinTime, health, power, attackCapacity) {
 }
 
-void AlienMonster::attack() {
+bool AlienMonster::attack() {
     int timestep = game->getTimestep();
     LinkedListStack<Unit*> tempEarthTanks;
     LinkedQueue<Unit*> temp;
@@ -16,12 +16,14 @@ void AlienMonster::attack() {
     Unit* soldier = nullptr;
     int soldierCount = this->getAttackCapacity() / 2;
     int tankCount = this->getAttackCapacity() - soldierCount;
+    bool attacked = false;
     while (tankCount > 0)
     {
         if (game->getEarthUnit(ET, tank)) {
             tank->getAttacked(this, timestep);
             tempEarthTanks.push(tank);
             --tankCount;
+            attacked = true;
         }
         else break;
     }
@@ -32,6 +34,7 @@ void AlienMonster::attack() {
             soldier->getAttacked(this, timestep);
             temp.enqueue(soldier);
             --soldierCount;
+            attacked = true;
         }
         else break;
     }
@@ -52,4 +55,5 @@ void AlienMonster::attack() {
         temp.dequeue(soldier);
         game->handleUnit(soldier);
     }
+    return attacked;
 }

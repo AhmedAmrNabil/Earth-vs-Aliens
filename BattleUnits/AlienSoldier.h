@@ -6,7 +6,7 @@
 class AlienSoldier : public Unit {
    public:
     AlienSoldier(Game* game, int joinTime, double health, double power, int attackCapacity);
-    void attack() override;
+    bool attack() override;
 };
 
 #endif

@@ -8,9 +8,10 @@ HealUnit::HealUnit(Game* game, int joinTime, double health, double power, int at
 {
 }
 
-void HealUnit::attack()
+bool HealUnit::attack()
 {
-	if (game->isUMLEmpty()) return;
+	bool attacked = false;
+	if (game->isUMLEmpty()) return false;
 	int timestep = game->getTimestep();
 	Unit* unit;
 	LinkedQueue<Unit*> tempList;
@@ -23,6 +24,7 @@ void HealUnit::attack()
 			if (!unit->isLow()) game->addEarthUnit(unit);
 			else tempList.enqueue(unit);
 			--healCount;
+			attacked = true;
 		}
 		else break;
 	}
@@ -43,4 +45,5 @@ void HealUnit::attack()
 		this->decrementHealth(this->health,timestep);
 		game->handleUnit(this);
 	}
+	return attacked;
 }
