@@ -23,6 +23,7 @@ class Game
 	GAME_MODE gameMode;
 	bool earthAttacked;
 	bool alienAttacked;
+	int infectionCount;
 public:
 	Game();
 	void printarmies();
@@ -47,6 +48,9 @@ public:
 	double getSoldierRatio();
 	EarthArmy* getEarthArmy();
 	AlienArmy* getAlienArmy();
+	void incrementInfected();
+	void decrementInfected();
+	double getInfectionPercentage();
 	bool isDraw();
 	~Game();
 	

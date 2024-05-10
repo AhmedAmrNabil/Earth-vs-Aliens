@@ -52,6 +52,6 @@ class Unit {
 	UNIT_TYPE getType() const;
 };
 
-std::ostream& operator<<(std::ostream& out, const Unit* unit);
+std::ostream& operator<<(std::ostream& out, Unit* unit);
 
 #endif

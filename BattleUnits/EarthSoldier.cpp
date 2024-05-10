@@ -5,6 +5,8 @@
 
 EarthSoldier::EarthSoldier(Game* game, int joinTime, double health, double power, int attackCapacity)
 	: Unit(game, ES, joinTime, health, power, attackCapacity) {
+	infected = false;
+	immune = false;
 }
 
 bool EarthSoldier::attack() {
@@ -33,4 +35,24 @@ bool EarthSoldier::attack() {
 		game->handleUnit(enemyUnit);
 	}
 	return attacked;
+}
+
+bool EarthSoldier::isInfected()
+{
+	return infected;
+}
+
+void EarthSoldier::setInfected(bool b)
+{
+	infected = b;
+}
+
+bool EarthSoldier::isImmune()
+{
+	return immune;
+}
+
+void EarthSoldier::setImmunity(bool b)
+{
+	immune = b;
 }
