@@ -1,7 +1,7 @@
 #include "Unit.h"
 #include <iostream>
 #include <cmath>
-#include <windows.h>
+#include <string>
 #include "EarthSoldier.h"
 
 int Unit::lastAlienId = 2000;
@@ -14,36 +14,28 @@ Unit::Unit(Game* game, UNIT_TYPE type, int joinTime, double health, double power
 	initialhealth = health;
 	joinUMLTime = -1;
 	id = isAlien() ? lastAlienId++ : lastEarthId++;
+	
 }
 
 std::ostream& operator<<(std::ostream& out, Unit* unit) {
-	HANDLE  hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-	CONSOLE_SCREEN_BUFFER_INFO info;
-	GetConsoleScreenBufferInfo(hConsole, &info);
+	
 	EarthSoldier* soldier = dynamic_cast <EarthSoldier*>(unit);
 	if (soldier && (soldier->isInfected() && !soldier->isImmune())) {
-		SetConsoleTextAttribute(hConsole, FOREGROUND_RED | 0xf0 & info.wAttributes);
-		out << "(";
+		out << "\033[1;31m(\033[1;34m" << unit->getId() << "\033[1;31m)\033[0m";
+		return out;
 	}
-	unsigned short int color = 0;
+	std::string color = "";
 	switch (unit->getType()) {
-	case ES:color = FOREGROUND_BLUE; break;
-	case ET:color = FOREGROUND_BLUE | FOREGROUND_GREEN; break;
-	case EG:color = FOREGROUND_GREEN; break;
-	case AS:color = FOREGROUND_BLUE | FOREGROUND_RED; break;
-	case AM:color = FOREGROUND_RED; break;
-	case AD:color = FOREGROUND_RED | FOREGROUND_GREEN; break;
-	default: color = FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE; break;
+	case ES:color = "\033[1;34m"; break;
+	case ET:color = "\033[1;36m"; break;
+	case EG:color = "\033[1;32m"; break;
+	case AS:color = "\033[1;33m"; break;
+	case AM:color = "\033[1;31m"; break;
+	case AD:color = "\033[1;35m"; break;
+	default: color = "\033[1;37m"; break;
 	}
-	color |= FOREGROUND_INTENSITY;
-	SetConsoleTextAttribute(hConsole, color | 0xf0 & info.wAttributes);
 
-	out << unit->getId();
-	if (soldier && (soldier->isInfected() && !soldier->isImmune())) {
-		SetConsoleTextAttribute(hConsole, FOREGROUND_RED | 0xf0 & info.wAttributes);
-		out << ")";
-	}
-	SetConsoleTextAttribute(hConsole, info.wAttributes);
+	out << color <<unit->getId() << "\033[0m";
 	return out;
 }
 

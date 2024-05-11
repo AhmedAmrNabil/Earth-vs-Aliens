@@ -1,7 +1,7 @@
 #include "Game.h"
 #include <conio.h>
 #include <fstream>
-#include <fstream>
+#include <windows.h>
 #include <string>
 #include <sstream>
 #include <iomanip>
@@ -22,6 +22,13 @@ Game::Game() :RNG(this)
 	saverActive = false;
 	infectionThreshold = 0;
 	srand(time(0));
+
+	//Enabling color support
+	HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
+	DWORD dwMode = 0;
+	GetConsoleMode(hOut, &dwMode);
+	dwMode |= ENABLE_VIRTUAL_TERMINAL_PROCESSING;
+	SetConsoleMode(hOut, dwMode);
 }
 
 bool Game::isInteractive() {
