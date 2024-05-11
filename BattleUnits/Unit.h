@@ -5,6 +5,7 @@
 
 enum UNIT_TYPE {
 	HU,
+	SU,
 	ES,
 	ET,
 	EG,
