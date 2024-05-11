@@ -7,6 +7,8 @@
 #include <iomanip>
 #include <cstdlib> 
 #include <time.h> 
+#include "BattleUnits/EarthSoldier.h"
+
 Game::Game() :RNG(this)
 {
 	gameMode = INTERACTIVE;
@@ -15,6 +17,7 @@ Game::Game() :RNG(this)
 	alienAttacked = true;
 	earthAttacked = true;
 	infectionCount = 0;
+	umlsoldier = 0;
 	srand(time(0));
 }
 
@@ -93,20 +96,26 @@ void Game::gameTick() {
 	if (gameMode == INTERACTIVE) {
 		printkilledunits();
 		printUML();
-		cout << "\tCurrent Infection Percentage is " << getInfectionPercentage();
+		cout << "\t===================================================\n";
+		cout << "\tCurrent Infection Percentage is " << getInfectionPercentage()<<endl;
 	}
 	++timestep;
 }
 
 void Game::addToKilled(Unit*& unit)
 {
+	EarthSoldier* soldier = dynamic_cast<EarthSoldier*>(unit);
+	if (soldier && (soldier->isInfected() && !soldier->isImmune())) decrementInfected();
 	killedUnits.enqueue(unit);
 }
 
 void Game::addToUML(Unit*& unit, int joinUMLtime)
 {
 	int pri;
-	if (unit->getType() == ES) pri = (earthData.maxHealth - unit->getHealth()) * 1000;
+	if (unit->getType() == ES) {
+		pri = (earthData.maxHealth - unit->getHealth()) * 1000; 
+		umlsoldier++;
+	}
 	else pri = -1;
 	UML.enqueue(unit, pri);
 	unit->setUMLJoinTime(joinUMLtime);
@@ -172,12 +181,17 @@ void Game::decrementInfected()
 	infectionCount--;
 }
 
+int Game::getAliveSoldiers()
+{
+	return umlsoldier + earthArmy.getSoldierCount();
+}
+
 double Game::getInfectionPercentage()
 {
-	if (infectionCount == 0 || earthArmy.getSoldierCount() == 0) {
+	if (infectionCount == 0 || getAliveSoldiers() == 0) {
 		return 0;
 	}
-	double b = (double(infectionCount) / earthArmy.getTotalSoldierCount()) * 100;
+	double b = (double(infectionCount) / getAliveSoldiers()) * 100;
 	return b;
 }
 

@@ -17,6 +17,7 @@ bool AlienMonster::attack() {
     int timestep = game->getTimestep();
     LinkedListStack<Unit*> tempEarthTanks;
     LinkedQueue<Unit*> temp;
+    LinkedQueue<Unit*> temp2;
     Unit* tank = nullptr;
     Unit* soldier = nullptr;
     int soldierCount = this->getAttackCapacity() / 2;
@@ -27,6 +28,7 @@ bool AlienMonster::attack() {
         if (game->getEarthUnit(ET, tank)) {
             tank->getAttacked(this, timestep);
             tempEarthTanks.push(tank);
+            temp2.enqueue(tank);
             --tankCount;
             attacked = true;
         }
@@ -55,15 +57,16 @@ bool AlienMonster::attack() {
         if (game->getEarthUnit(ET, tank)) {
             tank->getAttacked(this, timestep);
             tempEarthTanks.push(tank);
+            temp2.enqueue(tank);
             --soldierCount;
             attacked = true;
         }
         else break;
     }
-    if ((!tempEarthTanks.isEmpty() || !temp.isEmpty()) && game->isInteractive()) {
+    if ((!temp2.isEmpty() || !temp.isEmpty()) && game->isInteractive()) {
         cout << "\tAM " << this << " shots ";
         cout << "\t";
-        tempEarthTanks.print();
+        temp2.print();
         temp.print();
         cout << endl;
     }
@@ -76,6 +79,9 @@ bool AlienMonster::attack() {
     while (!temp.isEmpty()) {
         temp.dequeue(soldier);
         game->handleUnit(soldier);
+    }
+    while (!temp2.isEmpty()) {
+        temp2.dequeue(tank);
     }
     return attacked;
 }

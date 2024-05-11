@@ -24,6 +24,7 @@ class Game
 	bool earthAttacked;
 	bool alienAttacked;
 	int infectionCount;
+	int umlsoldier;
 public:
 	Game();
 	void printarmies();
@@ -50,6 +51,7 @@ public:
 	AlienArmy* getAlienArmy();
 	void incrementInfected();
 	void decrementInfected();
+	int getAliveSoldiers();
 	double getInfectionPercentage();
 	bool isDraw();
 	bool spreadInfect(Unit*& unit);
