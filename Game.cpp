@@ -18,9 +18,9 @@ Game::Game() :RNG(this)
 	infectionCount = 0;
 	totalInfectionCount = 0;
 	umlsoldier = 0;
-	loadInput();
-	saverActive = false;
 	infectionThreshold = 0;
+	saverActive = false;
+	loadInput();
 	srand(time(0));
 
 	//Enabling color support
@@ -123,11 +123,11 @@ void Game::gameTick() {
 		printkilledunits();
 		printUML();
 		cout << "\t===================================================\n";
-		cout << "\tCurrent Infection Percentage is " << getInfectionPercentage() << endl;
+		cout << "\tCurrent Infection Percentage is " << setprecision(4)<< getInfectionPercentage() << "%" << endl;
 	}
-	if (!saverActive && infectionCount >= infectionThreshold)
+	if (infectionCount >= infectionThreshold)
 		saverActive = true;
-	else if (saverActive && infectionCount == 0) {
+	else if (infectionCount == 0) {
 		saverActive = false;
 		killAllSaver();
 	}
