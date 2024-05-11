@@ -12,7 +12,7 @@ public:
 	bool peek(UNIT_TYPE type, Unit*& unit);
 	bool fight();
 	void print();
-	int getSoldierCount();
+	int getSaverCount();
 	bool isAlive();
 
 };
