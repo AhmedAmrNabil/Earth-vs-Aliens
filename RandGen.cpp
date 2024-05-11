@@ -5,8 +5,9 @@
 #include "BattleUnits/AlienSoldier.h"
 #include "BattleUnits/EarthGunnery.h"
 #include "BattleUnits/EarthSoldier.h"
-#include "BattleUnits/HealUnit.h"
 #include "BattleUnits/EarthTank.h"
+#include "BattleUnits/HealUnit.h"
+#include "BattleUnits/SaverUnit.h"
 #include "Armies/EarthArmy.h"
 #include "Armies/AlienArmy.h"
 #include "Game.h"
@@ -27,6 +28,7 @@ double generateDouble(double begin, double end) {
 }
 
 Unit* RandGen::generateEarthUnit() {
+	if (Unit::getEarthLastId() == 1000)return nullptr;
 	Unit* unit;
 	double power = generator(earthData.minPower, earthData.maxPower);
 	double health = generator(earthData.minHealth, earthData.maxHealth);
@@ -43,8 +45,18 @@ Unit* RandGen::generateEarthUnit() {
 
 	return unit;
 }
+Unit* RandGen::generateAllyUnit() {
+	Unit* unit;
+	if (Unit::getEarthLastId() == 1000)return nullptr;
+	double power = generator(allyData.minPower, allyData.maxPower);
+	double health = generator(allyData.minHealth, allyData.maxHealth);
+	int capacity = generator(allyData.minCapacity, allyData.maxCapacity);
+	unit = new SaverUnit(game,game->getTimestep(),health,power,capacity);
+	return unit;
 
+}
 Unit* RandGen::generateAlienUnit() {
+	if (Unit::getAlienLastId() == 3000)return nullptr;
 	Unit* unit;
 	double power = generator(alienData.minPower, alienData.maxPower);
 	double health = generator(alienData.minHealth, alienData.maxHealth);
@@ -63,8 +75,9 @@ Unit* RandGen::generateAlienUnit() {
 void RandGen::generateUnits() {
 	EarthArmy* earthArmy = game->getEarthArmy();
 	AlienArmy* alienArmy = game->getAlienArmy();
-	Unit* unit = nullptr;
+	AllyArmy* allyArmy = game->getAllyArmy();
 
+	Unit* unit = nullptr;
 	int A = generator(1, 100);
 	if (A <= Prob) {
 		for (int i = 0; i < N; ++i) {
@@ -80,11 +93,21 @@ void RandGen::generateUnits() {
 			alienArmy->addUnit(unit, true);
 		}
 	}
+	if (!game->saverIsActive())return;
+	unit = nullptr;
+	A = generator(1, 100);
+	if (A <= percentages.percentSU) {
+		for (int i = 0; i < N; ++i) {
+			unit = generateAllyUnit();
+			allyArmy->addUnit(unit, true);
+		}
+	}
 }
 
-void RandGen::setData(ArmyData earthData, ArmyData alienData, Percentages percentages, int N, int Prob) {
+void RandGen::setData(ArmyData earthData, ArmyData alienData, ArmyData allyData , Percentages percentages, int N, int Prob) {
 	this->earthData = earthData;
 	this->alienData = alienData;
+	this->allyData = allyData;
 	this->percentages = percentages;
 	this->N = N;
 	this->Prob = Prob;

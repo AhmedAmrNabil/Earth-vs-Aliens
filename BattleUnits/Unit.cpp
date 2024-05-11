@@ -64,3 +64,5 @@ int Unit::getAttackCapacity() const { return attackCapacity; }
 int Unit::getId() const { return id; }
 int Unit::getDestructionTime() const{ return destructionTime; }
 UNIT_TYPE Unit::getType() const { return type; }
+int Unit::getEarthLastId() { return lastEarthId; }
+int Unit::getAlienLastId() { return lastAlienId; }

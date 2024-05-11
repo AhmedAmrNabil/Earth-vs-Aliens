@@ -13,11 +13,14 @@ Game::Game() :RNG(this)
 {
 	gameMode = INTERACTIVE;
 	timestep = 1;
-	loadInput();
 	alienAttacked = true;
 	earthAttacked = true;
 	infectionCount = 0;
+	totalInfectionCount = 0;
 	umlsoldier = 0;
+	loadInput();
+	saverActive = false;
+	infectionThreshold = 0;
 	srand(time(0));
 }
 
@@ -30,6 +33,7 @@ void Game::printarmies()
 	cout << "\nCurrent Timestep: " << timestep << endl;
 	earthArmy.print();
 	alienArmy.print();
+	allyArmy.print();
 }
 
 void Game::printkilledunits()
@@ -58,14 +62,21 @@ bool Game::getAlienUnit(UNIT_TYPE type, Unit*& unit)
 	return alienArmy.getUnit(type, unit);
 }
 
+bool Game::getSaverUnit(UNIT_TYPE type, Unit*& unit)
+{
+	return allyArmy.getUnit(type, unit);
+}
+
 bool Game::getfromUML(Unit*& unit)
 {
 	int pri;
 	bool b = UML.dequeue(unit, pri);
+	if (b && unit->getType() == ES)--umlsoldier;
 	while (b && timestep - unit->getUMLJoinTime() > 10) {
 		unit->decrementHealth(unit->getHealth(), timestep);
 		addToKilled(unit);
 		b = UML.dequeue(unit, pri);
+		if (b && unit->getType() == ES)--umlsoldier;
 	}
 	return b;
 }
@@ -79,6 +90,9 @@ bool Game::addEarthUnit(Unit*& unit)
 {
 	return earthArmy.addUnit(unit);
 }
+bool Game::addSaverUnit(Unit*& unit) {
+	return allyArmy.addUnit(unit);
+}
 
 bool Game::addAlienUnit(Unit*& unit)
 {
@@ -91,13 +105,22 @@ void Game::gameTick() {
 		printarmies();
 		cout << "\t==============Units fighting at current step=======\n";
 	}
+	bool saverAttacked;
 	earthAttacked = earthArmy.fight();
 	alienAttacked = alienArmy.fight();
+	if (saverActive)
+		saverAttacked = allyArmy.fight();
 	if (gameMode == INTERACTIVE) {
 		printkilledunits();
 		printUML();
 		cout << "\t===================================================\n";
-		cout << "\tCurrent Infection Percentage is " << getInfectionPercentage()<<endl;
+		cout << "\tCurrent Infection Percentage is " << getInfectionPercentage() << endl;
+	}
+	if (!saverActive && infectionCount >= infectionThreshold)
+		saverActive = true;
+	else if (saverActive && infectionCount == 0) {
+		saverActive = false;
+		killAllSaver();
 	}
 	++timestep;
 }
@@ -113,7 +136,7 @@ void Game::addToUML(Unit*& unit, int joinUMLtime)
 {
 	int pri;
 	if (unit->getType() == ES) {
-		pri = (earthData.maxHealth - unit->getHealth()) * 1000; 
+		pri = (earthData.maxHealth - unit->getHealth()) * 1000;
 		umlsoldier++;
 	}
 	else pri = -1;
@@ -126,7 +149,8 @@ void Game::handleUnit(Unit* unit)
 	if (unit->isDead()) addToKilled(unit);
 	else if (unit->isLow()) addToUML(unit, timestep);
 	else {
-		if (unit->isAlien()) addAlienUnit(unit);
+		if (unit->getType() == SU)addSaverUnit(unit);
+		else if (unit->isAlien()) addAlienUnit(unit);
 		else addEarthUnit(unit);
 	}
 }
@@ -159,7 +183,19 @@ void Game::loadInput()
 	alienData.maxCapacity *= -1;
 
 	input_file >> percentages.percentIf;
-	RNG.setData(earthData, alienData, percentages, N, Prob);
+	input_file >> infectionThreshold;
+	input_file >> percentages.percentSU;
+
+
+	input_file >> allyData.minPower >> allyData.maxPower;
+	input_file >> alienData.minHealth >> allyData.maxHealth;
+	input_file >> alienData.minCapacity >> allyData.maxCapacity;
+
+	allyData.maxPower *= -1;
+	allyData.maxHealth *= -1;
+	allyData.maxCapacity *= -1;
+
+	RNG.setData(earthData, alienData, allyData, percentages, N, Prob);
 
 	input_file.close();
 }
@@ -170,15 +206,22 @@ EarthArmy* Game::getEarthArmy() {
 AlienArmy* Game::getAlienArmy() {
 	return &alienArmy;
 }
+AllyArmy* Game::getAllyArmy() {
+	return &allyArmy;
+}
+bool Game::saverIsActive() {
+	return saverActive;
+}
 
 void Game::incrementInfected()
 {
-	infectionCount++;
+	++infectionCount;
+	++totalInfectionCount;
 }
 
 void Game::decrementInfected()
 {
-	infectionCount--;
+	--infectionCount;
 }
 
 int Game::getAliveSoldiers()
@@ -262,10 +305,19 @@ bool Game::spreadInfect(Unit*& unit)
 	return infected;
 }
 
+void Game::killAllSaver()
+{
+	Unit* saver;
+	while (allyArmy.getUnit(SU, saver)) {
+		saver->decrementHealth(saver->getHealth(), timestep);
+		addToKilled(saver);
+	}
+}
+
 void Game::endGame() {
 	Unit* temp;
 	int pri = 0;
-	while (UML.dequeue(temp,pri)) {
+	while (UML.dequeue(temp, pri)) {
 		temp->decrementHealth(temp->getHealth(), timestep);
 		addToKilled(temp);
 	}
@@ -343,7 +395,7 @@ void Game::endGame() {
 		<< "total EG: " << totalCountEG << "\t"
 		<< "total HU: " << totalCountHU << "\n";
 
-	outputFile <<"\tdeadES/totalES: " << getRatio(countES * 100.0, totalCountES) << "%\t\t"
+	outputFile << "\tdeadES/totalES: " << getRatio(countES * 100.0, totalCountES) << "%\t\t"
 		<< "deadET/totalET: " << getRatio(countET * 100.0, totalCountET) << "%\t\t"
 		<< "deadEG/totalES: " << getRatio(countEG * 100.0, totalCountEG) << "%\t\t"
 		<< "deadHU/totalHU: " << getRatio(countHU * 100.0, totalCountHU) << "%\n";
@@ -353,29 +405,29 @@ void Game::endGame() {
 
 	outputFile << "\tdeadEarthUnits/totalEarthUnits: " << getRatio(totalEarthCount * 100.0, totalInitialEarthCount) << "%\n";
 
-	outputFile <<"\tAverage Df: " << getRatio(earthSumDf, totalEarthCount) << "\t\t"
-		<<"Average Dd: " <<getRatio(earthSumDd, totalEarthCount) << "\t\t"
-		<<"Average Db: "<< getRatio(earthSumDb, totalEarthCount) << '\n';
+	outputFile << "\tAverage Df: " << getRatio(earthSumDf, totalEarthCount) << "\t\t"
+		<< "Average Dd: " << getRatio(earthSumDd, totalEarthCount) << "\t\t"
+		<< "Average Db: " << getRatio(earthSumDb, totalEarthCount) << '\n';
 
-	outputFile <<"\tDf/Db: " << getRatio(earthSumDf * 100.0, earthSumDb) << "%\t\t"
+	outputFile << "\tDf/Db: " << getRatio(earthSumDf * 100.0, earthSumDb) << "%\t\t"
 		<< "Dd/Db: " << getRatio(earthSumDd * 100.0, earthSumDb) << "%\n";
 
 
 
 	// Alien army print
 	outputFile << "\nFor Alien Army:\n";
-	outputFile << "\ttotal AS: " << totalCountAS << "\t"
-		<< "total AM: " << totalCountAM << "\t"
-		<< "total AD: " << totalCountAD << '\n';
+	outputFile << "\tTotal AS: " << totalCountAS << "\t"
+		<< "Total AM: " << totalCountAM << "\t"
+		<< "Total AD: " << totalCountAD << '\n';
 
-	outputFile << "\tdeadAS/totalAS: " << getRatio(countAS * 100.0, totalCountAS) << "%\t\t"
-		<< "deadAM/totalAM: " << getRatio(countAM * 100.0, totalCountAM) << "%\t\t"
-		<< "deadAD/totalAD: " << getRatio(countAD * 100.0, totalCountAD) << "%\n";
+	outputFile << "\tDeadAS/TotalAS: " << getRatio(countAS * 100.0, totalCountAS) << "%\t\t"
+		<< "DeadAM/TotalAM: " << getRatio(countAM * 100.0, totalCountAM) << "%\t\t"
+		<< "DeadAD/TotalAD: " << getRatio(countAD * 100.0, totalCountAD) << "%\n";
 
 	totalAlienCount = countAS + countAM + countAD;
 	totalInitialAlienCount = totalCountAS + totalCountAM + totalCountAD;
 
-	outputFile << "\tdeadAlienUnits/totalAlienUnits: " << getRatio(totalAlienCount * 100.0, totalInitialAlienCount) << "%\n";
+	outputFile << "\tDeadAlienUnits/TotalAlienUnits: " << getRatio(totalAlienCount * 100.0, totalInitialAlienCount) << "%\n";
 
 	outputFile << "\tAverage Df: " << getRatio(alienSumDf, totalAlienCount) << "\t\t"
 		<< "Average Dd: " << getRatio(alienSumDd, totalAlienCount) << "\t\t"
@@ -384,7 +436,7 @@ void Game::endGame() {
 	outputFile << "\tDf/Db: " << getRatio(alienSumDf * 100.0, alienSumDb) << "%\t\t"
 		<< "Dd/Db: " << getRatio(alienSumDd * 100.0, alienSumDb) << "%\n";
 
-
+	outputFile << "\nInfectedSoldier/TotalEarthSoldiers: " << getRatio(totalInfectionCount * 100, totalCountES) << "%\n";
 	outputFile.close();
 	cout << "Simulation ends, Output file is created\n";
 }

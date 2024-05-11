@@ -51,6 +51,8 @@ class Unit {
 	int getFirstAttackTime() const;
 	int getJoinTime() const;
 	UNIT_TYPE getType() const;
+	static int getEarthLastId();
+	static int getAlienLastId();
 };
 
 std::ostream& operator<<(std::ostream& out, Unit* unit);

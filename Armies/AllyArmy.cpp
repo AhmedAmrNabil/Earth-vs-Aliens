@@ -5,7 +5,7 @@ AllyArmy::AllyArmy() : Army() {
 	saversCount = 0;
 }
 
-bool AllyArmy::addUnit(Unit* unit, bool isNew = false) {
+bool AllyArmy::addUnit(Unit* unit, bool isNew) {
 	if (unit == nullptr)return false;
 	bool inserted = saverUnits.enqueue(unit);
 	if (inserted && isNew)++saversCount;
@@ -41,7 +41,7 @@ int AllyArmy::getSaverCount() {
 
 void AllyArmy::print() {
 	cout << "\t============== Ally Army Alive Units ==============\n";
-	cout << "\t" << saverUnits.getCount() << "\tHU ";
+	cout << "\t" << saverUnits.getCount() << "\tSU ";
 	saverUnits.print();
 	cout << endl;
 }
