@@ -22,7 +22,7 @@ bool EarthGunnery::attack() {
 
     int monsterCount = this->getAttackCapacity() / 2;
     int dronesCount = this->getAttackCapacity() - monsterCount;
-    while (monsterCount > 0) {
+    while (monsterCount) {
         if (game->getAlienUnit(AM, enemyUnit)) {
             enemyUnit->getAttacked(this, timestep);
             tempListMonster.enqueue(enemyUnit);
@@ -34,7 +34,7 @@ bool EarthGunnery::attack() {
 
     dronesCount += monsterCount;
 
-    while (dronesCount>0) {
+    while (dronesCount) {
         if (game->getAlienUnit(AD, enemyUnit)) {
             enemyUnit->getAttacked(this, timestep);
             tempListDrone.push(enemyUnit);
@@ -44,6 +44,18 @@ bool EarthGunnery::attack() {
         --dronesCount;
     }
 
+    monsterCount += dronesCount;
+
+    while (monsterCount) {
+        if (game->getAlienUnit(AM, enemyUnit)) {
+            enemyUnit->getAttacked(this, timestep);
+            tempListMonster.enqueue(enemyUnit);
+            attacked = true;
+        }
+        else break;
+        --monsterCount;
+    }
+
     if ((!tempListDrone.isEmpty() || !tempListMonster.isEmpty()) && game->isInteractive()) {
         cout << "\tEG " << this << " shots ";
         cout << "\t";
@@ -51,6 +63,7 @@ bool EarthGunnery::attack() {
         tempListDrone.print();
         cout << endl;
     }
+
     while (!tempListDrone.isEmpty()) {
         tempListDrone.pop(enemyUnit);
         game->handleUnit(enemyUnit);
@@ -60,5 +73,6 @@ bool EarthGunnery::attack() {
         tempListMonster.dequeue(enemyUnit);
         game->handleUnit(enemyUnit);
     }
+
     return attacked;
 }

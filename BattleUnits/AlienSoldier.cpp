@@ -11,7 +11,13 @@ bool AlienSoldier::attack() {
 	int timestep = game->getTimestep();
 	Unit* enemyUnit;
 	LinkedQueue<Unit*> tempList;
+	LinkedQueue<Unit*> saverTempList;
 	int soldierCount = this->getAttackCapacity();
+	int saverCount = 0;
+	if (game->saverIsActive()) {
+		soldierCount /= 2;
+		saverCount = this->getAttackCapacity() - saverCount;
+	}
 	bool attacked = false;
 	while (soldierCount) {
 		if (game->getEarthUnit(ES, enemyUnit)) {
@@ -22,10 +28,32 @@ bool AlienSoldier::attack() {
 		else break;
 		--soldierCount;
 	}
-	if (!tempList.isEmpty() && game->isInteractive()) {
+	saverCount += soldierCount;
+	while (saverCount) {
+		if (game->getSaverUnit(enemyUnit)) {
+			enemyUnit->getAttacked(this, timestep);
+			saverTempList.enqueue(enemyUnit);
+			attacked = true;
+		}
+		else break;
+		--saverCount;
+	}
+	soldierCount += saverCount;
+	while (soldierCount) {
+		if (game->getEarthUnit(ES, enemyUnit)) {
+			enemyUnit->getAttacked(this, timestep);
+			tempList.enqueue(enemyUnit);
+			attacked = true;
+		}
+		else break;
+		--soldierCount;
+	}
+
+	if ((!tempList.isEmpty() || !saverTempList.isEmpty()) && game->isInteractive()) {
 		cout << "\tAS " << this << " shots ";
 		cout << "\t";
 		tempList.print();
+		saverTempList.print();
 		cout << endl;
 	}
 	while (!tempList.isEmpty()) {

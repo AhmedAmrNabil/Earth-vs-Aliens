@@ -62,21 +62,23 @@ bool Game::getAlienUnit(UNIT_TYPE type, Unit*& unit)
 	return alienArmy.getUnit(type, unit);
 }
 
-bool Game::getSaverUnit(UNIT_TYPE type, Unit*& unit)
+bool Game::getSaverUnit(Unit*& unit)
 {
-	return allyArmy.getUnit(type, unit);
+	return allyArmy.getUnit(SU, unit);
 }
 
 bool Game::getfromUML(Unit*& unit)
 {
 	int pri;
 	bool b = UML.dequeue(unit, pri);
-	if (b && unit->getType() == ES)--umlsoldier;
+	EarthSoldier* soldier = dynamic_cast<EarthSoldier*>(unit);
+	if (soldier && (!soldier->isInfected() || soldier->isImmune())) --umlsoldier;
 	while (b && timestep - unit->getUMLJoinTime() > 10) {
 		unit->decrementHealth(unit->getHealth(), timestep);
 		addToKilled(unit);
 		b = UML.dequeue(unit, pri);
-		if (b && unit->getType() == ES)--umlsoldier;
+		soldier = dynamic_cast<EarthSoldier*>(unit);
+		if (soldier && (!soldier->isInfected() || soldier->isImmune())) --umlsoldier;
 	}
 	return b;
 }
@@ -137,7 +139,10 @@ void Game::addToUML(Unit*& unit, int joinUMLtime)
 	int pri;
 	if (unit->getType() == ES) {
 		pri = (earthData.maxHealth - unit->getHealth()) * 1000;
-		umlsoldier++;
+		EarthSoldier* soldier = dynamic_cast<EarthSoldier*>(unit);
+		if (soldier && (!soldier->isInfected() || soldier->isImmune())) {
+			umlsoldier++;
+		}
 	}
 	else pri = -1;
 	UML.enqueue(unit, pri);
@@ -287,7 +292,7 @@ bool Game::spreadInfect(Unit*& unit)
 	LinkedQueue<Unit*> temp;
 	bool infected = false;
 	if (random2 <= 2) {
-		for (int i = 1; i <= random && this->getEarthUnit(ES, unit); i++)
+		for (int i = 1; i <= random && earthArmy.peek(ES, unit); i++)
 		{
 			this->getEarthUnit(ES, unit);
 			if (i != random) {
@@ -295,6 +300,7 @@ bool Game::spreadInfect(Unit*& unit)
 			}
 			else infected = true;
 		}
+
 		while (!temp.isEmpty())
 		{
 			Unit* u1;
