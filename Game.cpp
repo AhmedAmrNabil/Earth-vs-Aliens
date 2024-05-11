@@ -232,7 +232,7 @@ string Game::getRatio(double x, double y) {
 }
 
 bool Game::isDraw() {
-	return !(earthAttacked || alienAttacked);
+	return !(earthAttacked || alienAttacked) && (earthArmy.isAlive() && alienArmy.isAlive());
 }
 
 bool Game::spreadInfect(Unit*& unit)
@@ -284,7 +284,10 @@ void Game::endGame() {
 	int alienSumDf, alienSumDd, alienSumDb;
 	countES = countAS = countET = countEG = countAM = countAD = countHU = 0;
 	earthSumDf = earthSumDd = earthSumDb = alienSumDf = alienSumDd = alienSumDb = 0;
-	while (killedUnits.dequeue(deadUnit)) {
+	int killedCount = killedUnits.getCount();
+	killedUnits.peek(deadUnit);
+	while (killedCount) {
+		killedUnits.dequeue(deadUnit);
 		Tj = deadUnit->getJoinTime();
 		Ta = deadUnit->getFirstAttackTime();
 		Td = deadUnit->getDestructionTime();
@@ -317,15 +320,15 @@ void Game::endGame() {
 			earthSumDd += Dd;
 			earthSumDb += Db;
 		}
-
+		killedUnits.enqueue(deadUnit);
+		--killedCount;
 	}
-
-	string battleResult = ""; // Assume the win state when earth win not alien (but i am sided with aliens :D )
-	if (!earthArmy.isAlive() && !alienArmy.isAlive() || isDraw()) battleResult = "Drawn";
-	else if (earthArmy.isAlive() && !alienArmy.isAlive()) battleResult = "Win";
-	else if (!earthArmy.isAlive() && alienArmy.isAlive()) battleResult = "Loss";
+	string battleResult = "\nBattle result: "; // Assume the win state when earth win not alien (but i am sided with aliens :D )
+	if ((!earthArmy.isAlive() && !alienArmy.isAlive()) || isDraw()) battleResult += "Drawn";
+	else if (earthArmy.isAlive() && !alienArmy.isAlive()) battleResult += "Win";
+	else if (!earthArmy.isAlive() && alienArmy.isAlive()) battleResult += "Loss";
 	outputFile << battleResult << '\n';
-	totalCountES = earthArmy.getTotalSoldierCount()+UML.getCount();
+	totalCountES = earthArmy.getTotalSoldierCount();
 	totalCountET = earthArmy.getTotalTankCount();
 	totalCountEG = earthArmy.getTotalGunneryCount();
 	totalCountHU = earthArmy.getTotalHealCount();
@@ -334,48 +337,52 @@ void Game::endGame() {
 	totalCountAD = alienArmy.getTotalDroneCount();
 
 	//earth army print
-	outputFile << totalCountES << "\t\t"
-		<< totalCountET << "\t\t"
-		<< totalCountEG << "\t\t"
-		<< totalCountHU << '\n';
+	outputFile << "\nFor Earth Army:\n";
+	outputFile << "\ttotal ES: " << totalCountES << "\t"
+		<< "total ET: " << totalCountET << "\t"
+		<< "total EG: " << totalCountEG << "\t"
+		<< "total HU: " << totalCountHU << "\n";
 
-	outputFile << getRatio(countES * 100.0, totalCountES) << "\t\t"
-		<< getRatio(countET * 100.0, totalCountET) << "\t\t"
-		<< getRatio(countEG * 100.0, totalCountEG) << "\t\t"
-		<< getRatio(countHU * 100.0, totalCountHU) << '\n';
+	outputFile <<"\tdeadES/totalES: " << getRatio(countES * 100.0, totalCountES) << "%\t\t"
+		<< "deadET/totalET: " << getRatio(countET * 100.0, totalCountET) << "%\t\t"
+		<< "deadEG/totalES: " << getRatio(countEG * 100.0, totalCountEG) << "%\t\t"
+		<< "deadHU/totalHU: " << getRatio(countHU * 100.0, totalCountHU) << "%\n";
 
 	totalEarthCount = countES + countET + countEG + countHU;
 	totalInitialEarthCount = totalCountES + totalCountET + totalCountEG + totalCountHU;
 
-	outputFile << getRatio(totalEarthCount * 100.0, totalInitialEarthCount) << '\n';
+	outputFile << "\tdeadEarthUnits/totalEarthUnits: " << getRatio(totalEarthCount * 100.0, totalInitialEarthCount) << "%\n";
 
-	outputFile << getRatio(earthSumDf, totalEarthCount) << "\t\t"
-		<< getRatio(earthSumDd, totalEarthCount) << "\t\t"
-		<< getRatio(earthSumDb, totalEarthCount) << '\n';
+	outputFile <<"\tAverage Df: " << getRatio(earthSumDf, totalEarthCount) << "\t\t"
+		<<"Average Dd: " <<getRatio(earthSumDd, totalEarthCount) << "\t\t"
+		<<"Average Db: "<< getRatio(earthSumDb, totalEarthCount) << '\n';
 
-	outputFile << getRatio(earthSumDf * 100.0, earthSumDb) << "\t\t"
-		<< getRatio(earthSumDd * 100.0, earthSumDb) << '\n';
+	outputFile <<"\tDf/Db: " << getRatio(earthSumDf * 100.0, earthSumDb) << "%\t\t"
+		<< "Dd/Db: " << getRatio(earthSumDd * 100.0, earthSumDb) << "%\n";
+
+
 
 	// Alien army print
-	outputFile << totalCountAS << "\t\t"
-		<< totalCountAM << "\t\t"
-		<< totalCountAD << '\n';
+	outputFile << "\nFor Alien Army:\n";
+	outputFile << "\ttotal AS: " << totalCountAS << "\t"
+		<< "total AM: " << totalCountAM << "\t"
+		<< "total AD: " << totalCountAD << '\n';
 
-	outputFile << getRatio(countAS * 100.0, totalCountAS) << "\t\t"
-		<< getRatio(countAM * 100.0, totalCountAM) << "\t\t"
-		<< getRatio(countAD * 100.0, totalCountAD) << '\n';
+	outputFile << "\tdeadAS/totalAS: " << getRatio(countAS * 100.0, totalCountAS) << "%\t\t"
+		<< "deadAM/totalAM: " << getRatio(countAM * 100.0, totalCountAM) << "%\t\t"
+		<< "deadAD/totalAD: " << getRatio(countAD * 100.0, totalCountAD) << "%\n";
 
 	totalAlienCount = countAS + countAM + countAD;
 	totalInitialAlienCount = totalCountAS + totalCountAM + totalCountAD;
 
-	outputFile << getRatio(totalAlienCount * 100.0, totalInitialAlienCount) << '\n';
+	outputFile << "\tdeadAlienUnits/totalAlienUnits: " << getRatio(totalAlienCount * 100.0, totalInitialAlienCount) << "%\n";
 
-	outputFile << getRatio(alienSumDf, totalAlienCount) << "\t\t"
-		<< getRatio(alienSumDd, totalAlienCount) << "\t\t"
-		<< getRatio(alienSumDb, totalAlienCount) << '\n';
+	outputFile << "\tAverage Df: " << getRatio(alienSumDf, totalAlienCount) << "\t\t"
+		<< "Average Dd: " << getRatio(alienSumDd, totalAlienCount) << "\t\t"
+		<< "Average Db: " << getRatio(alienSumDb, totalAlienCount) << '\n';
 
-	outputFile << getRatio(alienSumDf * 100.0, alienSumDb) << "\t\t"
-		<< getRatio(alienSumDd * 100.0, alienSumDb) << '\n';
+	outputFile << "\tDf/Db: " << getRatio(alienSumDf * 100.0, alienSumDb) << "%\t\t"
+		<< "Dd/Db: " << getRatio(alienSumDd * 100.0, alienSumDb) << "%\n";
 
 
 	outputFile.close();
@@ -384,6 +391,7 @@ void Game::endGame() {
 
 Game::~Game() {
 	Unit* unit;
+	killedUnits.peek(unit);
 	while (killedUnits.dequeue(unit))
 	{
 		if (unit != nullptr)
