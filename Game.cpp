@@ -123,7 +123,7 @@ void Game::gameTick() {
 		printkilledunits();
 		printUML();
 		cout << "\t===================================================\n";
-		cout << "\tCurrent Infection Percentage is " << setprecision(4)<< getInfectionPercentage() << "%" << endl;
+		cout << "\tCurrent Infection Percentage is " << fixed << setprecision(2) << getInfectionPercentage() << "%" << endl;
 	}
 	if (infectionCount >= infectionThreshold)
 		saverActive = true;
