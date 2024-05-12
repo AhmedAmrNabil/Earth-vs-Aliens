@@ -109,17 +109,17 @@ bool Game::addAlienUnit(Unit*& unit)
 }
 
 void Game::gameTick() {
-	RNG.generateUnits();
-	if (gameMode == INTERACTIVE) {
-		printarmies();
-		cout << "\t==============Units fighting at current step=======\n";
-	}
+	attackedIDs = "";
 	bool saverAttacked;
 	earthAttacked = earthArmy.fight();
 	alienAttacked = alienArmy.fight();
 	if (saverActive)
 		saverAttacked = allyArmy.fight();
+	RNG.generateUnits();
 	if (gameMode == INTERACTIVE) {
+		printarmies();
+		cout << "\t==============Units fighting at current step=======\n";
+		cout << attackedIDs;
 		printkilledunits();
 		printUML();
 		cout << "\t===================================================\n";
@@ -133,6 +133,11 @@ void Game::gameTick() {
 	}
 	++timestep;
 }
+
+void Game::addToAttacked(string ids) {
+	attackedIDs += ids;
+}
+
 
 void Game::addToKilled(Unit*& unit)
 {
