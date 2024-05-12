@@ -96,7 +96,7 @@ void RandGen::generateUnits() {
 	if (!game->saverIsActive())return;
 	unit = nullptr;
 	A = generator(1, 100);
-	if (A <= percentages.percentSU) {
+	if (A <= Prob) {
 		for (int i = 0; i < N; ++i) {
 			unit = generateAllyUnit();
 			allyArmy->addUnit(unit, true);

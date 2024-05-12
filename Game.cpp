@@ -201,7 +201,6 @@ void Game::loadInput()
 
 	input_file >> percentages.percentIf;
 	input_file >> infectionThreshold;
-	input_file >> percentages.percentSU;
 
 
 	input_file >> allyData.minPower >> allyData.maxPower;
