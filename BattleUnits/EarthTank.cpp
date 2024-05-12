@@ -12,10 +12,9 @@ bool EarthTank::attack() {
     if (!attackSoldiers && game->getSoldierRatio() < 30) attackSoldiers = true;
     if ( attackSoldiers && game->getSoldierRatio() > 80) attackSoldiers = false;
     int timestep = game->getTimestep();
-    Unit* monster;
-    Unit* soldier;
-    LinkedQueue<Unit*> tmpmonster;
-    LinkedQueue<Unit*> tmpsoldier;
+    Unit* enemyUnit;
+    LinkedQueue<Unit*> tempListMonster;
+    LinkedQueue<Unit*> tempListSolider;
     int monsterCount , soldierCount;
     if(attackSoldiers) {
         monsterCount = getAttackCapacity() / 2;
@@ -26,9 +25,9 @@ bool EarthTank::attack() {
         soldierCount = 0;
     }
     while (attackSoldiers && soldierCount != 0 ) {
-        if (game->getAlienUnit(AS, soldier)) {
-            soldier->getAttacked(this, timestep);
-            tmpsoldier.enqueue(soldier);
+        if (game->getAlienUnit(AS, enemyUnit)) {
+            enemyUnit->getAttacked(this, timestep);
+            tempListSolider.enqueue(enemyUnit);
             soldierCount--;
             attacked = true;
         }
@@ -36,38 +35,59 @@ bool EarthTank::attack() {
     }
     monsterCount += soldierCount;
     while (monsterCount != 0) {
-        if (game->getAlienUnit(AM, monster)) {
-            monster->getAttacked(this, timestep);
-            tmpmonster.enqueue(monster);
+        if (game->getAlienUnit(AM, enemyUnit)) {
+            enemyUnit->getAttacked(this, timestep);
+            tempListMonster.enqueue(enemyUnit);
             monsterCount--;
             attacked = true;
         }
         else break;    
     }
     while (attackSoldiers && monsterCount != 0) {
-        if (game->getAlienUnit(AS, soldier)) {
-            soldier->getAttacked(this, timestep);
-            tmpsoldier.enqueue(soldier);
+        if (game->getAlienUnit(AS, enemyUnit)) {
+            enemyUnit->getAttacked(this, timestep);
+            tempListSolider.enqueue(enemyUnit);
             soldierCount--;
             attacked = true;
         }
         else break;
     }
-    if (!tmpsoldier.isEmpty() && game->isInteractive()) {
-        cout << "\tET " << this << " shots ";
-        cout << "\t";
-        tmpsoldier.print();
-        if (!tmpmonster.isEmpty()) tmpmonster.print();
-        cout << endl;
+    if (game->isInteractive() && (!tempListMonster.isEmpty() || !tempListSolider.isEmpty())) {
+        string attackedIds = "\tET ";
+        attackedIds += this;
+        attackedIds += " shots\t";
+
+        if (tempListSolider.dequeue(enemyUnit)) {
+            attackedIds += "[";
+            attackedIds += enemyUnit;
+            while (!tempListSolider.isEmpty()) {
+                tempListSolider.dequeue(enemyUnit);
+                attackedIds += ", ";
+                attackedIds += enemyUnit;
+            }
+            attackedIds += "]";
+        }
+
+        if (tempListMonster.dequeue(enemyUnit)) {
+            attackedIds += "[";
+            game->handleUnit(enemyUnit);
+            attackedIds += enemyUnit;
+            while (!tempListMonster.isEmpty()) {
+                tempListMonster.dequeue(enemyUnit);
+                game->handleUnit(enemyUnit);
+                attackedIds += ", ";
+                attackedIds += enemyUnit;
+            }
+            attackedIds += "]";
+        }
     }
-    Unit* unit;
-    while (!tmpsoldier.isEmpty()) {
-        tmpsoldier.dequeue(unit);
-        game->handleUnit(unit);
+    while (!tempListSolider.isEmpty()) {
+        tempListSolider.dequeue(enemyUnit);
+        game->handleUnit(enemyUnit);
     }
-    while (!tmpmonster.isEmpty()) {
-        tmpmonster.dequeue(unit);
-        game->handleUnit(unit);
+    while (!tempListMonster.isEmpty()) {
+        tempListMonster.dequeue(enemyUnit);
+        game->handleUnit(enemyUnit);
     }
     return attacked;
 }

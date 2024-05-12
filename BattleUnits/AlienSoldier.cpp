@@ -10,8 +10,8 @@ AlienSoldier::AlienSoldier(Game* game, int joinTime, double health, double power
 bool AlienSoldier::attack() {
 	int timestep = game->getTimestep();
 	Unit* enemyUnit;
-	LinkedQueue<Unit*> tempList;
-	LinkedQueue<Unit*> saverTempList;
+	LinkedQueue<Unit*> tempListSoldier;
+	LinkedQueue<Unit*> tempListSaver;
 	int soldierCount = this->getAttackCapacity();
 	int saverCount = 0;
 	if (game->saverIsActive()) {
@@ -22,7 +22,7 @@ bool AlienSoldier::attack() {
 	while (soldierCount) {
 		if (game->getEarthUnit(ES, enemyUnit)) {
 			enemyUnit->getAttacked(this, timestep);
-			tempList.enqueue(enemyUnit);
+			tempListSoldier.enqueue(enemyUnit);
 			attacked = true;
 		}
 		else break;
@@ -32,7 +32,7 @@ bool AlienSoldier::attack() {
 	while (saverCount) {
 		if (game->getSaverUnit(enemyUnit)) {
 			enemyUnit->getAttacked(this, timestep);
-			saverTempList.enqueue(enemyUnit);
+			tempListSaver.enqueue(enemyUnit);
 			attacked = true;
 		}
 		else break;
@@ -42,22 +42,52 @@ bool AlienSoldier::attack() {
 	while (soldierCount) {
 		if (game->getEarthUnit(ES, enemyUnit)) {
 			enemyUnit->getAttacked(this, timestep);
-			tempList.enqueue(enemyUnit);
+			tempListSoldier.enqueue(enemyUnit);
 			attacked = true;
 		}
 		else break;
 		--soldierCount;
 	}
 
-	if ((!tempList.isEmpty() || !saverTempList.isEmpty()) && game->isInteractive()) {
-		cout << "\tAS " << this << " shots ";
-		cout << "\t";
-		tempList.print();
-		saverTempList.print();
-		cout << endl;
+	if (game->isInteractive() && (!tempListSoldier.isEmpty() || !tempListSaver.isEmpty())) {
+		string attackedIds = "\tAS ";
+		attackedIds += this;
+		attackedIds += " shots\t";
+		if (tempListSoldier.dequeue(enemyUnit)) {
+			attackedIds += "[";
+			game->handleUnit(enemyUnit);
+			attackedIds += enemyUnit;
+			while (!tempListSoldier.isEmpty()) {
+				tempListSoldier.dequeue(enemyUnit);
+				game->handleUnit(enemyUnit);
+				attackedIds += ", ";
+				attackedIds += enemyUnit;
+			}
+			attackedIds += "]";
+		}
+
+		if (tempListSaver.dequeue(enemyUnit)) {
+			attackedIds += "[";
+			game->handleUnit(enemyUnit);
+			attackedIds += enemyUnit;
+			while (!tempListSaver.isEmpty()) {
+				tempListSaver.dequeue(enemyUnit);
+				game->handleUnit(enemyUnit);
+				attackedIds += ", ";
+				attackedIds += enemyUnit;
+			}
+			attackedIds += "]";
+		}
+		attackedIds += '\n';
+		game->addToAttacked(attackedIds);
+
 	}
-	while (!tempList.isEmpty()) {
-		tempList.dequeue(enemyUnit);
+	while (!tempListSoldier.isEmpty()) {
+		tempListSoldier.dequeue(enemyUnit);
+		game->handleUnit(enemyUnit);
+	}
+	while (!tempListSaver.isEmpty()) {
+		tempListSaver.dequeue(enemyUnit);
 		game->handleUnit(enemyUnit);
 	}
 	return attacked;

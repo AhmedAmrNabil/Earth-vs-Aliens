@@ -22,12 +22,27 @@ bool SaverUnit::attack() {
 		else break;
 		--soldierCount;
 	}
-	if (!tempList.isEmpty() && game->isInteractive()) {
-		cout << "\tSU " << this << " shots ";
-		cout << "\t";
-		tempList.print();
-		cout << endl;
+
+	if (game->isInteractive() && !tempList.isEmpty()) {
+		string attackedIds = "\tSU ";
+		attackedIds += this;
+		attackedIds += " shots\t";
+		if (tempList.dequeue(enemyUnit)) {
+			attackedIds += "[";
+			game->handleUnit(enemyUnit);
+			attackedIds += enemyUnit;
+			while (!tempList.isEmpty()) {
+				tempList.dequeue(enemyUnit);
+				game->handleUnit(enemyUnit);
+				attackedIds += ", ";
+				attackedIds += enemyUnit;
+			}
+			attackedIds += "]";
+		}
+		attackedIds += '\n';
+		game->addToAttacked(attackedIds);
 	}
+
 	while (!tempList.isEmpty()) {
 		tempList.dequeue(enemyUnit);
 		game->handleUnit(enemyUnit);

@@ -56,5 +56,6 @@ class Unit {
 };
 
 std::ostream& operator<<(std::ostream& out, Unit* unit);
+std::string& operator+=(std::string& out, Unit* unit);
 
 #endif

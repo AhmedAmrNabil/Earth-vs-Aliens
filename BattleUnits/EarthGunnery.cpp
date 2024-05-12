@@ -17,6 +17,7 @@ bool EarthGunnery::attack() {
     int timestep = game->getTimestep();
     Unit* enemyUnit = nullptr;
     LinkedListStack<Unit*> tempListDrone;
+    LinkedQueue<Unit*> tempListPrint;
     LinkedQueue<Unit*> tempListMonster;
     bool attacked = false;
 
@@ -38,6 +39,7 @@ bool EarthGunnery::attack() {
         if (game->getAlienUnit(AD, enemyUnit)) {
             enemyUnit->getAttacked(this, timestep);
             tempListDrone.push(enemyUnit);
+            tempListPrint.enqueue(enemyUnit);
             attacked = true;
         }
         else break;
@@ -56,12 +58,35 @@ bool EarthGunnery::attack() {
         --monsterCount;
     }
 
-    if ((!tempListDrone.isEmpty() || !tempListMonster.isEmpty()) && game->isInteractive()) {
-        cout << "\tEG " << this << " shots ";
-        cout << "\t";
-        tempListMonster.print();
-        tempListDrone.print();
-        cout << endl;
+    if (game->isInteractive() && (!tempListMonster.isEmpty() || !tempListPrint.isEmpty())) {
+        string attackedIds = "\tEG ";
+        attackedIds += this;
+        attackedIds += " shots\t";
+        if (tempListMonster.dequeue(enemyUnit)) {
+            attackedIds += "[";
+            game->handleUnit(enemyUnit);
+            attackedIds += enemyUnit;
+            while (!tempListMonster.isEmpty()) {
+                tempListMonster.dequeue(enemyUnit);
+                game->handleUnit(enemyUnit);
+                attackedIds += ", ";
+                attackedIds += enemyUnit;
+            }
+            attackedIds += "]";
+        }
+
+        if (tempListPrint.dequeue(enemyUnit)) {
+            attackedIds += "[";
+            attackedIds += enemyUnit;
+            while (!tempListPrint.isEmpty()) {
+                tempListPrint.dequeue(enemyUnit);
+                attackedIds += ", ";
+                attackedIds += enemyUnit;
+            }
+            attackedIds += "]";
+        }
+        attackedIds += '\n';
+        game->addToAttacked(attackedIds);
     }
 
     while (!tempListDrone.isEmpty()) {
@@ -72,6 +97,9 @@ bool EarthGunnery::attack() {
     while (!tempListMonster.isEmpty()) {
         tempListMonster.dequeue(enemyUnit);
         game->handleUnit(enemyUnit);
+    }
+    while (!tempListPrint.isEmpty()) {
+        tempListPrint.dequeue(enemyUnit);
     }
 
     return attacked;

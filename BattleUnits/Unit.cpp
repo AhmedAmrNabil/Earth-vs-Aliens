@@ -39,6 +39,26 @@ std::ostream& operator<<(std::ostream& out, Unit* unit) {
 	return out;
 }
 
+std::string& operator+=(std::string& out, Unit* unit) {
+	EarthSoldier* soldier = dynamic_cast <EarthSoldier*>(unit);
+	if (soldier && (soldier->isInfected() && !soldier->isImmune())) {
+		out += "\033[1;31m(\033[1;34m" + std::to_string(unit->getId()) + "\033[1;31m)\033[0m";
+		return out;
+	}
+	switch (unit->getType()) {
+	case ES:out += "\033[1;34m"; break;
+	case ET:out += "\033[1;36m"; break;
+	case EG:out += "\033[1;32m"; break;
+	case AS:out += "\033[1;33m"; break;
+	case AM:out += "\033[1;31m"; break;
+	case AD:out += "\033[1;35m"; break;
+	default: out += "\033[1;37m"; break;
+	}
+
+	out += std::to_string(unit->getId()) + "\033[0m";
+	return out;
+}
+
 void Unit::decrementHealth(double damage, int timestep) {
 	health -= damage;
 	if (health <= 0) {

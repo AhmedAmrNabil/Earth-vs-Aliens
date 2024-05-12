@@ -15,20 +15,19 @@ AlienMonster::AlienMonster(Game* game, int joinTime, double health, double power
 
 bool AlienMonster::attack() {
     int timestep = game->getTimestep();
-    LinkedListStack<Unit*> tempEarthTanks;
-    LinkedQueue<Unit*> temp;
-    LinkedQueue<Unit*> temp2;
-    Unit* tank = nullptr;
-    Unit* soldier = nullptr;
+    LinkedListStack<Unit*> tempListTank;
+    LinkedQueue<Unit*> tempListSoldier;
+    LinkedQueue<Unit*> tempListPrint;
+    Unit* enemyUnit = nullptr;
     int soldierCount = this->getAttackCapacity() / 2;
     int tankCount = this->getAttackCapacity() - soldierCount;
     bool attacked = false;
     while (tankCount > 0)
     {
-        if (game->getEarthUnit(ET, tank)) {
-            tank->getAttacked(this, timestep);
-            tempEarthTanks.push(tank);
-            temp2.enqueue(tank);
+        if (game->getEarthUnit(ET, enemyUnit)) {
+            enemyUnit->getAttacked(this, timestep);
+            tempListTank.push(enemyUnit);
+            tempListPrint.enqueue(enemyUnit);
             --tankCount;
             attacked = true;
         }
@@ -37,14 +36,14 @@ bool AlienMonster::attack() {
     soldierCount += tankCount;
     while (soldierCount > 0)
     {
-        if (game->getEarthUnit(ES, soldier)) {
-            soldier->getAttacked(this, timestep);
-            temp.enqueue(soldier);
+        if (game->getEarthUnit(ES, enemyUnit)) {
+            enemyUnit->getAttacked(this, timestep);
+            tempListSoldier.enqueue(enemyUnit);
             --soldierCount;
             if (this->willInfect()) {
-                EarthSoldier* s1 = dynamic_cast<EarthSoldier*>(soldier);
-                if (!s1->isInfected()) {
-                    s1->setInfected(true);
+                EarthSoldier* soldier = dynamic_cast<EarthSoldier*>(enemyUnit);
+                if (!soldier->isInfected()) {
+                    soldier->setInfected(true);
                     game->incrementInfected();
                 }
             }
@@ -54,34 +53,57 @@ bool AlienMonster::attack() {
     }
     while (soldierCount > 0) 
     {
-        if (game->getEarthUnit(ET, tank)) {
-            tank->getAttacked(this, timestep);
-            tempEarthTanks.push(tank);
-            temp2.enqueue(tank);
+        if (game->getEarthUnit(ET, enemyUnit)) {
+            enemyUnit->getAttacked(this, timestep);
+            tempListTank.push(enemyUnit);
+            tempListPrint.enqueue(enemyUnit);
             --soldierCount;
             attacked = true;
         }
         else break;
     }
-    if ((!temp2.isEmpty() || !temp.isEmpty()) && game->isInteractive()) {
-        cout << "\tAM " << this << " shots ";
-        cout << "\t";
-        temp2.print();
-        temp.print();
-        cout << endl;
+    if (game->isInteractive() && (!tempListSoldier.isEmpty() || !tempListPrint.isEmpty())) {
+        string attackedIds = "\tAM ";
+        attackedIds += this;
+        attackedIds += " shots\t";
+        if (tempListSoldier.dequeue(enemyUnit)) {
+            attackedIds += "[";
+            game->handleUnit(enemyUnit);
+            attackedIds += enemyUnit;
+            while (!tempListSoldier.isEmpty()) {
+                tempListSoldier.dequeue(enemyUnit);
+                game->handleUnit(enemyUnit);
+                attackedIds += ", ";
+                attackedIds += enemyUnit;
+            }
+            attackedIds += "]";
+        }
+
+        if (tempListPrint.dequeue(enemyUnit)) {
+            attackedIds += "[";
+            attackedIds += enemyUnit;
+            while (!tempListPrint.isEmpty()) {
+                tempListPrint.dequeue(enemyUnit);
+                attackedIds += ", ";
+                attackedIds += enemyUnit;
+            }
+            attackedIds += "]";
+        }
+        attackedIds += '\n';
+        game->addToAttacked(attackedIds);
+
     }
-    while (!tempEarthTanks.isEmpty())
+    while (!tempListTank.isEmpty())
     {
-        Unit* tmp = nullptr;
-        tempEarthTanks.pop(tmp);
-        game->handleUnit(tmp);
+        tempListTank.pop(enemyUnit);
+        game->handleUnit(enemyUnit);
     }
-    while (!temp.isEmpty()) {
-        temp.dequeue(soldier);
-        game->handleUnit(soldier);
+    while (!tempListSoldier.isEmpty()) {
+        tempListSoldier.dequeue(enemyUnit);
+        game->handleUnit(enemyUnit);
     }
-    while (!temp2.isEmpty()) {
-        temp2.dequeue(tank);
+    while (!tempListPrint.isEmpty()) {
+        tempListPrint.dequeue(enemyUnit);
     }
     return attacked;
 }

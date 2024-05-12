@@ -11,18 +11,19 @@ AlienDrone::AlienDrone(Game* game, int joinTime, double health, double power, in
 
 bool AlienDrone::attack() {
     int timestep = game->getTimestep();
-    LinkedListStack<Unit*> tempEarthTanks;
-    LinkedQueue<Unit*> temp;
-    Unit* tank = nullptr;
-    Unit* gunnery = nullptr;
+    LinkedListStack<Unit*> tempListTank;
+    LinkedQueue<Unit*> tempListGunnery;
+    LinkedQueue<Unit*> tempListPrint;
+    Unit* enemyUnit = nullptr;
     int gunnerCount = this->getAttackCapacity() / 2;
     int tankCount=this->getAttackCapacity()- gunnerCount;
     bool attacked = false;
     while (tankCount > 0) 
     {
-        if (game->getEarthUnit(ET, tank)) {
-            tank->getAttacked(this, timestep);
-            tempEarthTanks.push(tank);
+        if (game->getEarthUnit(ET, enemyUnit)) {
+            enemyUnit->getAttacked(this, timestep);
+            tempListTank.push(enemyUnit);
+            tempListPrint.enqueue(enemyUnit);
             --tankCount;
             attacked = true;
         }
@@ -31,29 +32,68 @@ bool AlienDrone::attack() {
     gunnerCount += tankCount;
     while (gunnerCount > 0)
     {
-        if (game->getEarthUnit(EG, gunnery)) {
-            gunnery->getAttacked(this, timestep);
-            temp.enqueue(gunnery);
+        if (game->getEarthUnit(EG, enemyUnit)) {
+            enemyUnit->getAttacked(this, timestep);
+            tempListGunnery.enqueue(enemyUnit);
             --gunnerCount;
             attacked = true;
         }
         else break;
     }
-    if ((!tempEarthTanks.isEmpty() || !temp.isEmpty()) && game->isInteractive()) {
-        cout << "\tAD " << this << " shots ";
-        cout << "\t";
-        tempEarthTanks.print();
-        temp.print();
-        cout << endl;
+
+    while (gunnerCount > 0)
+    {
+        if (game->getEarthUnit(ET, enemyUnit)) {
+            enemyUnit->getAttacked(this, timestep);
+            tempListTank.push(enemyUnit);
+            tempListPrint.enqueue(enemyUnit);
+            --tankCount;
+            attacked = true;
+        }
+        else break;
     }
-    while (!tempEarthTanks.isEmpty()) {
-        Unit* tmp = nullptr;
-        tempEarthTanks.pop(tmp);
-        game->handleUnit(tmp);
+
+    if (game->isInteractive() && (!tempListPrint.isEmpty() || !tempListGunnery.isEmpty())) {
+        string attackedIds = "\tAD ";
+        attackedIds += this;
+        attackedIds += " shots\t";
+        if (tempListPrint.dequeue(enemyUnit)) {
+            attackedIds += "[";
+            attackedIds += enemyUnit;
+            while (!tempListPrint.isEmpty()) {
+                tempListPrint.dequeue(enemyUnit);
+                attackedIds += ", ";
+                attackedIds += enemyUnit;
+            }
+            attackedIds += "]";
+        }
+
+        if (tempListGunnery.dequeue(enemyUnit)) {
+            attackedIds += "[";
+            attackedIds += enemyUnit;
+            game->handleUnit(enemyUnit);
+            while (!tempListGunnery.isEmpty()) {
+                tempListGunnery.dequeue(enemyUnit);
+                game->handleUnit(enemyUnit);
+                attackedIds += ", ";
+                attackedIds += enemyUnit;
+            }
+            attackedIds += "]";
+        }
+        attackedIds += '\n';
+        game->addToAttacked(attackedIds);
+
     }
-    while (!temp.isEmpty()) {
-        temp.dequeue(gunnery);
-        game->handleUnit(gunnery);
+    while (!tempListTank.isEmpty()) {
+        tempListTank.pop(enemyUnit);
+        game->handleUnit(enemyUnit);
+    }
+    while (!tempListGunnery.isEmpty()) {
+        tempListGunnery.dequeue(enemyUnit);
+        game->handleUnit(enemyUnit);
+    }
+    while (!tempListPrint.isEmpty()) {
+        tempListPrint.dequeue(enemyUnit);
     }
     return attacked;
 }
