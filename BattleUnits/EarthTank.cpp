@@ -59,9 +59,11 @@ bool EarthTank::attack() {
 
         if (tempListSolider.dequeue(enemyUnit)) {
             attackedIds += "[";
+            game->handleUnit(enemyUnit);
             attackedIds += enemyUnit;
             while (!tempListSolider.isEmpty()) {
                 tempListSolider.dequeue(enemyUnit);
+                game->handleUnit(enemyUnit);
                 attackedIds += ", ";
                 attackedIds += enemyUnit;
             }
