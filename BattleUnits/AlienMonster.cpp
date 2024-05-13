@@ -42,7 +42,7 @@ bool AlienMonster::attack() {
             --soldierCount;
             if (this->willInfect()) {
                 EarthSoldier* soldier = dynamic_cast<EarthSoldier*>(enemyUnit);
-                if (!soldier->isInfected()) {
+                if (!soldier->isInfected() && !soldier->isImmune()) {
                     soldier->setInfected(true);
                     game->incrementInfected();
                 }

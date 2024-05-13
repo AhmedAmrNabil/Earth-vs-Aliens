@@ -21,18 +21,22 @@ bool HealUnit::attack()
 		if (game->getfromUML(unit)) {
 			EarthSoldier* soldier = dynamic_cast<EarthSoldier*>(unit);
 			if (soldier && (soldier->isInfected() && !soldier->isImmune())) {
-				soldier->setImmunity(true);
-				game->decrementInfected();
-				game->addToUML(unit , game->getTimestep());
+				soldier->getHealed(this, true);
+				if (!soldier->isLow()) {
+					soldier->setImmunity(true);
+					game->decrementInfected();
+					game->addEarthUnit(unit);
+				}
+				else tempList.enqueue(unit);
 			}
 			else {
-				unit->getHealed(this);
+				unit->getHealed(this , false);
 				total.enqueue(unit);
 				if (!unit->isLow()) game->addEarthUnit(unit);
 				else tempList.enqueue(unit);
-				--healCount;
-				attacked = true;
 			}
+			--healCount;
+			attacked = true;
 		}
 		else break;
 	}
