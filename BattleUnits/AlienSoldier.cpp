@@ -16,7 +16,7 @@ bool AlienSoldier::attack() {
 	int saverCount = 0;
 	if (game->saverIsActive()) {
 		soldierCount /= 2;
-		saverCount = this->getAttackCapacity() - saverCount;
+		saverCount = this->getAttackCapacity() - soldierCount;
 	}
 	bool attacked = false;
 	while (soldierCount) {
