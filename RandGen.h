@@ -25,6 +25,7 @@ class Unit;
 class RandGen {
 	ArmyData earthData;
 	ArmyData alienData;
+	ArmyData allyData;
 	Percentages percentages;
 	int N, Prob;
 	Game* game;
@@ -35,8 +36,9 @@ public:
 	double generateDouble(double begin, double end);
 	Unit* generateEarthUnit();
 	Unit* generateAlienUnit();
+	Unit* generateAllyUnit();
 	void generateUnits();
-	void setData(ArmyData earthData, ArmyData alienData,Percentages percentages, int N, int Prob);
+	void setData(ArmyData earthData, ArmyData alienData, ArmyData allyData,Percentages percentages, int N, int Prob);
 };
 
 #endif

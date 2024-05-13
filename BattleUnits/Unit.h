@@ -5,6 +5,7 @@
 
 enum UNIT_TYPE {
 	HU,
+	SU,
 	ES,
 	ET,
 	EG,
@@ -50,8 +51,11 @@ class Unit {
 	int getFirstAttackTime() const;
 	int getJoinTime() const;
 	UNIT_TYPE getType() const;
+	static int getEarthLastId();
+	static int getAlienLastId();
 };
 
 std::ostream& operator<<(std::ostream& out, Unit* unit);
+std::string& operator+=(std::string& out, Unit* unit);
 
 #endif

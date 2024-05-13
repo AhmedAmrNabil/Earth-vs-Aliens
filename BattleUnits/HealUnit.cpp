@@ -36,11 +36,24 @@ bool HealUnit::attack()
 		}
 		else break;
 	}
-	if (!total.isEmpty() && game->isInteractive()) {
-		cout << "\tHU " << this << " healed ";
-		cout << "\t";
-		total.print();
-		cout << endl;
+	if (game->isInteractive() && !tempList.isEmpty()) {
+		string attackedIds = "\tHU ";
+		attackedIds += this;
+		attackedIds += " healed\t";
+		if (tempList.dequeue(unit)) {
+			attackedIds += "[";
+			game->handleUnit(unit);
+			attackedIds += unit;
+			while (!tempList.isEmpty()) {
+				tempList.dequeue(unit);
+				game->handleUnit(unit);
+				attackedIds += ", ";
+				attackedIds += unit;
+			}
+			attackedIds += "]";
+		}
+		attackedIds += '\n';
+		game->addToAttacked(attackedIds);
 	}
 	while (!tempList.isEmpty()) {
 		tempList.dequeue(unit);

@@ -132,6 +132,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Armies\AlienArmy.cpp" />
+    <ClCompile Include="Armies\AllyArmy.cpp" />
     <ClCompile Include="Armies\EarthArmy.cpp" />
     <ClCompile Include="BattleUnits\AlienDrone.cpp" />
     <ClCompile Include="BattleUnits\AlienMonster.cpp" />
@@ -140,6 +141,7 @@
     <ClCompile Include="BattleUnits\EarthSoldier.cpp" />
     <ClCompile Include="BattleUnits\EarthTank.cpp" />
     <ClCompile Include="BattleUnits\HealUnit.cpp" />
+    <ClCompile Include="BattleUnits\SaverUnit.cpp" />
     <ClCompile Include="BattleUnits\Unit.cpp" />
     <ClCompile Include="DataStructures\ArrayMonster.cpp" />
     <ClCompile Include="Game.cpp" />
@@ -148,6 +150,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Armies\AlienArmy.h" />
+    <ClInclude Include="Armies\AllyArmy.h" />
     <ClInclude Include="Armies\Army.h" />
     <ClInclude Include="Armies\EarthArmy.h" />
     <ClInclude Include="BattleUnits\AlienDrone.h" />
@@ -157,6 +160,7 @@
     <ClInclude Include="BattleUnits\EarthTank.h" />
     <ClInclude Include="BattleUnits\AlienSoldier.h" />
     <ClInclude Include="BattleUnits\HealUnit.h" />
+    <ClInclude Include="BattleUnits\SaverUnit.h" />
     <ClInclude Include="BattleUnits\Unit.h" />
     <ClInclude Include="DataStructures\ArrayMonster.h" />
     <ClInclude Include="DataStructures\DNode.h" />
