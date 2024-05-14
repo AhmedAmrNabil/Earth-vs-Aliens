@@ -37,8 +37,9 @@ class Unit {
 	Unit(Game* game,UNIT_TYPE type, int joinTime, double health, double power, int attackCapacity);
 	virtual bool attack() = 0;
 	void decrementHealth(double damage, int timestep);
+	void incrementHealth(double heal);
 	void getAttacked(Unit* enemyUnit, int timestep);
-	void getHealed(Unit* HealUnit);
+	void getHealed(Unit* HealUnit , bool infected);
 	void setUMLJoinTime(int jointime);
 	int getUMLJoinTime();
 	bool isDead() const;

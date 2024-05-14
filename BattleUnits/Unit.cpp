@@ -68,14 +68,20 @@ void Unit::decrementHealth(double damage, int timestep) {
 	if (firstAttackedTime == -1) firstAttackedTime = timestep;
 }
 
+void Unit::incrementHealth(double heal)
+{
+	health += heal;
+}
+
 void Unit::getAttacked(Unit* enemyUnit, int timestep) {
 	double damage = (enemyUnit->power * enemyUnit->health / 100.0) / sqrt(this->health);
 	decrementHealth(damage, timestep);
 }
 
-void Unit::getHealed(Unit* healUnit) {
+void Unit::getHealed(Unit* healUnit  , bool infected) {
 	double heal = (healUnit->power * healUnit->health / 100.0) / sqrt(this->health);
-	health += heal;
+	if(infected) incrementHealth(heal / 2);
+	else incrementHealth(heal);
 }
 
 void Unit::setUMLJoinTime(int jointime) {
