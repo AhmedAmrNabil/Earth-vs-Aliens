@@ -365,22 +365,21 @@ void Game::endGame() {
 		Dd = Td - Ta;
 		Db = Td - Tj;
 		outputFile << Td << "\t\t"
-			<< deadUnit->getId();
-		switch (deadUnit->getType()) {
-		case ES:  outputFile << "ES"; ++countES; break;
-		case ET:  outputFile << "ET"; ++countET; break;
-		case EG:  outputFile << "EG"; ++countEG; break;
-		case HU:  outputFile << "HU"; ++countHU; break;
-		case AS:  outputFile << "AS"; ++countAS; break;
-		case AM:  outputFile << "AM"; ++countAM; break;
-		case AD:  outputFile << "AD"; ++countAD; break;
-		case SU:  outputFile << "SU"; break;
-		}
-		outputFile << "\t\t"
+			<< deadUnit->getId() << "\t\t"
 			<< Tj << "\t\t"
 			<< Df << "\t\t"
 			<< Dd << "\t\t"
 			<< Db << '\n';
+
+		switch (deadUnit->getType()) {
+		case ES:  ++countES; break;
+		case ET:  ++countET; break;
+		case EG:  ++countEG; break;
+		case HU:  ++countHU; break;
+		case AS:  ++countAS; break;
+		case AM:  ++countAM; break;
+		case AD:  ++countAD; break;
+		}
 
 		if (deadUnit->isAlien()) {
 			alienSumDf += Df;
