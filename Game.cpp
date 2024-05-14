@@ -416,7 +416,7 @@ void Game::endGame() {
 
 	outputFile << "\tdeadES/totalES: " << getRatio(countES * 100.0, totalCountES) << "%\t\t"
 		<< "deadET/totalET: " << getRatio(countET * 100.0, totalCountET) << "%\t\t"
-		<< "deadEG/totalES: " << getRatio(countEG * 100.0, totalCountEG) << "%\t\t"
+		<< "deadEG/totalEG: " << getRatio(countEG * 100.0, totalCountEG) << "%\t\t"
 		<< "deadHU/totalHU: " << getRatio(countHU * 100.0, totalCountHU) << "%\n";
 
 	totalEarthCount = countES + countET + countEG + countHU;
