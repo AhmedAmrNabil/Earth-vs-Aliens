@@ -268,12 +268,13 @@ void Game::startGame() {
 	char ch = 0;
 	cout << "Run The game in interactive or silent mode ? ( [I]nteractive / [S]ilent ): ";
 	cin >> ch;
-	if (ch == 'i' || ch == 'I')gameMode = INTERACTIVE;
-	else {
+	if (ch == 's' || ch == 'S') { 
+		gameMode = SILENT; 
 		cout << "Silent Mode\nSimulation Starts...\n";
-		gameMode = SILENT;
-
 	}
+	else
+		gameMode = INTERACTIVE;
+
 	ch = 0;
 	while (ch != 27 && (earthArmy.isAlive() && alienArmy.isAlive() && !isDraw() || timestep < 40)) {
 		gameTick();
