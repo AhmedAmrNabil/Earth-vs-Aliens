@@ -15,21 +15,9 @@ bool AlienDrone::attack() {
     LinkedQueue<Unit*> tempListGunnery;
     LinkedQueue<Unit*> tempListPrint;
     Unit* enemyUnit = nullptr;
-    int gunnerCount = this->getAttackCapacity() / 2;
-    int tankCount=this->getAttackCapacity()- gunnerCount;
+    int tankCount = this->getAttackCapacity() / 2;
+    int gunnerCount =this->getAttackCapacity()- tankCount;
     bool attacked = false;
-    while (tankCount > 0) 
-    {
-        if (game->getEarthUnit(ET, enemyUnit)) {
-            enemyUnit->getAttacked(this, timestep);
-            tempListTank.push(enemyUnit);
-            tempListPrint.enqueue(enemyUnit);
-            --tankCount;
-            attacked = true;
-        }
-        else break;
-    }
-    gunnerCount += tankCount;
     while (gunnerCount > 0)
     {
         if (game->getEarthUnit(EG, enemyUnit)) {
@@ -41,12 +29,23 @@ bool AlienDrone::attack() {
         else break;
     }
 
-    while (gunnerCount > 0)
+    tankCount += gunnerCount;
+    while (tankCount > 0) 
     {
         if (game->getEarthUnit(ET, enemyUnit)) {
             enemyUnit->getAttacked(this, timestep);
             tempListTank.push(enemyUnit);
             tempListPrint.enqueue(enemyUnit);
+            --tankCount;
+            attacked = true;
+        }
+        else break;
+    }
+    while (tankCount > 0)
+    {
+        if (game->getEarthUnit(EG, enemyUnit)) {
+            enemyUnit->getAttacked(this, timestep);
+            tempListGunnery.enqueue(enemyUnit);
             --tankCount;
             attacked = true;
         }
