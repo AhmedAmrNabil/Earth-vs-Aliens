@@ -5,13 +5,13 @@
 
 enum UNIT_TYPE {
 	HU,
-	SU,
 	ES,
 	ET,
 	EG,
 	AS,
 	AM,
-	AD
+	AD,
+	SU
 };
 
 class Army;
@@ -25,6 +25,7 @@ class Unit {
 	int attackCapacity;
 	static int lastEarthId;
 	static int lastAlienId;
+	static int lastSaverId;
 
    protected:
 	int destructionTime;
@@ -54,6 +55,7 @@ class Unit {
 	UNIT_TYPE getType() const;
 	static int getEarthLastId();
 	static int getAlienLastId();
+	static int getSaverLastId();
 };
 
 std::ostream& operator<<(std::ostream& out, Unit* unit);

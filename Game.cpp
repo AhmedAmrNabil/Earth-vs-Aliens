@@ -125,7 +125,7 @@ void Game::gameTick() {
 		cout << "\t===================================================\n";
 		cout << "\tCurrent Infection Percentage is " << fixed << setprecision(2) << getInfectionPercentage() << "%" << endl;
 	}
-	if (infectionCount >= infectionThreshold)
+	if (getInfectionPercentage() >= infectionThreshold)
 		saverActive = true;
 	else if (infectionCount == 0) {
 		saverActive = false;
@@ -384,7 +384,7 @@ void Game::endGame() {
 			alienSumDd += Dd;
 			alienSumDb += Db;
 		}
-		else {
+		else if(deadUnit->getType() != SU){
 			earthSumDf += Df;
 			earthSumDd += Dd;
 			earthSumDb += Db;
