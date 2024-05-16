@@ -111,6 +111,12 @@ bool Game::addAlienUnit(Unit*& unit)
 void Game::gameTick() {
 	attackedIDs = "";
 	bool saverAttacked;
+	if (getInfectionPercentage() >= infectionThreshold)
+		saverActive = true;
+	else if (infectionCount == 0) {
+		saverActive = false;
+		killAllSaver();
+	}
 	RNG.generateUnits();
 	earthAttacked = earthArmy.fight();
 	alienAttacked = alienArmy.fight();
@@ -118,19 +124,14 @@ void Game::gameTick() {
 		saverAttacked = allyArmy.fight();
 	if (gameMode == INTERACTIVE) {
 		printarmies();
-		cout << "\t==============Units fighting at current step=======\n";
+		cout << "\t========== Units fighting at current step =========\n";
 		cout << attackedIDs;
 		printkilledunits();
 		printUML();
 		cout << "\t===================================================\n";
 		cout << "\tCurrent Infection Percentage is " << fixed << setprecision(2) << getInfectionPercentage() << "%" << endl;
 	}
-	if (getInfectionPercentage() >= infectionThreshold)
-		saverActive = true;
-	else if (infectionCount == 0) {
-		saverActive = false;
-		killAllSaver();
-	}
+
 	++timestep;
 }
 
