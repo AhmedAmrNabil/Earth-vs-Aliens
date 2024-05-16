@@ -92,3 +92,9 @@ bool AlienSoldier::attack() {
 	}
 	return attacked;
 }
+
+
+
+
+
+
