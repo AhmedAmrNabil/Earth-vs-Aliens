@@ -111,11 +111,11 @@ bool Game::addAlienUnit(Unit*& unit)
 void Game::gameTick() {
 	attackedIDs = "";
 	bool saverAttacked;
+	RNG.generateUnits();
 	earthAttacked = earthArmy.fight();
 	alienAttacked = alienArmy.fight();
 	if (saverActive)
 		saverAttacked = allyArmy.fight();
-	RNG.generateUnits();
 	if (gameMode == INTERACTIVE) {
 		printarmies();
 		cout << "\t==============Units fighting at current step=======\n";
