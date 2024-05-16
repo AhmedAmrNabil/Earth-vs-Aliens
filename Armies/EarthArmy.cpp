@@ -102,7 +102,7 @@ bool EarthArmy::peek(UNIT_TYPE type, Unit*& unit)
 	return true;
 }
 
-bool EarthArmy::fight()
+bool EarthArmy::attack()
 {
 	bool soldierAttack = false;
 	bool tankAttack = false;

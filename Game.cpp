@@ -118,10 +118,10 @@ void Game::gameTick() {
 		killAllSaver();
 	}
 	RNG.generateUnits();
-	earthAttacked = earthArmy.fight();
-	alienAttacked = alienArmy.fight();
+	earthAttacked = earthArmy.attack();
+	alienAttacked = alienArmy.attack();
 	if (saverActive)
-		saverAttacked = allyArmy.fight();
+		saverAttacked = allyArmy.attack();
 	spreadInfect();
 	if (gameMode == INTERACTIVE) {
 		printarmies();
@@ -297,7 +297,7 @@ string Game::getRatio(double x, double y) {
 }
 
 bool Game::isDraw() {
-	return !(earthAttacked || alienAttacked) && (earthArmy.isAlive() && alienArmy.isAlive());
+	return !(earthAttacked || alienAttacked ) && (earthArmy.isAlive() && alienArmy.isAlive());
 }
 
 bool Game::spreadInfect()
