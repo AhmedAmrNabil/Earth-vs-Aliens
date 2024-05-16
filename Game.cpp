@@ -20,6 +20,7 @@ Game::Game() :RNG(this)
 	umlsoldier = 0;
 	infectionThreshold = 0;
 	saverActive = false;
+	healCount = 0;
 	loadInput();
 
 	// Enabling color support
