@@ -17,7 +17,7 @@ bool AlienMonster::attack() {
     int timestep = game->getTimestep();
     LinkedListStack<Unit*> tempListTank;
     LinkedQueue<Unit*> tempListSoldier;
-    LinkedQueue<Unit*> tempListPrint;
+    LinkedQueue<Unit*> tempListPrint; // Used to print the ids in the proper order
     LinkedQueue<Unit*> tempListSaver;
     Unit* enemyUnit = nullptr;
     int soldierCount = this->getAttackCapacity() / 2;
@@ -34,12 +34,14 @@ bool AlienMonster::attack() {
         }
         else break;
     }
-    soldierCount += tankCount;
 
+    // Adds the leftover capcity from tanks if there are no tanks left
+    soldierCount += tankCount;
 
     int soldiercount2 = soldierCount;
     int saverCount = 0;
     if (game->saverIsActive()) {
+        // Split the solider count between saver units and earth soldiers
         soldiercount2 /= 2;
         saverCount = soldierCount - soldiercount2;
     }
@@ -60,6 +62,7 @@ bool AlienMonster::attack() {
         }
         else break;
     }
+    // Adds the leftover capcity from soldier if there are no soldiers left
     saverCount += soldiercount2;
     while (saverCount > 0)
     {
@@ -72,6 +75,8 @@ bool AlienMonster::attack() {
         }
         else break;
     }
+
+    // Attacks the earth soldiers with the leftover saver unit capcity
     while (saverCount > 0) {
         if (game->getEarthUnit(ES, enemyUnit)) {
             enemyUnit->getAttacked(this, timestep);
@@ -90,6 +95,7 @@ bool AlienMonster::attack() {
         else break;
     }
 
+    // Attacks the tanks with the leftover soldier capcity
     while (soldierCount > 0)
     {
         if (game->getEarthUnit(ET, enemyUnit)) {
@@ -101,6 +107,8 @@ bool AlienMonster::attack() {
         }
         else break;
     }
+
+    // Print the attacked units
     if (game->isInteractive() && (!tempListSoldier.isEmpty() || !tempListPrint.isEmpty() || !tempListSaver.isEmpty())) {
         string attackedIds = "\tAM ";
         attackedIds += this;
@@ -145,6 +153,8 @@ bool AlienMonster::attack() {
         game->addToAttacked(attackedIds);
 
     }
+
+    // Handle the attacked units if the game is in silent mode
     while (!tempListTank.isEmpty())
     {
         tempListTank.pop(enemyUnit);

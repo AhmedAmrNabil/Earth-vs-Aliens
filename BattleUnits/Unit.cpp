@@ -10,29 +10,36 @@ int Unit::lastSaverId = 3000;
 
 Unit::Unit(Game* game, UNIT_TYPE type, int joinTime, double health, double power, int attackCapacity)
 	: game(game), type(type), joinTime(joinTime), health(health), power(power), attackCapacity(attackCapacity) {
+	
 	firstAttackedTime = -1;
 	destructionTime = -1;
-	initialhealth = health;
 	joinUMLTime = -1;
+	initialhealth = health;
+
+	// correctly assign the id depend on the type
 	id = (type == SU) ? ++lastSaverId : isAlien() ? ++lastAlienId : ++lastEarthId;
 }
 
 std::ostream& operator<<(std::ostream& out, Unit* unit) {
 	
+	// Note: this colors are the default terminal colors and
+	// is subjected to changed based on the terminal used to run the program
+
 	EarthSoldier* soldier = dynamic_cast <EarthSoldier*>(unit);
-	if (soldier && (soldier->isInfected() && !soldier->isImmune())) {
+	if (soldier && (soldier->isInfected() && !soldier->isImmune())) { //check for infection
 		out << "\033[1;31m(\033[1;34m" << unit->getId() << "\033[1;31m)\033[0m";
 		return out;
 	}
+
 	std::string color = "";
 	switch (unit->getType()) {
-	case ES:color = "\033[1;34m"; break;
-	case ET:color = "\033[1;36m"; break;
-	case EG:color = "\033[1;32m"; break;
-	case AS:color = "\033[1;33m"; break;
-	case AM:color = "\033[1;31m"; break;
-	case AD:color = "\033[1;35m"; break;
-	default: color = "\033[1;37m"; break;
+	case ES:color = "\033[1;34m"; break; // blue
+	case ET:color = "\033[1;36m"; break; // cyan
+	case EG:color = "\033[1;32m"; break; // green
+	case AS:color = "\033[1;33m"; break; // yellow
+	case AM:color = "\033[1;31m"; break; // red
+	case AD:color = "\033[1;35m"; break; // magenta
+	default: color = "\033[1;37m"; break; // white
 	}
 
 	out << color <<unit->getId() << "\033[0m";
@@ -40,19 +47,23 @@ std::ostream& operator<<(std::ostream& out, Unit* unit) {
 }
 
 std::string& operator+=(std::string& out, Unit* unit) {
+
+	// Note: this colors are the default terminal colors and
+	// is subjected to changed based on the terminal used to run the program
+
 	EarthSoldier* soldier = dynamic_cast <EarthSoldier*>(unit);
 	if (soldier && (soldier->isInfected() && !soldier->isImmune())) {
 		out += "\033[1;31m(\033[1;34m" + std::to_string(unit->getId()) + "\033[1;31m)\033[0m";
 		return out;
 	}
 	switch (unit->getType()) {
-	case ES:out += "\033[1;34m"; break;
-	case ET:out += "\033[1;36m"; break;
-	case EG:out += "\033[1;32m"; break;
-	case AS:out += "\033[1;33m"; break;
-	case AM:out += "\033[1;31m"; break;
-	case AD:out += "\033[1;35m"; break;
-	default: out += "\033[1;37m"; break;
+	case ES:out += "\033[1;34m"; break; // blue
+	case ET:out += "\033[1;36m"; break;	// cyan
+	case EG:out += "\033[1;32m"; break;	// green
+	case AS:out += "\033[1;33m"; break;	// yellow
+	case AM:out += "\033[1;31m"; break;	// red
+	case AD:out += "\033[1;35m"; break;	// magenta
+	default: out += "\033[1;37m"; break; // white
 	}
 
 	out += std::to_string(unit->getId()) + "\033[0m";

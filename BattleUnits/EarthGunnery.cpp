@@ -20,7 +20,8 @@ bool EarthGunnery::attack() {
     LinkedQueue<Unit*> tempListPrint;
     LinkedQueue<Unit*> tempListMonster;
     bool attacked = false;
-
+    // split the attack capcity between drons and monsters 
+    // with more drones if the capcity is odd
     int monsterCount = this->getAttackCapacity() / 2;
     int dronesCount = this->getAttackCapacity() - monsterCount;
     while (monsterCount) {
@@ -33,19 +34,21 @@ bool EarthGunnery::attack() {
         --monsterCount;
     }
 
+    // Adds the leftover capcity from monsters if there are no monsters left
     dronesCount += monsterCount;
 
     while (dronesCount) {
         if (game->getAlienUnit(AD, enemyUnit)) {
             enemyUnit->getAttacked(this, timestep);
             tempListDrone.push(enemyUnit);
-            tempListPrint.enqueue(enemyUnit);
+            tempListPrint.enqueue(enemyUnit); // Used to print the ids in the proper order
             attacked = true;
         }
         else break;
         --dronesCount;
     }
 
+    // Adds the leftover capcity from drones if there are no drones left
     monsterCount += dronesCount;
 
     while (monsterCount) {
@@ -58,6 +61,7 @@ bool EarthGunnery::attack() {
         --monsterCount;
     }
 
+    
     if (game->isInteractive() && (!tempListMonster.isEmpty() || !tempListPrint.isEmpty())) {
         string attackedIds = "\tEG ";
         attackedIds += this;
@@ -89,6 +93,8 @@ bool EarthGunnery::attack() {
         game->addToAttacked(attackedIds);
     }
 
+
+    // Handle the attacked units if the game is in silent mode
     while (!tempListDrone.isEmpty()) {
         tempListDrone.pop(enemyUnit);
         game->handleUnit(enemyUnit);
@@ -98,6 +104,7 @@ bool EarthGunnery::attack() {
         tempListMonster.dequeue(enemyUnit);
         game->handleUnit(enemyUnit);
     }
+
     while (!tempListPrint.isEmpty()) {
         tempListPrint.dequeue(enemyUnit);
     }

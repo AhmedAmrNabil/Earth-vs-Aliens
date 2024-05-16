@@ -20,6 +20,8 @@ bool HealUnit::attack()
 	while (healCount) {
 		if (game->getfromUML(unit)) {
 			EarthSoldier* soldier = dynamic_cast<EarthSoldier*>(unit);
+
+			// Check if infected to heal only half of the intended heal value
 			if (soldier && (soldier->isInfected() && !soldier->isImmune())) {
 				soldier->getHealed(this, true);
 				if (!soldier->isLow()) {
@@ -40,6 +42,8 @@ bool HealUnit::attack()
 		}
 		else break;
 	}
+
+	// Prints the healed Units
 	if (game->isInteractive() && !tempList.isEmpty()) {
 		string attackedIds = "\tHU ";
 		attackedIds += this;
@@ -59,6 +63,8 @@ bool HealUnit::attack()
 		attackedIds += '\n';
 		game->addToAttacked(attackedIds);
 	}
+
+	// Handle healed units if the game is in silent mode
 	while (!tempList.isEmpty()) {
 		tempList.dequeue(unit);
 		game->handleUnit(unit);
@@ -66,6 +72,8 @@ bool HealUnit::attack()
 	while (!total.isEmpty()) {
 		total.dequeue(unit);
 	}
+
+	// Kills the heal unit if it healed someone
 	if(healCount != this->getAttackCapacity()) { 
 		this->decrementHealth(this->health,timestep);
 		game->handleUnit(this);

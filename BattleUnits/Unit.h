@@ -35,30 +35,45 @@ class Unit {
 	double initialhealth;
 
    public:
+
 	Unit(Game* game,UNIT_TYPE type, int joinTime, double health, double power, int attackCapacity);
-	virtual bool attack() = 0;
+	
+	// Helper functions for changing health
 	void decrementHealth(double damage, int timestep);
 	void incrementHealth(double heal);
+	double getHealth() const;
+	bool isDead() const;
+
+	// Attack funciton and its helper
+	virtual bool attack() = 0;
 	void getAttacked(Unit* enemyUnit, int timestep);
-	void getHealed(Unit* HealUnit , bool infected);
+	
+	//UML helper functions
 	void setUMLJoinTime(int jointime);
 	int getUMLJoinTime();
-	bool isDead() const;
-	bool isAlien() const;
+	void getHealed(Unit* HealUnit , bool infected);
 	bool isLow() const;
-	int getAttackCapacity() const;
-	double getHealth() const;
+
+	// Getters for the output file and printing
 	int getId() const;
+	UNIT_TYPE getType() const;
 	int getDestructionTime() const;
 	int getFirstAttackTime() const;
 	int getJoinTime() const;
-	UNIT_TYPE getType() const;
+
+	// Getter for randGen to make it stop generating units
 	static int getEarthLastId();
 	static int getAlienLastId();
 	static int getSaverLastId();
+
+	bool isAlien() const;
+	int getAttackCapacity() const;
 };
 
+// Overloading the ostream << operator for printing in Datastructrures
 std::ostream& operator<<(std::ostream& out, Unit* unit);
+
+//Overloading the string += operator for printing in string when attacking
 std::string& operator+=(std::string& out, Unit* unit);
 
 #endif
