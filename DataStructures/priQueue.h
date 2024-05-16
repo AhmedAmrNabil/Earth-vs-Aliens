@@ -75,11 +75,9 @@ public:
 		if (isEmpty())return;
 		priNode<T>* ptr = head;
 		cout << "[" << head->getItem(tmp);
-		int c = 1;
-		while (ptr->getNext() && c < 10) {
+		while (ptr->getNext()) {
 			ptr = ptr->getNext();
 			cout << ", " << ptr->getItem(tmp);
-			c++;
 		}
 		cout << "]";
 	}

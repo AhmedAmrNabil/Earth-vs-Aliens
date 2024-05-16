@@ -266,13 +266,16 @@ int Game::getTimestep()
 
 void Game::startGame() {
 	char ch = 0;
+	string option = "";
 	cout << "Run The game in interactive or silent mode ? ( [I]nteractive / [S]ilent ): ";
-	cin >> ch;
-	if (ch == 'i' || ch == 'I')gameMode = INTERACTIVE;
+	cin >> option;
+	for (int i = 0; i < option.size() && i < 20; ++i)
+		option[i] = tolower(option[i]);
+
+	if (option[0] == 'i' || option == "interactive") gameMode = INTERACTIVE;
 	else {
 		cout << "Silent Mode\nSimulation Starts...\n";
 		gameMode = SILENT;
-
 	}
 	ch = 0;
 	while (ch != 27 && (earthArmy.isAlive() && alienArmy.isAlive() && !isDraw() || timestep < 40)) {
