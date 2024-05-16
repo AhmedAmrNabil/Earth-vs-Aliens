@@ -18,6 +18,7 @@ bool AlienMonster::attack() {
     LinkedListStack<Unit*> tempListTank;
     LinkedQueue<Unit*> tempListSoldier;
     LinkedQueue<Unit*> tempListPrint;
+    LinkedQueue<Unit*> tempListSaver;
     Unit* enemyUnit = nullptr;
     int soldierCount = this->getAttackCapacity() / 2;
     int tankCount = this->getAttackCapacity() - soldierCount;
@@ -34,12 +35,20 @@ bool AlienMonster::attack() {
         else break;
     }
     soldierCount += tankCount;
-    while (soldierCount > 0)
-    {
+
+
+    int soldiercount2 = soldierCount;
+    int saverCount = 0;
+    if (game->saverIsActive()) {
+        soldiercount2 /= 2;
+        saverCount = soldierCount - soldiercount2;
+    }
+    while (soldiercount2 > 0) {
         if (game->getEarthUnit(ES, enemyUnit)) {
             enemyUnit->getAttacked(this, timestep);
             tempListSoldier.enqueue(enemyUnit);
             --soldierCount;
+            --soldiercount2;
             if (this->willInfect()) {
                 EarthSoldier* soldier = dynamic_cast<EarthSoldier*>(enemyUnit);
                 if (!soldier->isInfected() && !soldier->isImmune()) {
@@ -51,7 +60,37 @@ bool AlienMonster::attack() {
         }
         else break;
     }
-    while (soldierCount > 0) 
+    saverCount += soldiercount2;
+    while (saverCount > 0)
+    {
+        if (game->getSaverUnit(enemyUnit)) {
+            enemyUnit->getAttacked(this, timestep);
+            tempListSaver.enqueue(enemyUnit);
+            attacked = true;
+            --soldierCount;
+            --saverCount;
+        }
+        else break;
+    }
+    while (saverCount > 0) {
+        if (game->getEarthUnit(ES, enemyUnit)) {
+            enemyUnit->getAttacked(this, timestep);
+            tempListSoldier.enqueue(enemyUnit);
+            --soldierCount;
+            --saverCount;
+            if (this->willInfect()) {
+                EarthSoldier* soldier = dynamic_cast<EarthSoldier*>(enemyUnit);
+                if (!soldier->isInfected() && !soldier->isImmune()) {
+                    soldier->setInfected(true);
+                    game->incrementInfected();
+                }
+            }
+            attacked = true;
+        }
+        else break;
+    }
+
+    while (soldierCount > 0)
     {
         if (game->getEarthUnit(ET, enemyUnit)) {
             enemyUnit->getAttacked(this, timestep);
@@ -62,7 +101,7 @@ bool AlienMonster::attack() {
         }
         else break;
     }
-    if (game->isInteractive() && (!tempListSoldier.isEmpty() || !tempListPrint.isEmpty())) {
+    if (game->isInteractive() && (!tempListSoldier.isEmpty() || !tempListPrint.isEmpty() || !tempListSaver.isEmpty())) {
         string attackedIds = "\tAM ";
         attackedIds += this;
         attackedIds += " shots\t";
@@ -89,6 +128,19 @@ bool AlienMonster::attack() {
             }
             attackedIds += "]";
         }
+        if (tempListSaver.dequeue(enemyUnit)) {
+            attackedIds += "[";
+            game->handleUnit(enemyUnit);
+            attackedIds += enemyUnit;
+            while (!tempListSaver.isEmpty()) {
+                tempListSaver.dequeue(enemyUnit);
+                game->handleUnit(enemyUnit);
+                attackedIds += ", ";
+                attackedIds += enemyUnit;
+            }
+            attackedIds += "]";
+        }
+
         attackedIds += '\n';
         game->addToAttacked(attackedIds);
 
@@ -100,6 +152,10 @@ bool AlienMonster::attack() {
     }
     while (!tempListSoldier.isEmpty()) {
         tempListSoldier.dequeue(enemyUnit);
+        game->handleUnit(enemyUnit);
+    }
+    while (!tempListSaver.isEmpty()) {
+        tempListSaver.dequeue(enemyUnit);
         game->handleUnit(enemyUnit);
     }
     while (!tempListPrint.isEmpty()) {

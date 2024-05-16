@@ -277,8 +277,9 @@ void Game::startGame() {
 		cout << "Silent Mode\nSimulation Starts...\n";
 		gameMode = SILENT;
 	}
+  
 	ch = 0;
-	while (ch != 27 && (earthArmy.isAlive() && alienArmy.isAlive() && !isDraw() || timestep < 40)) {
+	while (ch != 27 && (timestep <= 40 || earthArmy.isAlive() && alienArmy.isAlive() && !isDraw())) {
 		gameTick();
 		if (gameMode == INTERACTIVE)
 			ch = _getch();
@@ -372,14 +373,15 @@ void Game::endGame() {
 			<< Df << "\t\t"
 			<< Dd << "\t\t"
 			<< Db << '\n';
+
 		switch (deadUnit->getType()) {
-		case ES: ++countES; break;
-		case ET: ++countET; break;
-		case EG: ++countEG; break;
-		case HU: ++countHU; break;
-		case AS: ++countAS; break;
-		case AM: ++countAM; break;
-		case AD: ++countAD; break;
+		case ES:  ++countES; break;
+		case ET:  ++countET; break;
+		case EG:  ++countEG; break;
+		case HU:  ++countHU; break;
+		case AS:  ++countAS; break;
+		case AM:  ++countAM; break;
+		case AD:  ++countAD; break;
 		}
 
 		if (deadUnit->isAlien()) {
@@ -387,7 +389,7 @@ void Game::endGame() {
 			alienSumDd += Dd;
 			alienSumDb += Db;
 		}
-		else if(deadUnit->getType() != SU){
+		else if(deadUnit->getType() != SU) {
 			earthSumDf += Df;
 			earthSumDd += Dd;
 			earthSumDb += Db;
@@ -417,7 +419,7 @@ void Game::endGame() {
 
 	outputFile << "\tdeadES/totalES: " << getRatio(countES * 100.0, totalCountES) << "%\t\t"
 		<< "deadET/totalET: " << getRatio(countET * 100.0, totalCountET) << "%\t\t"
-		<< "deadEG/totalES: " << getRatio(countEG * 100.0, totalCountEG) << "%\t\t"
+		<< "deadEG/totalEG: " << getRatio(countEG * 100.0, totalCountEG) << "%\t\t"
 		<< "deadHU/totalHU: " << getRatio(countHU * 100.0, totalCountHU) << "%\n";
 
 	totalEarthCount = countES + countET + countEG + countHU;
