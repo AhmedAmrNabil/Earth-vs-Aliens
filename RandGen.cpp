@@ -45,16 +45,7 @@ Unit* RandGen::generateEarthUnit() {
 
 	return unit;
 }
-Unit* RandGen::generateAllyUnit() {
-	Unit* unit;
-	if (Unit::getEarthLastId() == 1000)return nullptr;
-	double power = generator(allyData.minPower, allyData.maxPower);
-	double health = generator(allyData.minHealth, allyData.maxHealth);
-	int capacity = generator(allyData.minCapacity, allyData.maxCapacity);
-	unit = new SaverUnit(game,game->getTimestep(),health,power,capacity);
-	return unit;
 
-}
 Unit* RandGen::generateAlienUnit() {
 	if (Unit::getAlienLastId() == 3000)return nullptr;
 	Unit* unit;
@@ -70,6 +61,17 @@ Unit* RandGen::generateAlienUnit() {
 		unit = new AlienDrone(game, game->getTimestep(), health, power, capacity);
 
 	return unit;
+}
+
+Unit* RandGen::generateAllyUnit() {
+	Unit* unit;
+	if (Unit::getSaverLastId() == 4000) return nullptr;
+	double power = generator(allyData.minPower, allyData.maxPower);
+	double health = generator(allyData.minHealth, allyData.maxHealth);
+	int capacity = generator(allyData.minCapacity, allyData.maxCapacity);
+	unit = new SaverUnit(game, game->getTimestep(), health, power, capacity);
+	return unit;
+
 }
 
 void RandGen::generateUnits() {

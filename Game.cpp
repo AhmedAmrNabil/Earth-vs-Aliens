@@ -386,7 +386,7 @@ void Game::endGame() {
 			alienSumDd += Dd;
 			alienSumDb += Db;
 		}
-		else if (deadUnit->getType() != SU) {
+		else if(deadUnit->getType() != SU) {
 			earthSumDf += Df;
 			earthSumDd += Dd;
 			earthSumDb += Db;
