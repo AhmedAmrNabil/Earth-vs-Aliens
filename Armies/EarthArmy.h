@@ -23,7 +23,7 @@ public:
 	bool addUnit(Unit* unit, bool isNew = false);
 	bool getUnit(UNIT_TYPE type, Unit*& unit);
 	bool peek(UNIT_TYPE type, Unit*& unit);
-	bool fight();
+	bool attack();
 	void print();
 	bool isAlive();
 	int getSoldierCount(); // Current soldier count for getting soldier ratio

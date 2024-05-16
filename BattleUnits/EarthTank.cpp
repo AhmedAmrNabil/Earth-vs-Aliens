@@ -13,7 +13,7 @@ bool EarthTank::attack() {
     //Check to attack soldiers or not
     bool attacked = false;
     if (!attackSoldiers && game->getSoldierRatio() < 30) attackSoldiers = true;
-    if ( attackSoldiers && game->getSoldierRatio() > 80) attackSoldiers = false;
+    if ( attackSoldiers && game->getSoldierRatio() >= 80) attackSoldiers = false;
     Unit* enemyUnit;
     LinkedQueue<Unit*> tempListMonster;
     LinkedQueue<Unit*> tempListSolider;

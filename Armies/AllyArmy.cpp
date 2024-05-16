@@ -24,7 +24,7 @@ bool AllyArmy::peek(UNIT_TYPE type, Unit*& unit) {
 	return true;
 }
 
-bool AllyArmy::fight() {
+bool AllyArmy::attack() {
 	bool saverAttack = false;
 	Unit* saver;
 

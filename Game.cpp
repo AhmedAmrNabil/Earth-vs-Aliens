@@ -21,9 +21,8 @@ Game::Game() :RNG(this)
 	infectionThreshold = 0;
 	saverActive = false;
 	loadInput();
-	srand(time(0));
 
-	//Enabling color support
+	// Enabling color support
 	HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
 	DWORD dwMode = 0;
 	GetConsoleMode(hOut, &dwMode);
@@ -118,10 +117,10 @@ void Game::gameTick() {
 		killAllSaver();
 	}
 	RNG.generateUnits();
-	earthAttacked = earthArmy.fight();
-	alienAttacked = alienArmy.fight();
+	earthAttacked = earthArmy.attack();
+	alienAttacked = alienArmy.attack();
 	if (saverActive)
-		saverAttacked = allyArmy.fight();
+		saverAttacked = allyArmy.attack();
 	spreadInfect();
 	if (gameMode == INTERACTIVE) {
 		printarmies();
@@ -297,7 +296,7 @@ string Game::getRatio(double x, double y) {
 }
 
 bool Game::isDraw() {
-	return !(earthAttacked || alienAttacked) && (earthArmy.isAlive() && alienArmy.isAlive());
+	return !(earthAttacked || alienAttacked ) && (earthArmy.isAlive() && alienArmy.isAlive());
 }
 
 bool Game::spreadInfect()

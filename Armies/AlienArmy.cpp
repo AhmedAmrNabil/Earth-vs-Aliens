@@ -96,7 +96,7 @@ bool AlienArmy::peek(UNIT_TYPE type, Unit*& unit) {
 	}
 	return true;
 }
-bool AlienArmy::fight()
+bool AlienArmy::attack()
 {
 	bool soliderAttack = false;
 	bool monsterAttack = false;
