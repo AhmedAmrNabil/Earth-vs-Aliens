@@ -8,14 +8,18 @@ EarthTank::EarthTank(Game* game,int joinTime, double health, double power, int a
 bool EarthTank::attackSoldiers = false;
 
 bool EarthTank::attack() {
+    int timestep = game->getTimestep();
+
+    //Check to attack soldiers or not
     bool attacked = false;
     if (!attackSoldiers && game->getSoldierRatio() < 30) attackSoldiers = true;
     if ( attackSoldiers && game->getSoldierRatio() > 80) attackSoldiers = false;
-    int timestep = game->getTimestep();
     Unit* enemyUnit;
     LinkedQueue<Unit*> tempListMonster;
     LinkedQueue<Unit*> tempListSolider;
     int monsterCount , soldierCount;
+
+    // split the attack capacity into two with more soldiers if attack capcity is odd
     if(attackSoldiers) {
         monsterCount = getAttackCapacity() / 2;
         soldierCount = getAttackCapacity() - monsterCount;
@@ -24,6 +28,7 @@ bool EarthTank::attack() {
         monsterCount = getAttackCapacity();
         soldierCount = 0;
     }
+
     while (attackSoldiers && soldierCount != 0 ) {
         if (game->getAlienUnit(AS, enemyUnit)) {
             enemyUnit->getAttacked(this, timestep);
@@ -33,7 +38,8 @@ bool EarthTank::attack() {
         }
         else break;
     }
-    monsterCount += soldierCount;
+
+    monsterCount += soldierCount; // Adds the leftover capcity from soldiers if they are empty
     while (monsterCount != 0) {
         if (game->getAlienUnit(AM, enemyUnit)) {
             enemyUnit->getAttacked(this, timestep);
@@ -43,6 +49,8 @@ bool EarthTank::attack() {
         }
         else break;    
     }
+
+    // Attack soldiers with the leftover capcity of the monsters
     while (attackSoldiers && monsterCount != 0) {
         if (game->getAlienUnit(AS, enemyUnit)) {
             enemyUnit->getAttacked(this, timestep);
@@ -52,6 +60,8 @@ bool EarthTank::attack() {
         }
         else break;
     }
+
+    // Printing of the attacked list
     if (game->isInteractive() && (!tempListMonster.isEmpty() || !tempListSolider.isEmpty())) {
         string attackedIds = "\tET ";
         attackedIds += this;
@@ -82,6 +92,8 @@ bool EarthTank::attack() {
             }
             attackedIds += "]";
         }
+        attackedIds += '\n';
+        game->addToAttacked(attackedIds);
     }
     while (!tempListSolider.isEmpty()) {
         tempListSolider.dequeue(enemyUnit);

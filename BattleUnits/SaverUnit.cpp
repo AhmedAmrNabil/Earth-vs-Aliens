@@ -23,6 +23,7 @@ bool SaverUnit::attack() {
 		--soldierCount;
 	}
 
+	// Printing attacked Units
 	if (game->isInteractive() && !tempList.isEmpty()) {
 		string attackedIds = "\tSU ";
 		attackedIds += this;
@@ -43,6 +44,7 @@ bool SaverUnit::attack() {
 		game->addToAttacked(attackedIds);
 	}
 
+	//Empty the tempList if the game is in silent mode
 	while (!tempList.isEmpty()) {
 		tempList.dequeue(enemyUnit);
 		game->handleUnit(enemyUnit);
