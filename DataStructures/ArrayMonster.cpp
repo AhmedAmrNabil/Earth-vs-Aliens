@@ -6,7 +6,7 @@ using std::cout;
 
 ArrayMonster::ArrayMonster() :arrayMonster()
 {
-	srand(time(0));
+	srand(int(time(0)));
 	monsterCount = 0;
 }
 

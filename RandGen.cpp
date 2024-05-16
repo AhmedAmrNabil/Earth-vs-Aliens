@@ -13,7 +13,14 @@
 #include "Game.h"
 
 RandGen::RandGen(Game* game) {
-	srand(time(0));
+	earthData = { 0,0,0,0,0,0 };
+	alienData = { 0,0,0,0,0,0 };
+	allyData = { 0,0,0,0,0,0 };
+	percentages = { 0,0,0,0,0,0,0,0 };
+	N = 0;
+	Prob = 0;
+
+	srand(int(time(0)));
 	this->game = game;
 }
 

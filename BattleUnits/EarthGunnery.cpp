@@ -10,7 +10,7 @@ EarthGunnery::EarthGunnery(Game* game, int joinTime, double health, double power
 };
 
 int EarthGunnery::getPriority() {
-    return power * sqrt(health);
+    return int(power * sqrt(health));
 }
 
 bool EarthGunnery::attack() {

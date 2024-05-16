@@ -117,11 +117,12 @@ void Game::gameTick() {
 		killAllSaver();
 	}
 	RNG.generateUnits();
-	earthAttacked = earthArmy.attack();
-	alienAttacked = alienArmy.attack();
+	earthAttacked = earthArmy.attack(); // Earth army attack alien army
+	alienAttacked = alienArmy.attack(); // Alien army attack earth army
 	if (saverActive)
-		saverAttacked = allyArmy.attack();
-	spreadInfect();
+		saverAttacked = allyArmy.attack(); // Saver army attack alien army
+
+	spreadInfect(); // Spread earth soldier infection
 	if (gameMode == INTERACTIVE) {
 		printarmies();
 		cout << "\t========== Units fighting at current step =========\n";
@@ -299,10 +300,10 @@ bool Game::isDraw() {
 	return !(earthAttacked || alienAttacked ) && (earthArmy.isAlive() && alienArmy.isAlive());
 }
 
-bool Game::spreadInfect()
+void Game::spreadInfect()
 {
 	Unit* unit = nullptr;
-	if (this->infectionCount < 1) return false;
+	if (this->infectionCount < 1) return;
 	int sc = earthArmy.getSoldierCount();
 	int random = RNG.generator(0, sc);
 	int random2 = RNG.generator(1,100);

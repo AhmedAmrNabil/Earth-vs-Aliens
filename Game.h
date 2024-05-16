@@ -87,7 +87,7 @@ public:
 	void decrementInfected();
 	int getAliveSoldiers();
 	double getInfectionPercentage();
-	bool spreadInfect();
+	void spreadInfect();
 
 	//Output File helper functions
 	bool isDraw();
