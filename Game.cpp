@@ -122,6 +122,7 @@ void Game::gameTick() {
 	alienAttacked = alienArmy.fight();
 	if (saverActive)
 		saverAttacked = allyArmy.fight();
+	spreadInfect();
 	if (gameMode == INTERACTIVE) {
 		printarmies();
 		cout << "\t========== Units fighting at current step =========\n";
@@ -299,32 +300,29 @@ bool Game::isDraw() {
 	return !(earthAttacked || alienAttacked) && (earthArmy.isAlive() && alienArmy.isAlive());
 }
 
-bool Game::spreadInfect(Unit*& unit)
+bool Game::spreadInfect()
 {
+	Unit* unit = nullptr;
 	if (this->infectionCount < 1) return false;
 	int sc = earthArmy.getSoldierCount();
-	int random = rand() % sc;
-	int random2 = rand() % 100;
-	LinkedQueue<Unit*> temp;
+	int random = RNG.generator(0, sc);
+	int random2 = RNG.generator(1,100);
+	EarthSoldier* s1;
 	bool infected = false;
-	if (random2 <= 2) {
-		for (int i = 1; i <= random && earthArmy.peek(ES, unit); i++)
-		{
-			this->getEarthUnit(ES, unit);
-			if (i != random) {
-				temp.enqueue(unit);
-			}
-			else infected = true;
-		}
 
-		while (!temp.isEmpty())
-		{
-			Unit* u1;
-			temp.dequeue(u1);
-			this->addEarthUnit(u1);
+	if (random2 <= 2) 
+		for (int i = 0; i < sc; i++) {
+			this->getEarthUnit(ES, unit);
+			if (i == random) {
+				s1 = dynamic_cast<EarthSoldier*>(unit);
+				if (!s1->isInfected()) {
+					s1->setInfected(true);
+					incrementInfected();
+				}
+			}
+			this->addEarthUnit(unit);
 		}
-	}
-	return infected;
+	
 }
 
 void Game::killAllSaver()

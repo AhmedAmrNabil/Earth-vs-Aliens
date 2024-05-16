@@ -37,7 +37,6 @@ bool EarthSoldier::attack() {
 		}
 		--soldierCount;
 	}
-	Unit* infectUnit;
 
 	if (game->isInteractive() && !tempList.isEmpty()) {
 		string attackedIds = "\tES ";
@@ -62,16 +61,6 @@ bool EarthSoldier::attack() {
 	while (!tempList.isEmpty()) {
 		tempList.dequeue(enemyUnit);
 		game->handleUnit(enemyUnit);
-	}
-
-
-	if (game->spreadInfect(infectUnit)) {
-		EarthSoldier* s1 = dynamic_cast<EarthSoldier*>(infectUnit);
-		if (!s1->isInfected()) {
-			s1->setInfected(true);
-			game->incrementInfected();
-		}
-		game->handleUnit(infectUnit);
 	}
 
 	return attacked;
