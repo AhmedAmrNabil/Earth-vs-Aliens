@@ -117,10 +117,10 @@ void Game::gameTick() {
 		killAllSaver();
 	}
 	RNG.generateUnits();
-	earthAttacked = earthArmy.attack(); // earth army attack alien army
-	alienAttacked = alienArmy.attack(); // alien army attack earth army
+	earthAttacked = earthArmy.attack(); // Earth army attack alien army
+	alienAttacked = alienArmy.attack(); // Alien army attack earth army
 	if (saverActive)
-		saverAttacked = allyArmy.attack(); // saver army attack alien army
+		saverAttacked = allyArmy.attack(); // Saver army attack alien army
 
 	spreadInfect(); // Spread earth soldier infection
 	if (gameMode == INTERACTIVE) {
