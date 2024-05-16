@@ -16,7 +16,18 @@ bool EarthSoldier::attack() {
 	LinkedQueue<Unit*> tempList;
 	int soldierCount = this->getAttackCapacity();
 	while (soldierCount) {
-		if (!this->infected) {
+		if (this->infected) { // Attacks earth soldiers if infected
+			if (game->getEarthUnit(ES, enemyUnit)) {
+				if (enemyUnit != this) {
+					enemyUnit->getAttacked(this, timestep);
+					tempList.enqueue(enemyUnit);
+					attacked = true;
+				}
+				else game->handleUnit(enemyUnit);
+			}
+			else break;
+		}
+		else { 
 			if (game->getAlienUnit(AS, enemyUnit)) {
 				enemyUnit->getAttacked(this, timestep);
 				tempList.enqueue(enemyUnit);
@@ -24,20 +35,10 @@ bool EarthSoldier::attack() {
 			}
 			else break;
 		}
-		else {
-			if (game->getEarthUnit(ES, enemyUnit)) {
-				if (enemyUnit != this) {
-					tempList.enqueue(enemyUnit);
-					enemyUnit->getAttacked(this, timestep);
-					attacked = true;
-				}
-				else game->handleUnit(enemyUnit);
-			}
-			else break;
-		}
 		--soldierCount;
 	}
 
+	// Printing of the attacked list
 	if (game->isInteractive() && !tempList.isEmpty()) {
 		string attackedIds = "\tES ";
 		attackedIds += this;
@@ -58,6 +59,7 @@ bool EarthSoldier::attack() {
 		game->addToAttacked(attackedIds);
 	}
 
+	// Handle the attacked units if the game is in silent mode
 	while (!tempList.isEmpty()) {
 		tempList.dequeue(enemyUnit);
 		game->handleUnit(enemyUnit);
@@ -66,22 +68,18 @@ bool EarthSoldier::attack() {
 	return attacked;
 }
 
-bool EarthSoldier::isInfected()
-{
+bool EarthSoldier::isInfected() {
 	return infected;
 }
 
-void EarthSoldier::setInfected(bool b)
-{
+void EarthSoldier::setInfected(bool b) {
 	infected = b;
 }
 
-bool EarthSoldier::isImmune()
-{
+bool EarthSoldier::isImmune() {
 	return immune;
 }
 
-void EarthSoldier::setImmunity(bool b)
-{
+void EarthSoldier::setImmunity(bool b) {
 	immune = b;
 }

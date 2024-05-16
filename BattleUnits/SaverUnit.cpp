@@ -44,7 +44,7 @@ bool SaverUnit::attack() {
 		game->addToAttacked(attackedIds);
 	}
 
-	//Empty the tempList if the game is in silent mode
+	//Handle the attacked units if the game is in silent mode
 	while (!tempList.isEmpty()) {
 		tempList.dequeue(enemyUnit);
 		game->handleUnit(enemyUnit);

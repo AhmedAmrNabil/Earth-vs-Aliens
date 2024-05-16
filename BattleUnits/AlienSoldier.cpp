@@ -14,7 +14,7 @@ bool AlienSoldier::attack() {
 	LinkedQueue<Unit*> tempListSaver;
 	int soldierCount = this->getAttackCapacity();
 	int saverCount = 0;
-	if (game->saverIsActive()) {
+	if (game->saverIsActive()) { // If saver Units is active attack it
 		soldierCount /= 2;
 		saverCount = this->getAttackCapacity() - soldierCount;
 	}
@@ -28,6 +28,8 @@ bool AlienSoldier::attack() {
 		else break;
 		--soldierCount;
 	}
+
+	// Adds the leftover capcity from soldiers if there are no soldiers left
 	saverCount += soldierCount;
 	while (saverCount) {
 		if (game->getSaverUnit(enemyUnit)) {
@@ -38,6 +40,8 @@ bool AlienSoldier::attack() {
 		else break;
 		--saverCount;
 	}
+
+	// Adds the leftover capcity from savers if there are no savers left
 	soldierCount += saverCount;
 	while (soldierCount) {
 		if (game->getEarthUnit(ES, enemyUnit)) {
@@ -49,6 +53,8 @@ bool AlienSoldier::attack() {
 		--soldierCount;
 	}
 
+
+	// Print the attacked units
 	if (game->isInteractive() && (!tempListSoldier.isEmpty() || !tempListSaver.isEmpty())) {
 		string attackedIds = "\tAS ";
 		attackedIds += this;
@@ -82,14 +88,18 @@ bool AlienSoldier::attack() {
 		game->addToAttacked(attackedIds);
 
 	}
+
+	// Handle the attacked units if the game is in silent mode
 	while (!tempListSoldier.isEmpty()) {
 		tempListSoldier.dequeue(enemyUnit);
 		game->handleUnit(enemyUnit);
 	}
+
 	while (!tempListSaver.isEmpty()) {
 		tempListSaver.dequeue(enemyUnit);
 		game->handleUnit(enemyUnit);
 	}
+
 	return attacked;
 }
 

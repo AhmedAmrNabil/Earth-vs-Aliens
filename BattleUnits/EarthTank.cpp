@@ -95,6 +95,8 @@ bool EarthTank::attack() {
         attackedIds += '\n';
         game->addToAttacked(attackedIds);
     }
+
+    // Handle attacked units if the game is in silent mode
     while (!tempListSolider.isEmpty()) {
         tempListSolider.dequeue(enemyUnit);
         game->handleUnit(enemyUnit);

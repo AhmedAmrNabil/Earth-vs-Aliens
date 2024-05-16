@@ -29,6 +29,7 @@ bool AlienDrone::attack() {
         else break;
     }
 
+    // Adds the leftover capcity from gunnery if there are no gunneries left
     tankCount += gunnerCount;
     while (tankCount > 0) 
     {
@@ -41,6 +42,8 @@ bool AlienDrone::attack() {
         }
         else break;
     }
+
+    // Attacks the tanks with the leftover tank capcity
     while (tankCount > 0)
     {
         if (game->getEarthUnit(EG, enemyUnit)) {
@@ -52,6 +55,7 @@ bool AlienDrone::attack() {
         else break;
     }
 
+    // Print the attacked units
     if (game->isInteractive() && (!tempListPrint.isEmpty() || !tempListGunnery.isEmpty())) {
         string attackedIds = "\tAD ";
         attackedIds += this;
@@ -83,6 +87,8 @@ bool AlienDrone::attack() {
         game->addToAttacked(attackedIds);
 
     }
+
+    // Handle the attacked units if the game is in silent mode
     while (!tempListTank.isEmpty()) {
         tempListTank.pop(enemyUnit);
         game->handleUnit(enemyUnit);

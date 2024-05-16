@@ -64,7 +64,7 @@ bool HealUnit::attack()
 		game->addToAttacked(attackedIds);
 	}
 
-
+	// Handle healed units if the game is in silent mode
 	while (!tempList.isEmpty()) {
 		tempList.dequeue(unit);
 		game->handleUnit(unit);
@@ -72,6 +72,8 @@ bool HealUnit::attack()
 	while (!total.isEmpty()) {
 		total.dequeue(unit);
 	}
+
+	// Kills the heal unit if it healed someone
 	if(healCount != this->getAttackCapacity()) { 
 		this->decrementHealth(this->health,timestep);
 		game->handleUnit(this);
