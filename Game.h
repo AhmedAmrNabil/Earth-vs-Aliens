@@ -12,29 +12,40 @@ enum GAME_MODE {
 
 class Game
 {
+	//Army objects
 	EarthArmy earthArmy;
 	AlienArmy alienArmy;
 	AllyArmy allyArmy;
 	RandGen RNG;
-	int timestep;
-	LinkedQueue <Unit*> killedUnits;
-	priQueue <Unit*> UML;
+
+	// Parameters loaded from the input file
 	Percentages percentages;
 	ArmyData earthData;
 	ArmyData alienData;
 	ArmyData allyData;
+
+	LinkedQueue <Unit*> killedUnits;
+	priQueue <Unit*> UML;
 	GAME_MODE gameMode;
+
+	//Check if any army has attacked
 	bool earthAttacked;
 	bool alienAttacked;
-	int infectionCount;
-	int umlsoldier;
+
 	bool saverActive;
+	int timestep;
+	int umlsoldier;
+
+	int healCount;
 	int infectionThreshold;
+	int infectionCount;
 	int totalInfectionCount;
+
+	// String to print ids of attacked units
 	string attackedIDs;
 public:
 
-	//Initialisations and file loading
+	// Initialisations and file loading
 	Game();
 	void loadInput();
 
@@ -59,7 +70,7 @@ public:
 	bool getfromUML(Unit*& unit);
 	void addToUML(Unit*& unit , int joinUMLtime);
 	bool isUMLEmpty();
-
+	void incrementHealCount();
 
 	//Game Functions
 	void startGame();

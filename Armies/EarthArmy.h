@@ -12,6 +12,8 @@ class EarthArmy : public Army {
 	LinkedListStack<Unit*> earthTanks;
 	LinkedQueue<Unit*> earthSoldiers;
 	LinkedListStack<Unit*> HL;
+	
+	// Total units count for each unit type
 	int tankCount;
 	int gunnerCount;
 	int soldierCount;
@@ -24,11 +26,13 @@ public:
 	bool fight();
 	void print();
 	bool isAlive();
+	int getSoldierCount(); // Current soldier count for getting soldier ratio
+	
+	// Getter for total units count for each unit type
 	int getTotalSoldierCount();
 	int getTotalGunneryCount();
 	int getTotalTankCount();
 	int getTotalHealCount();
-	int getSoldierCount();
 	~EarthArmy();
 };
 

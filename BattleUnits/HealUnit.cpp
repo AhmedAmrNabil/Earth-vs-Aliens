@@ -28,15 +28,26 @@ bool HealUnit::attack()
 					soldier->setImmunity(true);
 					game->decrementInfected();
 					game->addEarthUnit(unit);
+					if (!soldier->isHealedBefore()) {
+						soldier->setFullyHealed();
+						game->incrementHealCount();
+					}
 				}
 				else tempList.enqueue(unit);
 			}
 			else {
 				unit->getHealed(this , false);
-				total.enqueue(unit);
-				if (!unit->isLow()) game->addEarthUnit(unit);
+				if (!unit->isLow()) { 
+					game->addEarthUnit(unit); 
+					game->incrementHealCount();
+					if (!unit->isHealedBefore()) {
+						unit->setFullyHealed();
+						game->incrementHealCount();
+					}
+				}
 				else tempList.enqueue(unit);
 			}
+			total.enqueue(unit);
 			--healCount;
 			attacked = true;
 		}
@@ -44,17 +55,15 @@ bool HealUnit::attack()
 	}
 
 	// Prints the healed Units
-	if (game->isInteractive() && !tempList.isEmpty()) {
+	if (game->isInteractive() && !total.isEmpty()) {
 		string attackedIds = "\tHU ";
 		attackedIds += this;
 		attackedIds += " healed\t";
-		if (tempList.dequeue(unit)) {
+		if (total.dequeue(unit)) {
 			attackedIds += "[";
-			game->handleUnit(unit);
 			attackedIds += unit;
-			while (!tempList.isEmpty()) {
-				tempList.dequeue(unit);
-				game->handleUnit(unit);
+			while (!total.isEmpty()) {
+				total.dequeue(unit);
 				attackedIds += ", ";
 				attackedIds += unit;
 			}

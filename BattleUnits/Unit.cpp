@@ -15,6 +15,7 @@ Unit::Unit(Game* game, UNIT_TYPE type, int joinTime, double health, double power
 	destructionTime = -1;
 	joinUMLTime = -1;
 	initialhealth = health;
+	_isHealedBefore = false;
 
 	// correctly assign the id depend on the type
 	id = (type == SU) ? ++lastSaverId : isAlien() ? ++lastAlienId : ++lastEarthId;
@@ -100,10 +101,14 @@ void Unit::setUMLJoinTime(int jointime) {
 }
 
 
-
+ // Check if unit needs healing
 bool Unit::isLow() const {
-	double ratio = (health / initialhealth) * 100;
+	double ratio = ((health * 100) / initialhealth);
 	return (ratio < 20 && ratio > 0) && (type == ES || type == ET);
+}
+
+void Unit::setFullyHealed() {
+	_isHealedBefore = true;
 }
 
 int Unit::getJoinTime() const { return joinTime; }
@@ -119,3 +124,5 @@ UNIT_TYPE Unit::getType() const { return type; }
 int Unit::getEarthLastId() { return lastEarthId; }
 int Unit::getAlienLastId() { return lastAlienId; }
 int Unit::getSaverLastId() { return lastSaverId; }
+bool Unit::isHealedBefore() const { return _isHealedBefore; }
+

@@ -26,6 +26,7 @@ class Unit {
 	static int lastEarthId;
 	static int lastAlienId;
 	static int lastSaverId;
+	bool _isHealedBefore;
 
    protected:
 	int destructionTime;
@@ -53,6 +54,8 @@ class Unit {
 	int getUMLJoinTime();
 	void getHealed(Unit* HealUnit , bool infected);
 	bool isLow() const;
+	bool isHealedBefore() const; 
+	void setFullyHealed();
 
 	// Getters for the output file and printing
 	int getId() const;
