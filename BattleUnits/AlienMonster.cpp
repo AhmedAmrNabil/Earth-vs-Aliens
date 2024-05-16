@@ -10,7 +10,7 @@
 AlienMonster::AlienMonster(Game* game, int joinTime, double health, double power, int attackCapacity,int infectionPercent)
     : Unit(game,AM, joinTime, health, power, attackCapacity) {
     this->infectionPercent = infectionPercent;
-    srand(time(0));
+    srand(int(time(0)));
 }
 
 bool AlienMonster::attack() {

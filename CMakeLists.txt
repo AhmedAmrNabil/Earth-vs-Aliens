@@ -8,6 +8,7 @@ include_directories(.)
 add_executable(main
 Armies/AlienArmy.cpp
 Armies/EarthArmy.cpp
+Armies/AllyArmy.cpp
 BattleUnits/AlienDrone.cpp
 BattleUnits/AlienMonster.cpp
 BattleUnits/AlienSoldier.cpp
@@ -15,6 +16,8 @@ BattleUnits/EarthGunnery.cpp
 BattleUnits/EarthSoldier.cpp
 BattleUnits/EarthTank.cpp
 BattleUnits/Unit.cpp
+BattleUnits/HealUnit.cpp
+BattleUnits/SaverUnit.cpp
 DataStructures/ArrayMonster.cpp
 Game.cpp
 main.cpp
