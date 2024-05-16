@@ -11,11 +11,13 @@ class AlienArmy : public Army {
 	ArrayMonster alienMonsters;
 	LinkedDeque<Unit*> alienDrones;
 	LinkedQueue<Unit*> alienSoldiers;
+	bool insertRear;
+	bool peekRear;
+
+	// Total units count for each unit type
 	int monsterCount;
 	int soldierCount;
 	int droneCount;
-	bool insertRear;
-	bool peekRear;
 public:
 	AlienArmy();
 	bool addUnit(Unit* unit, bool isNew = false);
@@ -24,7 +26,9 @@ public:
 	bool fight();
 	void print();
 	bool isAlive();
-	int getSoldierCount();
+	int getSoldierCount(); // Current soldier count for getting soldier ratio
+
+	// Getter for total units count for each unit type
 	int getTotalSoldierCount();
 	int getTotalMonsterCount();
 	int getTotalDroneCount();

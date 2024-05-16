@@ -22,16 +22,17 @@ int RandGen::generator(int begin, int end) {
 	return random;
 }
 
-double generateDouble(double begin, double end) {
-	double random = begin + (end - begin) * rand() / double(RAND_MAX);
+double RandGen::generateDouble(double begin, double end) {
+	double random = begin + double(end - begin) * rand() / double(RAND_MAX);
 	return random;
 }
 
 Unit* RandGen::generateEarthUnit() {
+	// Returns nullptr if the ids exceeds 1000
 	if (Unit::getEarthLastId() == 1000)return nullptr;
 	Unit* unit;
-	double power = generator(earthData.minPower, earthData.maxPower);
-	double health = generator(earthData.minHealth, earthData.maxHealth);
+	double power = generateDouble(earthData.minPower, earthData.maxPower);
+	double health = generateDouble(earthData.minHealth, earthData.maxHealth);
 	int capacity = generator(earthData.minCapacity, earthData.maxCapacity);
 	int B = generator(1, 100);
 	if (B <= percentages.percentES)
@@ -47,10 +48,11 @@ Unit* RandGen::generateEarthUnit() {
 }
 
 Unit* RandGen::generateAlienUnit() {
+	// Returns nullptr if the ids exceeds 3000
 	if (Unit::getAlienLastId() == 3000)return nullptr;
 	Unit* unit;
-	double power = generator(alienData.minPower, alienData.maxPower);
-	double health = generator(alienData.minHealth, alienData.maxHealth);
+	double power = generateDouble(alienData.minPower, alienData.maxPower);
+	double health = generateDouble(alienData.minHealth, alienData.maxHealth);
 	int capacity = generator(alienData.minCapacity, alienData.maxCapacity);
 	int B = generator(1, 100);
 	if (B <= percentages.percentAS)
@@ -64,10 +66,11 @@ Unit* RandGen::generateAlienUnit() {
 }
 
 Unit* RandGen::generateAllyUnit() {
-	Unit* unit;
+	// Returns nullptr if the ids exceeds 4000
 	if (Unit::getSaverLastId() == 4000) return nullptr;
-	double power = generator(allyData.minPower, allyData.maxPower);
-	double health = generator(allyData.minHealth, allyData.maxHealth);
+	Unit* unit;
+	double power = generateDouble(allyData.minPower, allyData.maxPower);
+	double health = generateDouble(allyData.minHealth, allyData.maxHealth);
 	int capacity = generator(allyData.minCapacity, allyData.maxCapacity);
 	unit = new SaverUnit(game, game->getTimestep(), health, power, capacity);
 	return unit;
