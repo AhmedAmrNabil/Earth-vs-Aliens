@@ -43,7 +43,7 @@ bool AlienDrone::attack() {
         else break;
     }
 
-    // Attacks the tanks with the leftover tank capcity
+    // Attacks the tanks with the leftover gunnery capcity
     while (tankCount > 0)
     {
         if (game->getEarthUnit(EG, enemyUnit)) {

@@ -61,7 +61,7 @@ bool EarthGunnery::attack() {
         --monsterCount;
     }
 
-    // Print the attacked units
+    
     if (game->isInteractive() && (!tempListMonster.isEmpty() || !tempListPrint.isEmpty())) {
         string attackedIds = "\tEG ";
         attackedIds += this;
@@ -104,6 +104,7 @@ bool EarthGunnery::attack() {
         tempListMonster.dequeue(enemyUnit);
         game->handleUnit(enemyUnit);
     }
+
     while (!tempListPrint.isEmpty()) {
         tempListPrint.dequeue(enemyUnit);
     }

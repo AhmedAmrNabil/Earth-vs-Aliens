@@ -39,7 +39,8 @@ bool EarthTank::attack() {
         else break;
     }
 
-    monsterCount += soldierCount; // Adds the leftover capcity from soldiers if they are empty
+    // Adds the leftover capcity from soldiers if there are no soldiers left
+    monsterCount += soldierCount; 
     while (monsterCount != 0) {
         if (game->getAlienUnit(AM, enemyUnit)) {
             enemyUnit->getAttacked(this, timestep);
