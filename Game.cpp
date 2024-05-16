@@ -21,9 +21,8 @@ Game::Game() :RNG(this)
 	infectionThreshold = 0;
 	saverActive = false;
 	loadInput();
-	srand(time(0));
 
-	//Enabling color support
+	// Enabling color support
 	HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
 	DWORD dwMode = 0;
 	GetConsoleMode(hOut, &dwMode);
